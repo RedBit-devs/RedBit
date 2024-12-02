@@ -16,7 +16,9 @@
     <div id="about">
       <img src="/img/svg/waves/wave2.svg" alt="">
       <span class="text text-big">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat corporis incidunt aliquid nemo doloremque explicabo culpa eos inventore sunt recusandae odit dolor reiciendis dicta soluta consequatur nihil, quidem eligendi deserunt.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat corporis incidunt aliquid nemo doloremque
+        explicabo culpa eos inventore sunt recusandae odit dolor reiciendis dicta soluta consequatur nihil, quidem
+        eligendi deserunt.
       </span>
     </div>
     <div id="developers">
@@ -42,7 +44,9 @@
           </ul>
         </div>
         <div>
-          <div> <a class="text-big" href="https://github.com/RedBit-devs/RedBit" target="_blank">GitHub</a> </div>
+          <div>
+            <a class="text-big" href="https://github.com/RedBit-devs/RedBit" target="_blank">GitHub</a>
+          </div>
           <div>
             <ul>
               <li>idk</li>
@@ -57,40 +61,49 @@
 </template>
 
 <style scoped>
-main{
+main {
   display: flex;
   flex-direction: column;
 
   text-align: center;
 }
-main > div {
+
+main>div {
   display: grid;
   justify-items: center;
 }
-main > div > div {
+
+main>div>div {
   padding: 2rem;
 }
-main > div > img{
+
+main>div>img {
   width: 100%;
 }
-#title{
+
+#title {
   background: var(--clr-tertiary);
   place-content: center;
 }
-#featureList{
+
+#featureList {
   background-color: var(--clr-primary);
   grid-template-rows: repeat(2, 1fr);
 }
-#about{
+
+#about {
   background-color: var(--clr-ui-primary);
 }
-#developers{
+
+#developers {
   background-color: var(--clr-secondary);
 }
-#footer{
+
+#footer {
   background-color: var(--clr-ui-tertiary);
 }
-.flex-around{
+
+.flex-around {
   padding-inline: 10%;
   width: 100%;
   gap: 2rem;
