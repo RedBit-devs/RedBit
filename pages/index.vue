@@ -8,9 +8,9 @@
     <div id="featureList">
       <img src="/img/svg/waves/wave1.svg" alt="">
       <div class="flex-around">
-        <div>wannabe a card</div>
-        <div>wannabe a card</div>
-        <div>wannabe a card</div>
+        <BasicShowcaseCard />
+        <BasicShowcaseCard />
+        <BasicShowcaseCard />
       </div>
     </div>
     <div id="about">
@@ -24,10 +24,9 @@
       <h2 class="text-title">Developer team</h2>
 
       <div class="flex-around">
-        <div>wannabe a card</div>
-        <div>wannabe a card</div>
-        <div>wannabe a card</div>
-
+        <BasicShowcaseCard />
+        <BasicShowcaseCard />
+        <BasicShowcaseCard />
       </div>
 
     </div>
@@ -36,14 +35,14 @@
       <div class="flex-around">
         <div>
           <ul>
-            <h3>Stuff used</h3>
+            <h3 class="text-big tect-bold">Stuff used</h3>
             <li>key packages</li>
             <li>hosting</li>
             <li>db</li>
           </ul>
         </div>
         <div>
-          <div> <a href="https://github.com/RedBit-devs/RedBit" target="_blank">GitHub</a> </div>
+          <div> <a class="text-big" href="https://github.com/RedBit-devs/RedBit" target="_blank">GitHub</a> </div>
           <div>
             <ul>
               <li>idk</li>
@@ -94,6 +93,7 @@ main > div > img{
 .flex-around{
   padding-inline: 10%;
   width: 100%;
+  gap: 2rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
