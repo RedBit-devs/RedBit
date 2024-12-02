@@ -1,4 +1,4 @@
-:root{
+:root {
     --clr-primary: #EF3333;
     --clr-secondary: #942727;
     --clr-tertiary: #5F3A3A;
@@ -24,13 +24,14 @@
     font-size: 16px;
     color: var(--clr-text-primary);
 }
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: var(--clr-canvas);
     min-height: 100vh;
 }
@@ -39,16 +40,21 @@ a {
     color: var(--clr-text-link);
     position: relative;
 }
-a:visited{
+
+a:visited {
     color: hsl(from var(--clr-text-link) h calc(s + 20) l);
 }
-a:hover, a:focus-within {
+
+a:hover,
+a:focus-within {
     color: hsl(from var(--clr-text-link) h s calc(l*0.8));
 }
-a:active{
-    color: hsl(from var(--clr-text-link) calc(h + 20 ) s calc(l*1.1));
+
+a:active {
+    color: hsl(from var(--clr-text-link) calc(h + 20) s calc(l*1.1));
 }
-a::after{
+
+a::after {
     content: "";
     height: 0.15em;
     width: 100%;
@@ -61,36 +67,42 @@ a::after{
 
     transform: scaleX(0);
     transform-origin: right;
-    
+
     transition: transform .3s;
 }
+
 a:hover::after {
     transform: scaleX(1);
     transform-origin: left;
 }
 
 
-h1{
+h1 {
     font-size: 2.5rem;
 }
-h2{
+
+h2 {
     font-size: 1.5rem;
 }
-h3{
+
+h3 {
     font-size: 1.25rem;
 }
-h4{
+
+h4 {
     font-size: 1rem;
 }
-h5{
+
+h5 {
     font-size: .85rem;
 }
-h6{
+
+h6 {
     font-size: .6rem;
 }
 
 
-.text{
+.text {
     font-family: Inter;
     font-size: 1rem;
 }
@@ -98,9 +110,11 @@ h6{
 .text-big {
     font-size: 2rem;
 }
+
 .text-title {
     font-size: 4rem;
 }
+
 .text-medium {
     font-size: 1.5rem;
 }
@@ -112,4 +126,14 @@ h6{
 
 .text-bold {
     font-weight: bold;
+}
+
+@media screen and (max-width: 630px) {
+    .text-main-title {
+        font-size: 9rem;
+    }
+
+    .text-big {
+        font-size: 1.5rem;
+    }
 }
