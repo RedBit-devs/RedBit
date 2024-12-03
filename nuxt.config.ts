@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     '~/assets/css/fonts.css'
   ],
   devtools: { enabled: true },
-  modules: ["@prisma/nuxt", '@nuxthub/core'],
+  modules: ["@prisma/nuxt"],
   prisma: {
     runMigration: false,
     installStudio: false,

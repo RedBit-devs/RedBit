@@ -10,7 +10,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxthub/core": "^0.8.7",
     "@prisma/nuxt": "^0.0.35",
     "nuxt": "^3.14.0",
     "vue": "latest",
@@ -18,7 +17,6 @@
   },
   "devDependencies": {
     "@prisma/client": "^5.22.0",
-    "prisma": "^5.22.0",
-    "wrangler": "^3.91.0"
+    "prisma": "^5.22.0"
   }
 }
