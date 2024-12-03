@@ -1,0 +1,139 @@
+:root {
+    --clr-primary: #EF3333;
+    --clr-secondary: #942727;
+    --clr-tertiary: #5F3A3A;
+    --clr-text-primary: #FFFFFF;
+    --clr-text-secondary: #DCDCDC;
+    --clr-text-inverse: #000000;
+    --clr-text-link: #9047CF;
+    --clr-text-ok: #10F52B;
+    --clr-text-warn: #E36825;
+    --clr-text-danger: #E32525;
+    --clr-ui-primary: #333333;
+    --clr-ui-secondary: #292929;
+    --clr-ui-tertiary: #000000;
+    --clr-ui-ok: #63E229;
+    --clr-ui-warn: #E36825;
+    --clr-ui-danger: #E32525;
+    --clr-canvas: #2B2B2B;
+
+
+    --border-rounded: 12px;
+
+    font-family: Inter;
+    font-size: 16px;
+    color: var(--clr-text-primary);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--clr-canvas);
+    min-height: 100vh;
+}
+
+a {
+    color: var(--clr-text-link);
+    position: relative;
+}
+
+a:visited {
+    color: hsl(from var(--clr-text-link) h calc(s + 20) l);
+}
+
+a:hover,
+a:focus-within {
+    color: hsl(from var(--clr-text-link) h s calc(l*0.8));
+}
+
+a:active {
+    color: hsl(from var(--clr-text-link) calc(h + 20) s calc(l*1.1));
+}
+
+a::after {
+    content: "";
+    height: 0.15em;
+    width: 100%;
+
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+
+    background-color: currentColor;
+
+    transform: scaleX(0);
+    transform-origin: right;
+
+    transition: transform .3s;
+}
+
+a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+h5 {
+    font-size: .85rem;
+}
+
+h6 {
+    font-size: .6rem;
+}
+
+
+.text {
+    font-family: Inter;
+    font-size: 1rem;
+}
+
+.text-big {
+    font-size: 2rem;
+}
+
+.text-title {
+    font-size: 4rem;
+}
+
+.text-medium {
+    font-size: 1.5rem;
+}
+
+.text-main-title {
+    font-family: Jersey10;
+    font-size: 16rem;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 630px) {
+    .text-main-title {
+        font-size: 9rem;
+    }
+
+    .text-big {
+        font-size: 1.5rem;
+    }
+}
