@@ -9,15 +9,16 @@
     <section id="featureList">
       <img src="/img/svg/waves/wave1.svg" alt="">
       <div class="flex-around">
-        <BasicShowcaseCard />
-        <BasicShowcaseCard />
-        <BasicShowcaseCard />
+        <BasicShowcaseCard :card-data="featurecard1" />
+        <BasicShowcaseCard :card-data="featurecard1" />
+        <BasicShowcaseCard :card-data="featurecard1" />
       </div>
     </section>
     <section id="about">
       <img src="/img/svg/waves/wave2.svg" alt="">
       <span class="text text-big">
-        <strong>RedBit</strong> is a free and <u>open-source</u> communication platform that lets you chat with friends, family, and
+        <strong>RedBit</strong> is a free and <u>open-source</u> communication platform that lets you chat with friends,
+        family, and
         communities. With features direct messaging, and group chats, RedBit provides a
         seamless way to connect with others, no matter where they are.
       </span>
@@ -27,9 +28,9 @@
       <h2 class="text-title">Developer team</h2>
 
       <div class="flex-around">
-        <BasicShowcaseCard />
-        <BasicShowcaseCard />
-        <BasicShowcaseCard />
+        <BasicShowcaseCard :card-data="developercard1" />
+        <BasicShowcaseCard :card-data="developercard1" />
+        <BasicShowcaseCard :card-data="developercard1" />
       </div>
 
     </section>
@@ -58,6 +59,34 @@
     </footer>
   </main>
 </template>
+
+<script lang="ts" setup>
+//Some template data to modify in the future
+const featurecard1: CardData = {
+  imageUrl: "icon:mdi:lightning-bolt",
+  headerText: "Fast",
+  description: "Lorem psum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit amet"
+}
+const developercard1: CardData = {
+  imageUrl: "https://picsum.photos/300",
+  headerText: "Lajos",
+  bubbles: [
+    {
+      name: "picssum",
+      imageUrl: "https://picsum.photos/100",
+      url: "https://picsum.photos/"
+    },
+    {
+      name: "picssum",
+      imageUrl: "https://picsum.photos/100",
+      url: "https://picsum.photos/"
+    },
+  ],
+  description: "Lorem ipsum dolor ametLorem ipsum dolor ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit amet"
+}
+
+
+</script>
 
 <style scoped>
 main {
@@ -88,6 +117,7 @@ main>footer>img {
   background: var(--clr-tertiary);
   place-content: center;
 }
+
 #slogan {
   font-family: Inter-Italic;
   font-weight: lighter;
