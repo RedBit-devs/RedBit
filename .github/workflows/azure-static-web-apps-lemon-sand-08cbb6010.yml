@@ -3,11 +3,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - 34-setup-cd-firebase
+      - main
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - 34-setup-cd-firebase
+      - main
 
 jobs:
   build_and_deploy_job:
