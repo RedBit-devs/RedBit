@@ -12,4 +12,8 @@ export default defineNuxtConfig({
     installStudio: false,
     generateClient: true,
   },
+  typescript:{
+    typeCheck: true,
+    strict: false
+  }
 })
