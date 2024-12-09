@@ -11,7 +11,7 @@
                     </div>
                     <div class="input">
                         <label>Password</label>
-                        <input type="text">
+                        <input type="password">
                     </div>
                 </div>
                 <div class="submit">
@@ -123,7 +123,7 @@ input {
     color: white;
     border-radius: var(--border-rounded);
     width: 30%;
-    padding: 1.5%;
+    padding-inline: 2rem;
     justify-content: space-between;
     align-items: center;
 }
