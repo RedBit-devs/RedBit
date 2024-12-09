@@ -10,13 +10,17 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/icon": "^1.9.1",
     "@prisma/nuxt": "^0.0.35",
     "nuxt": "^3.14.0",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.2.1",
     "@prisma/client": "^5.22.0",
-    "prisma": "^5.22.0"
+    "prisma": "^5.22.0",
+    "typescript": "5.6.2",
+    "vue-tsc": "^2.1.10"
   }
 }
