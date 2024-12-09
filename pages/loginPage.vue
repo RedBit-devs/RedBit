@@ -63,6 +63,7 @@ h1 {
     width: 40%;
     margin-bottom: 2%;
     border-radius: 8px;
+    box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
 }
 
 .input-field {
@@ -123,9 +124,10 @@ input {
     color: white;
     border-radius: var(--border-rounded);
     width: 30%;
-    padding-inline: 2rem;
+    padding:0.5rem 1rem 0.5rem 1rem;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
 }
 
 .buttonRegister {
