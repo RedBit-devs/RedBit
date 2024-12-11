@@ -29,6 +29,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -132,6 +133,7 @@ h6 {
     --background: transparent;
     --text: var(--clr-text-primary);
     --elevation: 0px;
+
     border: none;
     text-decoration: none;
 
@@ -152,9 +154,19 @@ h6 {
     --background: var(--clr-primary);
     --text: var(--clr-text-inverse);
 }
+.btn.secondary{
+    --background: var(--clr-secondary);
+    --text: var(--clr-text-inverse);
+}
+.btn.tertiary{
+    --background: var(--clr-tertiary);
+    --text: var(--clr-text-primary);
+}
+
+
 .btn:hover{
     --elevation: 10px;
-    background-color: hsl(from var(--background) h s calc(l + 10));
+    background-color: hsl(from var(--background) h s calc(l + 5));
 }
 .btn:active{
     --elevation: 0px;
