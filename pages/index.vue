@@ -138,13 +138,13 @@ main>footer>img {
 
 footer {
   background-color: var(--clr-ui-tertiary);
-  text-align: left
+  text-align: left;
 }
 
 footer>div {
-  display: grid;
-  grid-template-areas: "list1 github list2";
-  grid-template-rows: fit-content 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0rem 4rem;
 
 }
