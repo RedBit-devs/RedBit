@@ -4,31 +4,48 @@
             <Icon name="mdi:arrow-left-thick" style="color: white;" class="arrow" size="400%" />
         </NuxtLink>
         <div class="content">
-            <div class=" login-box">
-                <h1 class="login-title">Login</h1>
+            <div class=" register-box">
+                <h1 class="login-title">Register</h1>
                 <div class="input-field">
                     <div class="input">
-                        <label>Email</label>
-                        <input type="text" placeholder="Type here" </div>
-                        <div class="input">
-                            <label>Password</label>
-                            <input type="password" placeholder="Type here">
-                        </div>
+                        <label>Firstname</label>
+                        <input type="text" placeholder="Type here">
                     </div>
-                    <div class="submit">
-                        <button class="buttonSubmit"> Submit</button>
+                    <div class="input">
+                        <label>Lastname</label>
+                        <input type="text" placeholder="Type here">
+                    </div>
+                    <div class="input">
+                        <label>Username</label>
+                        <input type="text" placeholder="Type here">
+                    </div>
+                    <div class="input">
+                        <label>Email</label>
+                        <input type="text" placeholder="Type here">
+                    </div>
+                    <div class="input">
+                        <label>Password</label>
+                        <input type="password" placeholder="Type here">
+                    </div>
+                    <div class="input">
+                        <label>Password again</label>
+                        <input type="password" placeholder="Type here">
                     </div>
                 </div>
-                <div class="register">
-                    <label>Not registered yet?</label>
-                    <NuxtLink to="/registerPage">
-                        <button class="buttonRegister">
-                            Resgister
-                        </button>
-                    </NuxtLink>
+                <div class="submit">
+                    <button class="buttonSubmit"> Register</button>
                 </div>
             </div>
+            <div class="login">
+                <label>Already have an account? </label>
+                <NuxtLink to="/loginPage">
+                    <button class="buttonLogin">
+                        Login
+                    </button>
+                </NuxtLink>
+            </div>
         </div>
+    </div>
 </template>
 
 <script setup>
@@ -37,11 +54,13 @@ definePageMeta({
 })
 </script>
 
+
 <style scoped>
 a::after {
     height: 0;
     width: 0;
 }
+
 
 .wrapper {
     background-image: linear-gradient(to bottom right, var(--clr-tertiary), var(--clr-ui-secondary));
@@ -52,8 +71,9 @@ a::after {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
+    min-height: 100vh;
     font-family: Inter;
+    font-size: 16px;
 }
 
 
@@ -66,7 +86,7 @@ h1 {
 
 }
 
-.login-box {
+.register-box {
     color: white;
     background-color: var(--clr-primary);
     width: 40%;
@@ -86,7 +106,8 @@ h1 {
     display: flex;
     flex-direction: column;
     width: 90%;
-    margin: 2%;
+    margin: .3rem;
+
 }
 
 label {
@@ -127,7 +148,7 @@ input {
 }
 
 
-.register {
+.login {
     display: flex;
     background-color: var(--clr-ui-primary);
     color: white;
@@ -137,9 +158,10 @@ input {
     justify-content: space-between;
     align-items: center;
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
+    margin-bottom: 2rem;
 }
 
-.buttonRegister {
+.buttonLogin {
     background-color: var(--clr-secondary);
     border: none;
     border-radius: var(--border-rounded);
@@ -150,7 +172,7 @@ input {
     color: white;
 }
 
-.buttonRegister:hover {
+.buttonLogin:hover {
     background-color: var(--clr-tertiary);
 }
 
@@ -170,7 +192,7 @@ input {
         padding: 1.5rem;
     }
 
-    .login-box {
+    .register-box {
         width: 80%;
     }
 
@@ -178,7 +200,7 @@ input {
         height: 32px;
     }
 
-    .register {
+    .login {
         width: fit-content;
     }
 
@@ -191,7 +213,7 @@ input {
         font-size: 30px;
     }
 
-    .buttonRegister {
+    .buttonLogin {
         margin-left: 1rem
     }
 }
@@ -202,11 +224,11 @@ input {
         padding: 1.5rem;
     }
 
-    .login-box {
+    .register-box {
         width: 100%;
     }
 
-    .register {
+    .login {
         width: fit-content;
     }
 
@@ -214,7 +236,7 @@ input {
         padding: 10px 15px 10px 15px;
     }
 
-    .buttonRegister {
+    .buttonLogin {
         padding: 10px 15px 10px 15px;
         margin-left: 1rem
     }
