@@ -30,6 +30,7 @@
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    font-size: inherit;
 }
 
 body {
@@ -55,7 +56,7 @@ a:not(.btn):active {
     color: hsl(from var(--clr-text-link) calc(h + 20) s calc(l*1.1));
 }
 
-a:not(.btn)::after {
+a:not(.btn, :has(span.iconify:only-child))::after {
     content: "";
     height: 0.15em;
     width: 100%;
@@ -72,7 +73,7 @@ a:not(.btn)::after {
     transition: transform .3s;
 }
 
-a:not(.btn):hover::after {
+a:not(.btn, :has(span.iconify:only-child)):hover::after {
     transform: scaleX(1);
     transform-origin: left;
 }
@@ -156,11 +157,35 @@ h6 {
 }
 .btn.secondary{
     --background: var(--clr-secondary);
-    --text: var(--clr-text-inverse);
+    --text: var(--clr-text-primary);
 }
 .btn.tertiary{
     --background: var(--clr-tertiary);
     --text: var(--clr-text-primary);
+}
+.btn.ui-primary{
+    --background: var(--clr-ui-primary);
+    --text: var(--clr-text-primary);
+}
+.btn.ui-secondary{
+    --background: var(--clr-ui-secondary);
+    --text: var(--clr-text-primary);
+}
+.btn.ui-tertiary{
+    --background: var(--clr-ui-tertiary);
+    --text: var(--clr-text-primary);
+}
+.btn.ok{
+    --background: var(--clr-ui-ok);
+    --text: var(--clr-text-inverse);
+}
+.btn.warn{
+    --background: var(--clr-ui-warn);
+    --text: var(--clr-text-inverse);
+}
+.btn.danger{
+    --background: var(--clr-ui-danger);
+    --text: var(--clr-text-inverse);
 }
 
 
