@@ -82,7 +82,7 @@ h1 {
 .input {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 90%;
 }
 
 
