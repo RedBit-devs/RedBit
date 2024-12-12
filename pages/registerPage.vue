@@ -1,47 +1,48 @@
 <template>
     <div class="wrapper">
-        <NuxtLink to="/">
-            <Icon name="mdi:arrow-left-thick" style="color: white;" class="arrow" size="400%" />
+        <NuxtLink id="goBack" to="/">
+            <Icon name="mdi:arrow-left-thick" style="color: white;" size="400%" />
         </NuxtLink>
         <div class="content">
             <div class=" register-box">
                 <h1 class="login-title">Register</h1>
                 <div class="input-field">
-                    <div class="input">
+                    <div class="input" id="firstname">
                         <label>Firstname</label>
                         <input type="text" placeholder="Type here">
                     </div>
-                    <div class="input">
+                    <div class="input" id="lastname">
                         <label>Lastname</label>
                         <input type="text" placeholder="Type here">
                     </div>
-                    <div class="input">
-                        <label>Username</label>
-                        <input type="text" placeholder="Type here">
-                    </div>
-                    <div class="input">
+
+                    <div class="input" id="email">
                         <label>Email</label>
                         <input type="text" placeholder="Type here">
                     </div>
-                    <div class="input">
+
+                    <div class="input" id="username">
+                        <label>Username</label>
+                        <input type="text" placeholder="Type here">
+                    </div>
+
+                    <div class="input" id="password">
                         <label>Password</label>
                         <input type="password" placeholder="Type here">
                     </div>
-                    <div class="input">
+                    <div class="input" id="passwordAgain">
                         <label>Password again</label>
                         <input type="password" placeholder="Type here">
                     </div>
                 </div>
                 <div class="submit">
-                    <button class="buttonSubmit"> Register</button>
+                    <button class="btn ui-secondary"> Register</button>
                 </div>
             </div>
             <div class="login">
                 <label>Already have an account? </label>
-                <NuxtLink to="/loginPage">
-                    <button class="buttonLogin">
-                        Login
-                    </button>
+                <NuxtLink class="btn secondary" to="/loginPage">
+                    Login
                 </NuxtLink>
             </div>
         </div>
@@ -56,11 +57,9 @@ definePageMeta({
 
 
 <style scoped>
-a::after {
-    height: 0;
-    width: 0;
+#goBack {
+    position: absolute;
 }
-
 
 .wrapper {
     background-image: linear-gradient(to bottom right, var(--clr-tertiary), var(--clr-ui-secondary));
@@ -72,56 +71,75 @@ a::after {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: Inter;
-    font-size: 16px;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
 }
 
 
 h1 {
     text-align: center;
-    margin: 7%;
+    padding-block: 3rem;
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 4px;
-
 }
 
 .register-box {
-    color: white;
     background-color: var(--clr-primary);
     width: 40%;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--border-rounded);
+    padding: 2rem 2rem;
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
+
 }
 
 .input-field {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+    display: grid;
+    grid-template-areas: "firstName lastName" "email email" "username username" "password password" "passwordAgain passwordAgain";
+}
 
+#firstname {
+    grid-area: firstName;
+}
+
+#lastname {
+    grid-area: lastName;
+}
+
+#email {
+    grid-area: email;
+}
+
+#username {
+    grid-area: username;
+}
+
+#password {
+    grid-area: password;
+}
+
+#passwordAgain {
+    grid-area: passwordAgain;
 }
 
 .input {
     display: flex;
     flex-direction: column;
-    width: 90%;
-    margin: .3rem;
-
-}
-
-label {
-    font-family: Inter;
-    font-size: 16px;
+    width: 100%;
 }
 
 input {
-    border-radius: var(--border-rounded);
     border: none;
-    height: 42px;
+    border-radius: var(--border-rounded);
+    height: 3rem;
     margin-top: 1%;
-    font-size: 16px;
-    padding: 5px;
+    padding: .5rem;
 }
 
 .submit {
@@ -130,99 +148,45 @@ input {
     align-items: center;
 }
 
-.buttonSubmit {
-    background-color: var(--clr-ui-secondary);
-    color: white;
-    border-radius: var(--border-rounded);
-    border: none;
-    padding: 10px 25px 10px 25px;
-    width: fit-content;
-    margin: 8%;
-    font-size: 16px;
-    font-family: Inter;
-    transition: .5s;
-}
-
-.buttonSubmit:hover {
-    background-color: var(--clr-ui-primary);
-}
-
 
 .login {
     display: flex;
+    gap: 1rem;
     background-color: var(--clr-ui-primary);
-    color: white;
     border-radius: var(--border-rounded);
     width: 30%;
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.5rem 1rem;
     justify-content: space-between;
     align-items: center;
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
-    margin-bottom: 2rem;
-}
-
-.buttonLogin {
-    background-color: var(--clr-secondary);
-    border: none;
-    border-radius: var(--border-rounded);
-    padding: 10px 20px 10px 20px;
-    width: fit-content;
-    font-family: Inter;
-    transition: .5s;
-    color: white;
-}
-
-.buttonLogin:hover {
-    background-color: var(--clr-tertiary);
 }
 
 
-@media only screen and (max-width:1100px) {
+@media only screen and (max-width:1300px) {
     .login-box {
         width: 50%;
     }
 
-    input {
-        height: 36px;
+    .input-field {
+        grid-template-areas: "firstName firstName" "lastName lastName" "email email" "username username" "password password" "passwordAgain passwordAgain";
     }
 }
 
 @media only screen and (max-width:850px) {
-    .content {
-        padding: 1.5rem;
-    }
-
     .register-box {
         width: 80%;
     }
 
     input {
-        height: 32px;
+        height: 2.2rem;
     }
 
     .login {
         width: fit-content;
     }
-
-    .input-box {
-        width: fit-content;
-        padding: 10%;
-    }
-
-    h1 {
-        font-size: 30px;
-    }
-
-    .buttonLogin {
-        margin-left: 1rem
-    }
 }
 
 @media only screen and (max-width:640px) {
-
-    .content {
-        padding: 1.5rem;
-    }
 
     .register-box {
         width: 100%;
@@ -232,13 +196,10 @@ input {
         width: fit-content;
     }
 
-    .buttonSubmit {
-        padding: 10px 15px 10px 15px;
+    #goBack {
+        left: 2rem;
+        top: 2rem;
     }
 
-    .buttonLogin {
-        padding: 10px 15px 10px 15px;
-        margin-left: 1rem
-    }
 }
 </style>

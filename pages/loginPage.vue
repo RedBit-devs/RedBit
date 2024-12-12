@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
-        <NuxtLink to="/">
-            <Icon name="mdi:arrow-left-thick" style="color: white;" class="arrow" size="400%" />
+        <NuxtLink to="/" id="goBack">
+            <Icon name="mdi:arrow-left-thick" style="color: white;" size="400%" />
         </NuxtLink>
         <div class="content">
             <div class=" login-box">
@@ -9,26 +9,26 @@
                 <div class="input-field">
                     <div class="input">
                         <label>Email</label>
-                        <input type="text" placeholder="Type here" </div>
-                        <div class="input">
-                            <label>Password</label>
-                            <input type="password" placeholder="Type here">
-                        </div>
+                        <input type="text" placeholder="Type here" id="email">
                     </div>
-                    <div class="submit">
-                        <button class="buttonSubmit"> Submit</button>
+                    <div class="input">
+                        <label>Password</label>
+                        <input type="password" placeholder="Type here" id="password">
                     </div>
                 </div>
-                <div class="register">
-                    <label>Not registered yet?</label>
-                    <NuxtLink to="/registerPage">
-                        <button class="buttonRegister">
-                            Resgister
-                        </button>
-                    </NuxtLink>
+                <div class="submit">
+                    <button class="btn ui-secondary"> Submit</button>
                 </div>
+
+            </div>
+            <div class="register">
+                <label>Not registered yet?</label>
+                <NuxtLink to="/registerPage" class="btn secondary">
+                    Register
+                </NuxtLink>
             </div>
         </div>
+    </div>
 </template>
 
 <script setup>
@@ -38,13 +38,12 @@ definePageMeta({
 </script>
 
 <style scoped>
-a::after {
-    height: 0;
-    width: 0;
-}
-
 .wrapper {
     background-image: linear-gradient(to bottom right, var(--clr-tertiary), var(--clr-ui-secondary));
+}
+
+#goBack {
+    position: absolute;
 }
 
 .content {
@@ -52,14 +51,13 @@ a::after {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
-    font-family: Inter;
+    min-height: 100vh;
+    gap: 2rem;
 }
-
 
 h1 {
     text-align: center;
-    margin: 7%;
+    padding-block: 3rem;
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 4px;
@@ -67,102 +65,64 @@ h1 {
 }
 
 .login-box {
-    color: white;
     background-color: var(--clr-primary);
     width: 40%;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
+    border-radius: var(--border-rounded);
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
+    padding-inline: 2rem;
+
 }
 
 .input-field {
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    gap: 1rem;
 }
 
 .input {
     display: flex;
     flex-direction: column;
-    width: 90%;
-    margin: 2%;
+    width: 100%;
 }
 
-label {
-    font-family: Inter;
-    font-size: 16px;
-}
 
 input {
     border-radius: var(--border-rounded);
     border: none;
-    height: 42px;
+    height: 3rem;
     margin-top: 1%;
-    font-size: 16px;
-    padding: 5px;
+    padding: .5rem;
 }
 
 .submit {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 1.5rem;
 }
-
-.buttonSubmit {
-    background-color: var(--clr-ui-secondary);
-    color: white;
-    border-radius: var(--border-rounded);
-    border: none;
-    padding: 10px 25px 10px 25px;
-    width: fit-content;
-    margin: 8%;
-    font-size: 16px;
-    font-family: Inter;
-    transition: .5s;
-}
-
-.buttonSubmit:hover {
-    background-color: var(--clr-ui-primary);
-}
-
 
 .register {
     display: flex;
     background-color: var(--clr-ui-primary);
-    color: white;
     border-radius: var(--border-rounded);
     width: 30%;
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
     justify-content: space-between;
     align-items: center;
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
 }
-
-.buttonRegister {
-    background-color: var(--clr-secondary);
-    border: none;
-    border-radius: var(--border-rounded);
-    padding: 10px 20px 10px 20px;
-    width: fit-content;
-    font-family: Inter;
-    transition: .5s;
-    color: white;
-}
-
-.buttonRegister:hover {
-    background-color: var(--clr-tertiary);
-}
-
 
 @media only screen and (max-width:1100px) {
     .login-box {
         width: 50%;
     }
 
-    input {
-        height: 36px;
+    .register {
+        width: fit-content;
     }
+
 }
 
 @media only screen and (max-width:850px) {
@@ -175,48 +135,14 @@ input {
     }
 
     input {
-        height: 32px;
-    }
-
-    .register {
-        width: fit-content;
-    }
-
-    .input-box {
-        width: fit-content;
-        padding: 10%;
-    }
-
-    h1 {
-        font-size: 30px;
-    }
-
-    .buttonRegister {
-        margin-left: 1rem
+        height: 2.2rem;
     }
 }
 
 @media only screen and (max-width:640px) {
-
-    .content {
-        padding: 1.5rem;
-    }
-
     .login-box {
         width: 100%;
     }
 
-    .register {
-        width: fit-content;
-    }
-
-    .buttonSubmit {
-        padding: 10px 15px 10px 15px;
-    }
-
-    .buttonRegister {
-        padding: 10px 15px 10px 15px;
-        margin-left: 1rem
-    }
 }
 </style>
