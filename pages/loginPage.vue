@@ -10,8 +10,8 @@
                     <div class="input">
                         <label>Email</label>
                         <input type="text" placeholder="Type here" id="email">
-                        <div class="input">
-                        </div>
+                    </div>
+                    <div class="input">
                         <label>Password</label>
                         <input type="password" placeholder="Type here" id="password">
                     </div>
@@ -78,8 +78,6 @@ h1 {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-
-
 }
 
 .input {
