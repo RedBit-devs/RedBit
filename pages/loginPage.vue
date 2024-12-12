@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
-        <NuxtLink to="/">
-            <Icon name="mdi:arrow-left-thick" style="color: white;" id="goBack" size="400%" />
+        <NuxtLink to="/" id="goBack">
+            <Icon name="mdi:arrow-left-thick" style="color: white;" size="400%" />
         </NuxtLink>
         <div class="content">
             <div class=" login-box">
