@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <NuxtLink to="/">
-            <Icon name="mdi:arrow-left-thick" style="color: white;" class="arrow" size="400%" />
+            <Icon name="mdi:arrow-left-thick" style="color: white;" id="goBack" size="400%" />
         </NuxtLink>
         <div class="content">
             <div class=" login-box">
@@ -9,24 +9,25 @@
                 <div class="input-field">
                     <div class="input">
                         <label>Email</label>
-                        <input type="text" placeholder="Type here" </div>
+                        <input type="text" placeholder="Type here" id="email">
                         <div class="input">
                             <label>Password</label>
-                            <input type="password" placeholder="Type here">
+                            <input type="password" placeholder="Type here" id="password">
                         </div>
                     </div>
                     <div class="submit">
                         <button class="btn ui-secondary"> Submit</button>
                     </div>
                 </div>
-                <div class="register">
-                    <label>Not registered yet?</label>
-                    <NuxtLink to="/registerPage" class="btn secondary">
-                        Register
-                    </NuxtLink>
-                </div>
+            </div>
+            <div class="register">
+                <label>Not registered yet?</label>
+                <NuxtLink to="/registerPage" class="btn secondary">
+                    Register
+                </NuxtLink>
             </div>
         </div>
+    </div>
 </template>
 
 <script setup>
@@ -40,7 +41,7 @@ definePageMeta({
     background-image: linear-gradient(to bottom right, var(--clr-tertiary), var(--clr-ui-secondary));
 }
 
-.arrow {
+#goBack {
     position: absolute;
 }
 
@@ -81,7 +82,7 @@ h1 {
 .input {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
 }
 
 
