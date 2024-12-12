@@ -11,14 +11,15 @@
                         <label>Email</label>
                         <input type="text" placeholder="Type here" id="email">
                         <div class="input">
-                            <label>Password</label>
-                            <input type="password" placeholder="Type here" id="password">
                         </div>
-                    </div>
-                    <div class="submit">
-                        <button class="btn ui-secondary"> Submit</button>
+                        <label>Password</label>
+                        <input type="password" placeholder="Type here" id="password">
                     </div>
                 </div>
+                <div class="submit">
+                    <button class="btn ui-secondary"> Submit</button>
+                </div>
+
             </div>
             <div class="register">
                 <label>Not registered yet?</label>
@@ -68,6 +69,7 @@ h1 {
     width: 40%;
     border-radius: var(--border-rounded);
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
+    padding-inline: 2rem;
 
 }
 
@@ -77,12 +79,13 @@ h1 {
     align-items: center;
     gap: 2rem;
 
+
 }
 
 .input {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
 }
 
 
