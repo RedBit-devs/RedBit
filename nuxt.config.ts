@@ -8,9 +8,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@prisma/nuxt", '@nuxt/icon'],
   prisma: {
-    runMigration: false,
     installStudio: false,
-    generateClient: true,
+    autoSetupPrisma: true
   },
   typescript:{
     typeCheck: true,
