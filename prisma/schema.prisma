@@ -11,12 +11,171 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model user {
-  id String @id @default(cuid())
+enum Visibility {
+  public
+  private
+}
+
+enum Chat_Room_Type {
+  text
+  voice
+}
+
+enum Message_Type {
+  text
+  file
+  image
+  video
+}
+
+model User {
+  id              String   @id @default(cuid())
+  username        String
+  email           String
+  phone_number    String?
+  profile_picture String?
+  birthdate       DateTime
+  first_name      String
+  last_name       String
+  description     String?
+  created_at      DateTime @default(now())
+
+  servers_joined Server_User_Connect[]
+  servers_owned  Server[]
+  friend_of      Friend_Connect[]      @relation("friend_of")
+  friended_by    Friend_Connect[]      @relation("friended_by")
+  messages       Message[]
+  bans           Ban[]
+  roles          User_Role_Connect[]
+}
+
+model Friend_Connect {
+  befriended_at DateTime?
+  created_at    DateTime  @default(now())
+
+  user_id   String
+  friend_id String
+
+  User   User? @relation("friend_of", fields: [user_id], references: [id])
+  Friend User? @relation("friended_by", fields: [friend_id], references: [id])
+
+  @@id([user_id, friend_id])
+}
+
+model Server {
+  id          String     @id @default(cuid())
+  name        String
+  picture     String
+  description String?
+  visibility  Visibility
+
+  servers     Server_User_Connect[]
+  bans        Ban[]
+  invites     Invite[]
+  chat_groups Chat_Group[]
+  roles       Role[]
+
+  owner_id String
+
+  Owner User @relation(fields: [owner_id], references: [id])
+}
+
+model Invite {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  lifetime   Int
+
+  server_id String
+
+  Server Server @relation(fields: [server_id], references: [id])
+}
+
+model Server_User_Connect {
+  created_at DateTime @default(now())
+
+  server_id String
+  user_id   String
+
+  Sser   User?   @relation(fields: [user_id], references: [id])
+  Server Server? @relation(fields: [server_id], references: [id])
+
+  @@id([server_id, user_id])
+}
+
+model Chat_Group {
+  id   String @id @default(cuid())
   name String
-  password String
-  email String @unique
-  profile_picture_url String?
+  //rules Int @default(0) ezzz így nem lesz jó, hacsak nem egyetlen álltalános rangot akarunk csatornánként
+
+  chat_rooms Chat_Room[]
+
+  server_id String
+
+  Server Server @relation(fields: [server_id], references: [id])
+}
+
+model Chat_Room {
+  id          String         @id @default(cuid())
+  name        String
+  type        Chat_Room_Type
+  description String?
+  archived    Boolean        @default(false)
+  //rules Int szintén
+
+  messages Message[]
+
+  chat_Group_id String
+
+  Chat_Group Chat_Group @relation(fields: [chat_Group_id], references: [id])
+}
+
+model Message {
+  id           String       @id @default(cuid())
+  text         String
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @default(now()) @updatedAt
+  type         Message_Type
+  user_id      String
+  chat_Room_id String
+
+  User      User      @relation(fields: [user_id], references: [id])
+  Chat_Room Chat_Room @relation(fields: [chat_Room_id], references: [id])
+}
+
+model Ban {
+  created_at DateTime @default(now())
+  reason     String
+
+  user_id   String
+  server_id String
+
+  Server Server @relation(fields: [server_id], references: [id])
+  User   User   @relation(fields: [user_id], references: [id])
+
+  @@id([server_id, user_id])
+}
+
+model Role {
+  id          String @id @default(cuid())
+  name        String
+  permissions Int    @default(0)
+
+  users User_Role_Connect[]
+
+  server_id String
+
+  Server Server @relation(fields: [server_id], references: [id])
+}
+
+model User_Role_Connect {
+  role_id String
+  user_id String
+
+  Role Role @relation(fields: [role_id], references: [id])
+  User User @relation(fields: [user_id], references: [id])
+
+  @@id([role_id, user_id])
 }
