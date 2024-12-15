@@ -64,6 +64,10 @@ menu{
     input:checked ~ menu, menu:focus-within{
         transform: scaleY(1);
     }
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
     
 }
 </style>
