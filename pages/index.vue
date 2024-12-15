@@ -145,7 +145,7 @@ footer>div {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0rem 4rem;
+  gap: 2rem 4rem;
 
 }
 
