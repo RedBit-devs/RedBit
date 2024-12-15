@@ -72,9 +72,9 @@ const developercard1: CardData = {
   headerText: "Lajos",
   bubbles: [
     {
-      name: "picssum",
-      imageUrl: "https://picsum.photos/100",
-      url: "https://picsum.photos/"
+      name: "account-multiple",
+      imageUrl: "icon:mdi:account-multiple",
+      url: "https://icones.js.org/collection/mdi?icon=mdi:account-multiple"
     },
     {
       name: "picssum",
