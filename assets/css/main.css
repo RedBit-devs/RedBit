@@ -56,7 +56,7 @@ a:not(.btn):active {
     color: hsl(from var(--clr-text-link) calc(h + 20) s calc(l*1.1));
 }
 
-a:not(.btn, :has(span.iconify:only-child))::after {
+a:not(.btn, :has(span.iconify:only-child), :has(img:only-child))::after {
     content: "";
     height: 0.15em;
     width: 100%;
@@ -73,7 +73,7 @@ a:not(.btn, :has(span.iconify:only-child))::after {
     transition: transform .3s;
 }
 
-a:not(.btn, :has(span.iconify:only-child)):hover::after {
+a:not(.btn, :has(span.iconify:only-child), :has(img:only-child)):hover::after {
     transform: scaleX(1);
     transform-origin: left;
 }

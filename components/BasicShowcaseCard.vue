@@ -9,7 +9,9 @@
         <h1 class="text text-medium" v-if="cardData.headerText">{{ cardData.headerText }}</h1>
         <div id="bubbles" v-if="cardData.bubbles">
             <a v-for="(bubble, i) in cardData.bubbles" :key="i" :href="bubble.url" target="_blank">
-                <img :src="bubble.imageUrl" :alt="bubble.name">
+                <Icon v-if="bubble.imageUrl.startsWith('icon:')" size="1.5rem"
+                    :name="bubble.imageUrl.replace('icon:', '')" style="color: var(--clr-text-primary)" />
+                <img v-else id="headerImage" :src="bubble.imageUrl" :alt="bubble.name" v-if="bubble.imageUrl">
             </a>
         </div>
         <span id="description" class="text" v-if="cardData.description">
