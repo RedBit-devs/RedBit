@@ -9,4 +9,5 @@ type User = {
   last_name: String;
   description: String;
   created_at: DateTime;
+  password: String;
 };
