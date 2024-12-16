@@ -42,6 +42,7 @@ model User {
   last_name       String
   description     String?
   created_at      DateTime @default(now())
+  password String
 
   servers_joined Server_User_Connect[]
   servers_owned  Server[]
