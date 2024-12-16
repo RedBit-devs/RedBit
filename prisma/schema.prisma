@@ -34,7 +34,7 @@ enum Message_Type {
 model User {
   id              String   @id @default(cuid())
   username        String
-  email           String
+  email           String   @unique
   phone_number    String?
   profile_picture String?
   birthdate       DateTime
@@ -56,13 +56,13 @@ model Friend_Connect {
   befriended_at DateTime?
   created_at    DateTime  @default(now())
 
-  user_id   String
-  friend_id String
+  user1_id   String
+  user2_id String
 
-  User   User? @relation("friend_of", fields: [user_id], references: [id])
-  Friend User? @relation("friended_by", fields: [friend_id], references: [id])
+  User1   User? @relation("friend_of", fields: [user1_id], references: [id])
+  User2 User? @relation("friended_by", fields: [user2_id], references: [id])
 
-  @@id([user_id, friend_id])
+  @@id([user1_id, user2_id])
 }
 
 model Server {
