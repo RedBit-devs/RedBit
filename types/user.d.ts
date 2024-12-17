@@ -1,5 +1,4 @@
-type User = {
-  id: int;
+type NewUser = {
   username: string;
   email: string;
   phone_number: int;
@@ -8,6 +7,5 @@ type User = {
   first_name: string;
   last_name: string;
   description: string;
-  created_at: Date;
   password: string;
 };
