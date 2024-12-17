@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const newUserData: NewUser = {
     username: "johnDoe123",
     email: "johndoe@example.com",
-    phone_number: 1234567890,
+    phone_number: "1234567890",
     profile_picture: "https://picsum.photos/200/300",
     birthdate: new Date("1990-02-12"),
     first_name: "John",
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   };
 
   try {
-    await prisma.user.create({ data: newUser })
+    await prisma.user.create({ data: newUserData })
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {

@@ -1,7 +1,7 @@
 type NewUser = {
   username: string;
   email: string;
-  phone_number: int;
+  phone_number: string;
   profile_picture: string;
   birthdate: Date;
   first_name: string;
