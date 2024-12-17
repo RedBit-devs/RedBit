@@ -1,13 +1,13 @@
 import prisma from "~/lib/prisma";
 import { Prisma } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 export default defineEventHandler(async (event) => {
-  const newUser: NewUser = await readBody(event);
+  const newUser: User = await readBody(event);
 
-  if (!IsPasswordValid(newUser.password)) {
+  if (!isPasswordValid(newUser.password)) {
     return {
-      message: "Password is not valid",
+      message: "Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
   };}
 
   try {
@@ -35,7 +35,6 @@ export default defineEventHandler(async (event) => {
     throw e
   }
 
-
   return {
     message: "User created",
   };
@@ -55,10 +54,9 @@ async function hashPassword(password: string): Promise<string> {
   }
   return "";
 }
-async function IsPasswordValid(password: string): Promise<boolean> {
+
+async function isPasswordValid(password: string): Promise<boolean> {
   const validpasswordpattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-  if (!validpasswordpattern.test(password)) {
-    return false;
-  }
-  return true;
+  const validpassword = validpasswordpattern.test(password)
+  return validpassword
 }
