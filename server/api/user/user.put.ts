@@ -5,6 +5,11 @@ import bcrypt from 'bcryptjs';
 export default defineEventHandler(async (event) => {
   const newUser: NewUser = await readBody(event);
 
+  if (!IsPasswordValid(newUser.password)) {
+    return {
+      message: "Password is not valid",
+  };}
+
   try {
     await prisma.user.create({ data: {
       username: newUser.username, 
@@ -49,4 +54,11 @@ async function hashPassword(password: string): Promise<string> {
     console.log(e);
   }
   return "";
+}
+async function IsPasswordValid(password: string): Promise<boolean> {
+  const validpasswordpattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  if (!validpasswordpattern.test(password)) {
+    return false;
+  }
+  return true;
 }
