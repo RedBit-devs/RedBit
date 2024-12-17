@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/icon": "^1.9.1",
     "@prisma/nuxt": "^0.0.35",
+    "bcrypt": "^5.1.1",
     "nuxt": "^3.14.0",
     "vue": "latest",
     "vue-router": "latest"
