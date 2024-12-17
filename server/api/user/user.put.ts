@@ -1,23 +1,27 @@
-import { usePrismaClient } from '@prisma/nuxt';
+import prisma from "~/lib/prisma"
+
 export default defineEventHandler(async (event) => {
-    const { $prisma } = usePrismaClient();
-    const prisma = $prisma;
-    const newUser : User = await readBody(event)
+    const newUser : User = await readBody(event) as User
 
-     async function  IsUserExist(email  : string): Promise<boolean> {
-        const user = await prisma.user.findFirst({  
-            where: {
-                email: email
-            }
-        })
-
-        if (!user) {
-            return false
-        }
-
-        return true
-      }
+    if (await IsUserExist(newUser.email)) {
+        return {
+            "message": "User already exist"
+        }}
     return {
         message: "User created"
      }
   })
+
+  async function  IsUserExist(email  : string): Promise<boolean> {
+    const user = await prisma.user.findFirst({  
+        where: {
+            email: email
+        }
+    })
+
+    if (!user) {
+        return false
+    }
+
+    return true
+  }
