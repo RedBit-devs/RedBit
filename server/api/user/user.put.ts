@@ -1,28 +1,25 @@
 import prisma from "~/lib/prisma";
+import { Prisma } from '@prisma/client'
 
 export default defineEventHandler(async (event) => {
-  const newUser: User = (await readBody(event)) as User;
+  const newUser: NewUser = await readBody(event);
 
-  if (await IsUserExist(newUser.email)) {
-    return {
-      message: "User already exist",
-    };
+  try {
+    await prisma.user.create({ data: newUser })
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === 'P2002') {
+        console.log(
+          'There is a unique constraint violation, a new user cannot be created with this email because it already exists'
+        )
+      }
+    }
+    throw e
   }
+
+
+
   return {
     message: "User created",
   };
 });
-
-async function IsUserExist(email: string): Promise<boolean> {
-  const user = await prisma.user.findFirst({
-    where: {
-      email: email,
-    },
-  });
-
-  if (!user) {
-    return false;
-  }
-
-  return true;
-}
