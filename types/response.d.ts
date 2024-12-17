@@ -5,9 +5,9 @@ type Error = {
 }
 
 type ApiResponse = {
-    context: string?;
-    method: string;
-    params: Object?;
+    context?: string;
+    method?: string;
+    params?: Object;
     data: {
         fields?: Object;            // like primsma.[table].fields
         deleted?: boolean;
