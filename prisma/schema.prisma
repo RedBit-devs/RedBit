@@ -9,8 +9,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -57,10 +57,10 @@ model Friend_Connect {
   befriended_at DateTime?
   created_at    DateTime  @default(now())
 
-  user1_id   String
+  user1_id String
   user2_id String
 
-  User1   User? @relation("friend_of", fields: [user1_id], references: [id])
+  User1 User? @relation("friend_of", fields: [user1_id], references: [id])
   User2 User? @relation("friended_by", fields: [user2_id], references: [id])
 
   @@id([user1_id, user2_id])
@@ -100,8 +100,8 @@ model Server_User_Connect {
   server_id String
   user_id   String
 
-  Sser   User?   @relation(fields: [user_id], references: [id])
-  Server Server? @relation(fields: [server_id], references: [id])
+  User   User   @relation(fields: [user_id], references: [id])
+  Server Server @relation(fields: [server_id], references: [id])
 
   @@id([server_id, user_id])
 }
@@ -144,6 +144,18 @@ model Message {
 
   User      User      @relation(fields: [user_id], references: [id])
   Chat_Room Chat_Room @relation(fields: [chat_Room_id], references: [id])
+  Message   Reply[]   @relation("message")
+  Reply     Reply[]   @relation("reply")
+}
+
+model Reply {
+  repply_id  String
+  message_id String
+
+  Reply   Message @relation("reply", fields: [repply_id], references: [id])
+  Message Message @relation("message", fields: [message_id], references: [id])
+
+  @@id([repply_id, message_id])
 }
 
 model Ban {
