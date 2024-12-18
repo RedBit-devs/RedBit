@@ -6,8 +6,8 @@ export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
   const passwordValaidation: boolean = await isPasswordValid(newUser.password);
   const emailValaidation: boolean = await isEmailValid(newUser.email);
+  const usernameValaidation: boolean = await isUsernameValid(newUser.username);
   if (!passwordValaidation) {
-    console.log("here");
     return {
       message:
         "Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
@@ -16,7 +16,13 @@ export default defineEventHandler(async (event) => {
   if  (!emailValaidation) {
     return {
       message:
-        "Email is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
+        "Email is not in the correct format",
+    };
+  }
+  if  (!usernameValaidation) {
+    return {
+      message:
+        "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
     };
   }
 
@@ -25,12 +31,9 @@ export default defineEventHandler(async (event) => {
       data: {
         username: newUser.username,
         email: newUser.email,
-        phone_number: newUser.phone_number,
-        profile_picture: newUser.profile_picture,
         birthdate: new Date(newUser.birthdate),
         first_name: newUser.first_name,
         last_name: newUser.last_name,
-        description: newUser.description,
         password: (await hashPassword(newUser.password)).toString(),
       },
     });
@@ -75,4 +78,11 @@ async function isEmailValid(email: string): Promise<boolean> {
   /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validEmailCheck = validEmailPattern.test(email);
   return validEmailCheck;
+}
+
+async function isUsernameValid(username: string): Promise<boolean> {
+  const validUsernamePattern : RegExp =
+  /^[a-zA-Z0-9_]{3,32}/;
+  const validUsernameCheck = validUsernamePattern.test(username);
+  return validUsernameCheck;
 }
