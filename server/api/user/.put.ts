@@ -21,6 +21,18 @@ export default defineEventHandler(async (event) => {
         "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
     };
   }
+  if (!(await isNameValid(newUser.first_name))) {
+    return {
+      message:
+        "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+    };
+  }
+  if (!(await isNameValid(newUser.last_name))) {
+    return {
+      message:
+        "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+    };
+  }
 
   try {
     await prisma.user.create({
@@ -124,4 +136,9 @@ const isUsernameValid = async (username: string): Promise<boolean> => {
   const validUsernamePattern: RegExp = /^[a-zA-Z0-9_]{3,32}/;
   const validUsernameCheck = validUsernamePattern.test(username);
   return validUsernameCheck;
+};
+const isNameValid = async (name: string): Promise<boolean> => {
+  const validNamePattern: RegExp = /^[a-zA-Z]{3,35}/;
+  const validNameCheck = validNamePattern.test(name);
+  return validNameCheck;
 };
