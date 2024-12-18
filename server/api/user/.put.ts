@@ -137,6 +137,17 @@ const isUsernameValid = async (username: string): Promise<boolean> => {
   const validUsernameCheck = validUsernamePattern.test(username);
   return validUsernameCheck;
 };
+/**
+ * Validates the given name.
+ *
+ * The name must match the following requirements:
+ * - At least 3 characters long
+ * - At most 35 characters long
+ * - Contains only letters (both uppercase and lowercase)
+ *
+ * @param {string} name - The name to be validated.
+ * @returns {Promise<boolean>} - A promise resolving to a boolean indicating if the name is valid.
+ */
 const isNameValid = async (name: string): Promise<boolean> => {
   const validNamePattern: RegExp = /^[a-zA-Z]{3,35}/;
   const validNameCheck = validNamePattern.test(name);
