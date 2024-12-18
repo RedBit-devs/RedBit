@@ -5,29 +5,34 @@ import bcrypt from "bcrypt";
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
   if (!(await isPasswordValid(newUser.password))) {
+    setResponseStatus(event, 400);
     return {
       message:
         "Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
     };
   }
   if (!(await isEmailValid(newUser.email))) {
+    setResponseStatus(event, 400);
     return {
       message: "Email is not in the correct format",
     };
   }
   if (!(await isUsernameValid(newUser.username))) {
+    setResponseStatus(event, 400);
     return {
       message:
         "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
     };
   }
   if (!(await isNameValid(newUser.first_name))) {
+    setResponseStatus(event, 400);
     return {
       message:
         "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
     };
   }
   if (!(await isNameValid(newUser.last_name))) {
+    setResponseStatus(event, 400);
     return {
       message:
         "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
