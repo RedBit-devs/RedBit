@@ -27,7 +27,7 @@ type ApiResponse = {
     method?: string;
     params?: Object;
     error: {
-        code: Number;
+        code: String;
         message: String; //A human readable message providing more details about the error. If there are multiple errors, message will be the message for the first error.
         errors?: Error[]
     };

@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
-  
+
   if(!(await isPasswordValid(newUser.password))) {
     return {
       message:
@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
   };
 });
 
-async function hashPassword(password: string): Promise<string> {
+async function hashPassword (password: string): Promise<string> {
   const saltRounds = 12;
   const salt = await bcrypt.genSalt(saltRounds);
   try {
