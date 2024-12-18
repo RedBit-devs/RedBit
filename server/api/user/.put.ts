@@ -4,22 +4,20 @@ import bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
-  const passwordValaidation: boolean = await isPasswordValid(newUser.password);
-  const emailValaidation: boolean = await isEmailValid(newUser.email);
-  const usernameValaidation: boolean = await isUsernameValid(newUser.username);
-  if (!passwordValaidation) {
+  
+  if(!(await isPasswordValid(newUser.password))) {
     return {
       message:
         "Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
     };
   }
-  if  (!emailValaidation) {
+  if(!(await isEmailValid(newUser.email))) {
     return {
       message:
         "Email is not in the correct format",
     };
   }
-  if  (!usernameValaidation) {
+  if(!(await isUsernameValid(newUser.username))) {
     return {
       message:
         "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
