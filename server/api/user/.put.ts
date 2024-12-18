@@ -4,13 +4,16 @@ import bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
-  if (!isPasswordValid(newUser.password)) {
+  const passwordValaidation: boolean = await isPasswordValid(newUser.password);
+  const emailValaidation: boolean = await isEmailValid(newUser.email);
+  if (!passwordValaidation) {
+    console.log("here");
     return {
       message:
         "Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
     };
   }
-  if  (!isEmailValid(newUser.email)) {
+  if  (!emailValaidation) {
     return {
       message:
         "Email is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
