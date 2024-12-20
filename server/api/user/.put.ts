@@ -138,17 +138,37 @@ export default defineEventHandler(async (event) => {
             error: {
               code: "400",
               message: 'The email is already in use',
+              errors: [
+                {
+                  domain: "Prisma",
+                  reason: "UniqueConstraintFailed",
+                  message: "The unique constraint on field 'email' failed"
+                }
+              ]
           }
         }
       } else {
         console.log(e.message);
       }
     }
-    throw e;
   }
 
   return {
-
+    context: 'CreateUser',
+    method: 'PUT',
+    params: {
+      username: newUser.username,
+      email: newUser.email,
+      birthdate: newUser.birthdate,
+      first_name: newUser.first_name,
+      last_name: newUser.last_name,
+      password: newUser.password
+     },
+    data: {
+      fields: {
+      },
+      totalitems: 1
+    }
   };
 });
 
