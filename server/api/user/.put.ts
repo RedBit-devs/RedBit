@@ -7,35 +7,96 @@ export default defineEventHandler(async (event) => {
   if (!(await isPasswordValid(newUser.password))) {
     setResponseStatus(event, 400);
     return {
-      message:
-        "Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
+      context: 'CreateUser',
+      method: 'POST',
+      params: {
+        username: { type: 'string' },
+        email: { type: 'string',  },
+        birthdate: { type: 'string', },
+        first_name: { type: 'string' },
+        last_name: { type: 'string' },
+        password: { type: 'string' }
+       },
+        error: {
+          code: "400",
+          message: 'Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character',
+      }
     };
   }
   if (!(await isEmailValid(newUser.email))) {
     setResponseStatus(event, 400);
     return {
-      message: "Email is not in the correct format",
+      context: 'CreateUser',
+      method: 'POST',
+      params: {
+        username: { type: 'string' },
+        email: { type: 'string',  },
+        birthdate: { type: 'string', },
+        first_name: { type: 'string' },
+        last_name: { type: 'string' },
+        password: { type: 'string' }
+       },
+        error: {
+          code: "400",
+          message: 'Email is not in the correct format',
+      }
     };
   }
   if (!(await isUsernameValid(newUser.username))) {
     setResponseStatus(event, 400);
     return {
-      message:
-        "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
+      context: 'CreateUser',
+      method: 'POST',
+      params: {
+        username: { type: 'string' },
+        email: { type: 'string',  },
+        birthdate: { type: 'string', },
+        first_name: { type: 'string' },
+        last_name: { type: 'string' },
+        password: { type: 'string' }
+       },
+        error: {
+          code: "400",
+          message: 'Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores',
+      }
     };
   }
   if (!(await isNameValid(newUser.first_name))) {
     setResponseStatus(event, 400);
     return {
-      message:
-        "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+      context: 'CreateUser',
+      method: 'POST',
+      params: {
+        username: { type: 'string' },
+        email: { type: 'string',  },
+        birthdate: { type: 'string', },
+        first_name: { type: 'string' },
+        last_name: { type: 'string' },
+        password: { type: 'string' }
+       },
+        error: {
+          code: "400",
+          message: 'First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters',
+      }
     };
   }
   if (!(await isNameValid(newUser.last_name))) {
     setResponseStatus(event, 400);
     return {
-      message:
-        "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+      context: 'CreateUser',
+      method: 'POST',
+      params: {
+        username: { type: 'string' },
+        email: { type: 'string',  },
+        birthdate: { type: 'string', },
+        first_name: { type: 'string' },
+        last_name: { type: 'string' },
+        password: { type: 'string' }
+       },
+        error: {
+          code: "400",
+          message: 'Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters',
+      }
     };
   }
 
@@ -57,7 +118,7 @@ export default defineEventHandler(async (event) => {
           "There is a unique constraint violation, a new user cannot be created with this email because it already exists"
         );
       } else {
-        `${e.message}`;
+        console.log(e.message);
       }
     }
     throw e;
