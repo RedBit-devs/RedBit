@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
           errors: [
             {
               domain: "users",
-              reason: "InvalidEmail",
+              reason: "EmailValidationFailed",
               message: "The provided email address is not valid"
             }
           ]
@@ -137,18 +137,42 @@ export default defineEventHandler(async (event) => {
            },
             error: {
               code: "400",
-              message: 'The email is already in use',
+              message: `The ${e.meta?.target} is already in use`,
               errors: [
                 {
                   domain: "Prisma",
-                  reason: "UniqueConstraintFailed",
-                  message: "The unique constraint on field 'email' failed"
+                  reason: e.name,
+                  message: `The unique constraint on field ${e.meta?.target} failed`
                 }
               ]
           }
         }
-      } else {
+      }else {
         console.log(e.message);
+      }
+    }else if(e instanceof Prisma.PrismaClientValidationError){
+      return {
+        context: 'CreateUser',
+        method: 'PUT',
+        params: {
+          username: newUser.username,
+          email: newUser.email,
+          birthdate: newUser.birthdate,
+          first_name: newUser.first_name,
+          last_name: newUser.last_name,
+          password: newUser.password
+         },
+          error: {
+            code: "400",
+            message: `Something was not in the correct format`,
+            errors: [
+              {
+                domain: "Prisma",
+                reason: "Prisma.PrismaClientValidationError",
+                message: `Something was not in the correct format`
+              }
+            ]
+        }
       }
     }
   }
