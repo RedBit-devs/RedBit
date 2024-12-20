@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 400);
     return {
       context: 'CreateUser',
-      method: 'POST',
+      method: 'PUT',
       params: {
         username: { type: 'string' },
         email: { type: 'string',  },
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
        },
         error: {
           code: "400",
-          message: 'Password is not valid - it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character',
+          message: 'Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character',
       }
     };
   }
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 400);
     return {
       context: 'CreateUser',
-      method: 'POST',
+      method: 'PUT',
       params: {
         username: { type: 'string' },
         email: { type: 'string',  },
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 400);
     return {
       context: 'CreateUser',
-      method: 'POST',
+      method: 'PUT',
       params: {
         username: { type: 'string' },
         email: { type: 'string',  },
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 400);
     return {
       context: 'CreateUser',
-      method: 'POST',
+      method: 'PUT',
       params: {
         username: { type: 'string' },
         email: { type: 'string',  },
@@ -84,7 +84,7 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 400);
     return {
       context: 'CreateUser',
-      method: 'POST',
+      method: 'PUT',
       params: {
         username: { type: 'string' },
         email: { type: 'string',  },
@@ -125,7 +125,7 @@ export default defineEventHandler(async (event) => {
   }
 
   return {
-    message: "User created",
+    
   };
 });
 
