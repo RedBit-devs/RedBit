@@ -123,9 +123,23 @@ export default defineEventHandler(async (event) => {
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        console.log(
-          "There is a unique constraint violation, a new user cannot be created with this email because it already exists"
-        );
+        setResponseStatus(event, 400);
+        return {
+          context: 'CreateUser',
+          method: 'PUT',
+          params: {
+            username: newUser.username,
+            email: newUser.email,
+            birthdate: newUser.birthdate,
+            first_name: newUser.first_name,
+            last_name: newUser.last_name,
+            password: newUser.password
+           },
+            error: {
+              code: "400",
+              message: 'The email is already in use',
+          }
+        }
       } else {
         console.log(e.message);
       }
