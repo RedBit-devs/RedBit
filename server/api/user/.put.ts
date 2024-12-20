@@ -10,16 +10,25 @@ export default defineEventHandler(async (event) => {
       context: 'CreateUser',
       method: 'PUT',
       params: {
-        username: { type: 'string' },
-        email: { type: 'string',  },
-        birthdate: { type: 'string', },
-        first_name: { type: 'string' },
-        last_name: { type: 'string' },
-        password: { type: 'string' }
+        username: newUser.username,
+        email: newUser.email,
+        birthdate: newUser.birthdate,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        password: newUser.password
        },
         error: {
           code: "400",
           message: 'Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character',
+          /*
+          errors: [
+            {
+              domain: "users",
+              reason: "InvalidEmail",
+              message: "The provided email address is not valid"
+            }
+          ]
+          */
       }
     };
   }
@@ -29,12 +38,12 @@ export default defineEventHandler(async (event) => {
       context: 'CreateUser',
       method: 'PUT',
       params: {
-        username: { type: 'string' },
-        email: { type: 'string',  },
-        birthdate: { type: 'string', },
-        first_name: { type: 'string' },
-        last_name: { type: 'string' },
-        password: { type: 'string' }
+        username: newUser.username,
+        email: newUser.email,
+        birthdate: newUser.birthdate,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        password: newUser.password
        },
         error: {
           code: "400",
@@ -48,12 +57,12 @@ export default defineEventHandler(async (event) => {
       context: 'CreateUser',
       method: 'PUT',
       params: {
-        username: { type: 'string' },
-        email: { type: 'string',  },
-        birthdate: { type: 'string', },
-        first_name: { type: 'string' },
-        last_name: { type: 'string' },
-        password: { type: 'string' }
+        username: newUser.username,
+        email: newUser.email,
+        birthdate: newUser.birthdate,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        password: newUser.password
        },
         error: {
           code: "400",
@@ -67,12 +76,12 @@ export default defineEventHandler(async (event) => {
       context: 'CreateUser',
       method: 'PUT',
       params: {
-        username: { type: 'string' },
-        email: { type: 'string',  },
-        birthdate: { type: 'string', },
-        first_name: { type: 'string' },
-        last_name: { type: 'string' },
-        password: { type: 'string' }
+        username: newUser.username,
+        email: newUser.email,
+        birthdate: newUser.birthdate,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        password: newUser.password
        },
         error: {
           code: "400",
@@ -86,12 +95,12 @@ export default defineEventHandler(async (event) => {
       context: 'CreateUser',
       method: 'PUT',
       params: {
-        username: { type: 'string' },
-        email: { type: 'string',  },
-        birthdate: { type: 'string', },
-        first_name: { type: 'string' },
-        last_name: { type: 'string' },
-        password: { type: 'string' }
+        username: newUser.username,
+        email: newUser.email,
+        birthdate: newUser.birthdate,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        password: newUser.password
        },
         error: {
           code: "400",
@@ -125,7 +134,7 @@ export default defineEventHandler(async (event) => {
   }
 
   return {
-    
+
   };
 });
 
