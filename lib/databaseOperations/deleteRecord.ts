@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
+import checkTable from "../utils/databaseTableValidation";
 
 /**
  * Deletes a single record in the given table with the given id.
@@ -15,20 +16,8 @@ const deleteRecord = async <T>(
   id: String,
   apiResponse: ApiResponse
 ): Promise<ApiResponse> => {
-  if (!prisma[table]) {
-    apiResponse.error = {
-      code: "400",
-      message: `Can't read from the ${table} table because it doesn't exist`,
-      errors: [
-        {
-          domain: "Prisma",
-          reason: "TableNotFound",
-          message: `Can't read from the ${table} table because it doesn't exist`,
-        },
-      ],
-    };
-    return apiResponse;
-  }
+  checkTable(prisma, table, apiResponse);
+  if (apiResponse.error) return apiResponse;
   try {
     await prisma[table].delete({
       where: {
