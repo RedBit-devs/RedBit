@@ -1,13 +1,13 @@
 type User = {
-  id: string;
+  id?: string;
   username: string;
   email: string;
-  phone_number: string;
-  profile_picture: string;
+  phone_number?: string;
+  profile_picture?: string;
   birthdate: Date;
-  created_at: Date;
+  created_at?: Date;
   first_name: string;
   last_name: string;
-  description: string;
+  description?: string;
   password: string;
 };
