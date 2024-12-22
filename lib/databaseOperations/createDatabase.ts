@@ -64,16 +64,3 @@ const createRecord = async <T>(
 };
 
 export default createRecord;
-
-/*
-          apiResponse.error =  {
-              code: "400",
-              message: `Something was not in the correct format`,
-              errors: [
-                {
-                  domain: "Prisma",
-                  reason: "Prisma.PrismaClientValidationError",
-                  message: `Something was not in the correct format`
-                }
-              ]
-*/
