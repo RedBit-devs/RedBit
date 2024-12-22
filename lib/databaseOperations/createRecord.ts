@@ -34,32 +34,30 @@ const createRecord = async <T>(
           ],
         };
       }
-    }
-    else if (error instanceof Prisma.PrismaClientValidationError) {
-        apiResponse.error =  {
-            code: "400",
-            message: `Something was not in the correct format`,
-            errors: [
-              {
-                domain: "Prisma",
-                reason: "ValidationError",
-                message: `Something was not in the correct format ${error.cause}`
-              }
-            ]
-        }
-    }
-    else {
-        apiResponse.error = {
-            code: "500",
-            message: `An unknown error occurred: ${error.message}`,
-            errors: [
-              {
-                domain: "Prisma",
-                reason: "UnknownError",
-                message: "An unexpected error occurred on the server.",
-              },
-            ],
-          };
+    } else if (error instanceof Prisma.PrismaClientValidationError) {
+      apiResponse.error = {
+        code: "400",
+        message: `Something was not in the correct format`,
+        errors: [
+          {
+            domain: "Prisma",
+            reason: "ValidationError",
+            message: `Something was not in the correct format ${error.cause}`,
+          },
+        ],
+      };
+    } else {
+      apiResponse.error = {
+        code: "500",
+        message: `An unknown error occurred: ${error.message}`,
+        errors: [
+          {
+            domain: "Prisma",
+            reason: "UnknownError",
+            message: "An unexpected error occurred on the server.",
+          },
+        ],
+      };
     }
     return apiResponse;
   }
