@@ -4,7 +4,6 @@ import checkTable from "../utils/databaseTableValidation";
 
 /**
  * Creates a record in the given table with the given data.
- * @param {PrismaClient} prisma The Prisma client
  * @param {string} table The name of the table to create the record in
  * @param {T} data The data to create the record with
  * @param {ApiResponse} apiResponse  The ApiResponse to populate with error or data information.

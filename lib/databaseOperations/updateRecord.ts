@@ -4,7 +4,6 @@ import checkTable from "../utils/databaseTableValidation";
 
 /**
  * Updates a single record in the given table with the given data.
- * @param prisma The instance of the Prisma Client.
  * @param table The name of the table to update.
  * @param data The data to be used for the update.
  * @param id The id of the record to be updated.
