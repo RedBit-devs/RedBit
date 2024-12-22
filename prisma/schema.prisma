@@ -42,6 +42,7 @@ model User {
   last_name       String
   description     String?
   created_at      DateTime @default(now())
+  password        String
 
   servers_joined Server_User_Connect[]
   servers_owned  Server[]
@@ -54,13 +55,13 @@ model User {
 
 model Friend_Connect {
   befriended_at DateTime?
-  created_at    DateTime  @default(now())
+  created_at   DateTime  @default(now())
 
   user1_id String
   user2_id String
 
-  User1 User? @relation("friend_of", fields: [user1_id], references: [id])
-  User2 User? @relation("friended_by", fields: [user2_id], references: [id])
+  User1 User @relation("friend_of", fields: [user1_id], references: [id])
+  User2 User @relation("friended_by", fields: [user2_id], references: [id])
 
   @@id([user1_id, user2_id])
 }
