@@ -16,8 +16,9 @@ const createRecord = async <T>(
 ): Promise<ApiResponse> => {
   checkTable(table, apiResponse);
   if (apiResponse.error) return apiResponse;
+  let dbResponse;
   try {
-    await prisma[table].create({
+    dbResponse = await prisma[table].create({
       data: data,
     });
   } catch (error) {
@@ -65,7 +66,7 @@ const createRecord = async <T>(
   apiResponse.data = {
     fields: prisma[table].fields,
     totalItems: 1,
-    items: [data],
+    items: [dbResponse],
   };
   return apiResponse;
 };

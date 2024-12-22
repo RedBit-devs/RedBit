@@ -18,8 +18,9 @@ const updateRecord = async <T>(
 ): Promise<ApiResponse> => {
   checkTable(table, apiResponse);
   if (apiResponse.error) return apiResponse;
+  let dbResponse;
   try {
-    await prisma[table].update({
+    dbResponse = await prisma[table].update({
       where: {
         id: id,
       },
@@ -71,7 +72,7 @@ const updateRecord = async <T>(
   apiResponse.data = {
     fields: prisma[table].fields,
     totalItems: 1,
-    items: [data],
+    items: [dbResponse],
   };
   return apiResponse;
 };

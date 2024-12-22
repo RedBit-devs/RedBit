@@ -16,9 +16,9 @@ const readRecord = async (
 ): Promise<ApiResponse> => {
   checkTable(table, apiResponse);
   if (apiResponse.error) return apiResponse;
-  let data;
+  let dbResponse;
   try {
-    data = await prisma[table].findFirst({
+    dbResponse = await prisma[table].findFirst({
       where: {
         id: id,
       },
@@ -52,7 +52,7 @@ const readRecord = async (
     }
     return apiResponse;
   }
-  if (!data) {
+  if (!dbResponse) {
     apiResponse.error = {
       code: "400",
       message: `Can't read from ${table} table because the record with  id: ${id} doesn't exist`,
@@ -69,7 +69,7 @@ const readRecord = async (
   apiResponse.data = {
     fields: prisma[table].fields,
     totalItems: 1,
-    items: [data],
+    items: [dbResponse],
   };
   return apiResponse;
 };
