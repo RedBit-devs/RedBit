@@ -1,7 +1,7 @@
 import prisma from "~/lib/prisma";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
-import createRecord from "~/lib/databaseOperations/createDatabase";
+import createRecord from "~/lib/databaseOperations/createRecord";
 
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
