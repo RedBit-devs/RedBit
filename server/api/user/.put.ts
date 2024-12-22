@@ -101,13 +101,14 @@ export default defineEventHandler(async (event) => {
       apiResponse
     };
   }
-
+  newUser.birthdate = new Date(newUser.birthdate);
+  newUser.password = await hashPassword(newUser.password).toString()
   try {
     await prisma.user.create({
       data: {
         username: newUser.username,
         email: newUser.email,
-        birthdate: new Date(newUser.birthdate),
+        birthdate:new Date(newUser.birthdate),
         first_name: newUser.first_name,
         last_name: newUser.last_name,
         password: (await hashPassword(newUser.password)).toString(),
