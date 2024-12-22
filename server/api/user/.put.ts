@@ -1,6 +1,7 @@
 import prisma from "~/lib/prisma";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
+import createRecord from "~/lib/databaseOperations/createDatabase";
 
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
@@ -101,56 +102,10 @@ export default defineEventHandler(async (event) => {
       apiResponse
     };
   }
+  newUser.birthdate = new Date(newUser.birthdate);
+  newUser.password = await hashPassword(newUser.password).toString()
+  await createRecord(prisma, 'User', newUser);
 
-  try {
-    await prisma.user.create({
-      data: {
-        username: newUser.username,
-        email: newUser.email,
-        birthdate: new Date(newUser.birthdate),
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        password: (await hashPassword(newUser.password)).toString(),
-      },
-    });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        setResponseStatus(event, 400);
-        apiResponse.error =  {
-          code: "400",
-          message: `The ${e.meta?.target} is already in use`,
-          errors: [
-            {
-              domain: "Prisma",
-              reason: "UniqueConstraintFailed",
-              message: `The unique constraint on field ${e.meta?.target} failed`
-            }
-          ]
-        }
-        return {
-          apiResponse
-        }
-      }else {
-        console.log(e.message);
-      }
-    }else if(e instanceof Prisma.PrismaClientValidationError){
-      apiResponse.error =  {
-          code: "400",
-          message: `Something was not in the correct format`,
-          errors: [
-            {
-              domain: "Prisma",
-              reason: "Prisma.PrismaClientValidationError",
-              message: `Something was not in the correct format`
-            }
-          ]
-      }
-      return {
-        apiResponse
-      }
-    }
-  }
 
   setResponseStatus(event, 201);
   return {

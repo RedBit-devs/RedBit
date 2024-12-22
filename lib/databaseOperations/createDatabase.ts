@@ -1,18 +1,20 @@
-import prisma from "~/lib/prisma";
 import { Prisma } from "@prisma/client";
-import type { Type } from "typescript";
-const createDatabaseOperation = async (newCreate: Type): Promise<ApiResponse> =>{
-    const apiResponse = {} as ApiResponse
+import { PrismaClient } from "@prisma/client"
+
+
+const createRecord = async <T>(prisma: PrismaClient, table: string, data: T): Promise<boolean> => {
+    const response = {} as ApiResponse
     try {
-        prisma
-        
+        await prisma[table].create({
+            data: data
+        })
     } catch (error) {
-        
     }
 
-    return apiResponse;
+    return true
 }
 
+export default createRecord
 
 /*
           apiResponse.error =  {
