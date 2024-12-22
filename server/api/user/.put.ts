@@ -103,7 +103,7 @@ export default defineEventHandler(async (event) => {
     };
   }
   newUser.birthdate = new Date(newUser.birthdate);
-  newUser.password = await hashPassword(newUser.password).toString()
+  newUser.password = await hashPassword(newUser.password)
   await createRecord(prisma, "user", newUser, apiResponse);
   if (apiResponse.error) {
     setResponseStatus(event, 400);
@@ -129,6 +129,7 @@ const hashPassword = async (password: string): Promise<string> => {
   const salt = await bcrypt.genSalt(saltRounds);
   try {
     const hash = await bcrypt.hash(password, salt);
+    await hash.toString();
     return hash;
   } catch (e) {
     throw e;
