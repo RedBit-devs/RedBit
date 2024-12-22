@@ -102,12 +102,16 @@ export default defineEventHandler(async (event) => {
       apiResponse
     };
   }
+
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await hashPassword(newUser.password).toString()
-  await createRecord(prisma, 'User', newUser);
 
-
-  setResponseStatus(event, 201);
+  await createRecord(prisma, 'User', newUser, apiResponse);
+  if (apiResponse.error) {
+    setResponseStatus(event, 400);
+  }else {
+    setResponseStatus(event, 201);
+  }
   return {
     apiResponse,
   };
