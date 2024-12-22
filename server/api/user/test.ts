@@ -4,6 +4,6 @@ import readRecord from "~/lib/databaseOperations/readDatabase";
 
 export default defineEventHandler(async (event) => {
   const apiResponse = {} as ApiResponse
-  const apiResponse2 = await deleteRecord(prisma, 'User', "cm4u7nsoh0000ix93uxobvnx3", apiResponse)
+  const apiResponse2 = await readRecord(prisma, 'User', "cm4zmjxrn00011kry4251ckwy", apiResponse)
   return apiResponse2
 })

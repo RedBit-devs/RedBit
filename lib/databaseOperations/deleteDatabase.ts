@@ -14,7 +14,6 @@ const deleteRecord = async <T>(
       },
     });
   } catch (error) {
-    console.log(error.code);
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         apiResponse.error = {
