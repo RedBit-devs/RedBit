@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/lib/prisma";
 const checkTable = async (
-  prisma: PrismaClient,
   table: string,
   apiResponse: ApiResponse
 ): Promise<ApiResponse> => {

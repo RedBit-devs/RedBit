@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import prisma from "~/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 import checkTable from "../utils/databaseTableValidation";
 
@@ -18,7 +19,7 @@ const updateRecord = async <T>(
   id: string,
   apiResponse: ApiResponse
 ): Promise<ApiResponse> => {
-  checkTable(prisma, table, apiResponse);
+  checkTable(table, apiResponse);
   if (apiResponse.error) return apiResponse;
   try {
     await prisma[table].update({

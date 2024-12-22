@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/lib/prisma";
 import checkTable from "../utils/databaseTableValidation";
 
 /**
@@ -11,12 +11,11 @@ import checkTable from "../utils/databaseTableValidation";
  * @returns {Promise<ApiResponse>} A Promise that resolves with the ApiResponse that contains the error or data information
  */
 const createRecord = async <T>(
-  prisma: PrismaClient,
   table: string,
   data: T,
   apiResponse: ApiResponse
 ): Promise<ApiResponse> => {
-  checkTable(prisma, table, apiResponse);
+  checkTable(table, apiResponse);
   if (apiResponse.error) return apiResponse;
   try {
     await prisma[table].create({

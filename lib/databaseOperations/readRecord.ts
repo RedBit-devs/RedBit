@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import prisma from "~/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 import checkTable from "../utils/databaseTableValidation";
 
@@ -16,7 +17,7 @@ const readRecord = async (
   id: string,
   apiResponse: ApiResponse
 ): Promise<ApiResponse> => {
-  checkTable(prisma, table, apiResponse);
+  checkTable(table, apiResponse);
   if (apiResponse.error) return apiResponse;
   let data;
   try {
