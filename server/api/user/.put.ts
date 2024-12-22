@@ -4,108 +4,101 @@ import bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
+  const apiResponse = {} as ApiResponse;
+  apiResponse.context = 'CreateUser';
+  apiResponse.method = 'PUT';
+  apiResponse.params =  {
+    username: newUser.username,
+    email: newUser.email,
+    birthdate: newUser.birthdate,
+    first_name: newUser.first_name,
+    last_name: newUser.last_name,
+    password: newUser.password
+   }
+
   if (!(await isPasswordValid(newUser.password))) {
     setResponseStatus(event, 400);
+    apiResponse.error = {
+      code: "400",
+      message: 'Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character',
+      errors: [
+        {
+          domain: "users",
+          reason: "PasswordValidationFailed",
+          message: "The provided password is not valid"
+        }
+      ]
+    }
     return {
-      context: 'CreateUser',
-      method: 'PUT',
-      params: {
-        username: newUser.username,
-        email: newUser.email,
-        birthdate: newUser.birthdate,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        password: newUser.password
-       },
-        error: {
-          code: "400",
-          message: 'Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character',
-          /*
-          errors: [
-            {
-              domain: "users",
-              reason: "EmailValidationFailed",
-              message: "The provided email address is not valid"
-            }
-          ]
-          */
+      apiResponse,
       }
     };
-  }
   if (!(await isEmailValid(newUser.email))) {
     setResponseStatus(event, 400);
+    apiResponse.error = {
+      code: "400",
+      message: 'Email is not in the correct format',
+      errors: [
+        {
+          domain: "users",
+          reason: "EmailValidationFailed",
+          message: "The provided email is not valid"
+        }
+      ]
+    }
     return {
-      context: 'CreateUser',
-      method: 'PUT',
-      params: {
-        username: newUser.username,
-        email: newUser.email,
-        birthdate: newUser.birthdate,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        password: newUser.password
-       },
-        error: {
-          code: "400",
-          message: 'Email is not in the correct format',
-      }
+      apiResponse
     };
   }
   if (!(await isUsernameValid(newUser.username))) {
     setResponseStatus(event, 400);
+    apiResponse.error = {
+      code: "400",
+      message: 'Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores',
+      errors: [
+        {
+          domain: "users",
+          reason: "usernameValidationFailed",
+          message: "The provided username is not valid"
+        }
+      ]
+  }
     return {
-      context: 'CreateUser',
-      method: 'PUT',
-      params: {
-        username: newUser.username,
-        email: newUser.email,
-        birthdate: newUser.birthdate,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        password: newUser.password
-       },
-        error: {
-          code: "400",
-          message: 'Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores',
-      }
+      apiResponse
     };
   }
   if (!(await isNameValid(newUser.first_name))) {
     setResponseStatus(event, 400);
+    apiResponse.error = {
+      code: "400",
+      message: 'First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters',
+      errors: [
+        {
+          domain: "users",
+          reason: "NameValidationFailed",
+          message: "The provided first name is not valid"
+        }
+      ]
+  }
     return {
-      context: 'CreateUser',
-      method: 'PUT',
-      params: {
-        username: newUser.username,
-        email: newUser.email,
-        birthdate: newUser.birthdate,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        password: newUser.password
-       },
-        error: {
-          code: "400",
-          message: 'First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters',
-      }
+      apiResponse
     };
   }
   if (!(await isNameValid(newUser.last_name))) {
     setResponseStatus(event, 400);
+    apiResponse.error = {
+      code: "400",
+      message: 'Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters',
+      errors: [
+        {
+          domain: "users",
+          reason: "NameValidationFailed",
+          message: "The provided last name is not valid"
+        }
+      ]
+  }
     return {
-      context: 'CreateUser',
-      method: 'PUT',
-      params: {
-        username: newUser.username,
-        email: newUser.email,
-        birthdate: newUser.birthdate,
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        password: newUser.password
-       },
-        error: {
-          code: "400",
-          message: 'Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters',
-      }
+      apiResponse
     };
   }
 
@@ -124,75 +117,44 @@ export default defineEventHandler(async (event) => {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
         setResponseStatus(event, 400);
+        apiResponse.error =  {
+          code: "400",
+          message: `The ${e.meta?.target} is already in use`,
+          errors: [
+            {
+              domain: "Prisma",
+              reason: "UniqueConstraintFailed",
+              message: `The unique constraint on field ${e.meta?.target} failed`
+            }
+          ]
+        }
         return {
-          context: 'CreateUser',
-          method: 'PUT',
-          params: {
-            username: newUser.username,
-            email: newUser.email,
-            birthdate: newUser.birthdate,
-            first_name: newUser.first_name,
-            last_name: newUser.last_name,
-            password: newUser.password
-           },
-            error: {
-              code: "400",
-              message: `The ${e.meta?.target} is already in use`,
-              errors: [
-                {
-                  domain: "Prisma",
-                  reason: e.name,
-                  message: `The unique constraint on field ${e.meta?.target} failed`
-                }
-              ]
-          }
+          apiResponse
         }
       }else {
         console.log(e.message);
       }
     }else if(e instanceof Prisma.PrismaClientValidationError){
+      apiResponse.error =  {
+          code: "400",
+          message: `Something was not in the correct format`,
+          errors: [
+            {
+              domain: "Prisma",
+              reason: "Prisma.PrismaClientValidationError",
+              message: `Something was not in the correct format`
+            }
+          ]
+      }
       return {
-        context: 'CreateUser',
-        method: 'PUT',
-        params: {
-          username: newUser.username,
-          email: newUser.email,
-          birthdate: newUser.birthdate,
-          first_name: newUser.first_name,
-          last_name: newUser.last_name,
-          password: newUser.password
-         },
-          error: {
-            code: "400",
-            message: `Something was not in the correct format`,
-            errors: [
-              {
-                domain: "Prisma",
-                reason: "Prisma.PrismaClientValidationError",
-                message: `Something was not in the correct format`
-              }
-            ]
-        }
+        apiResponse
       }
     }
   }
 
+  setResponseStatus(event, 201);
   return {
-    context: 'CreateUser',
-    method: 'PUT',
-    params: {
-      username: newUser.username,
-      email: newUser.email,
-      birthdate: newUser.birthdate,
-      first_name: newUser.first_name,
-      last_name: newUser.last_name,
-      password: newUser.password
-     },
-    data: {
-      fields: {
-      },
-      totalitems: 1
-    }
+    apiResponse,
   };
 });
 
