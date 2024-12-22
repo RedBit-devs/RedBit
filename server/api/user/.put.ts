@@ -104,6 +104,16 @@ export default defineEventHandler(async (event) => {
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await hashPassword(newUser.password).toString()
   try {
+    await prisma.user.create({
+      data: {
+        username: newUser.username,
+        email: newUser.email,
+        birthdate:new Date(newUser.birthdate),
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        password: (await hashPassword(newUser.password)).toString(),
+      },
+    });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
