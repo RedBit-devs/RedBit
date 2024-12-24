@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     last_name: newUser.last_name,
     password: newUser.password,
   };
-  if (!(await userValidation.userValidation(newUser, apiResponse))) {
+  if ((await userValidation.userValidation(newUser, apiResponse))) {
     setResponseStatus(event, 400);
     return {
       apiResponse,
