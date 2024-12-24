@@ -1,4 +1,4 @@
-import createRecord from "~/lib/databaseOperations/createRecord";
+import createRecord from "~/lib/prisma/databaseOperations/createRecord";
 import userValidation from "~/lib/utils/userValidation";
 
 

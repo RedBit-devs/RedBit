@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import prisma from "~/lib/prisma";
-import checkTable from "../utils/databaseTableValidation";
+import checkTable from "../databaseTableValidation";
 
 /**
  * Creates a record in the given table with the given data.
