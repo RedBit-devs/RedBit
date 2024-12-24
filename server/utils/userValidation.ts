@@ -90,6 +90,20 @@ const isNameValid = async (name: string): Promise<boolean> => {
   return validNameCheck;
 };
 
+/**
+ * Validates a user data for creation.
+ *
+ * Checks if the password is valid according to the password requirements.
+ * Checks if the email is valid according to the email requirements.
+ * Checks if the username is valid according to the username requirements.
+ * Checks if the first name and last name are valid according to the name requirements.
+ *
+ * If any of the checks fail, an ApiResponse object is populated with an error message and the reason for the failure.
+ *
+ * @param {User} newUser - The user to be validated.
+ * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the error message if any of the checks fail.
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the checks passed or not.
+ */
 const userValidation = async (
   newUser: User,
   apiResponse: ApiResponse
