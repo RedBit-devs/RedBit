@@ -12,7 +12,7 @@ import prisma from "~/lib/prisma";
 const checkTable = async (
   table: string,
   apiResponse: ApiResponse
-): Promise<ApiResponse> => {
+) => {
   if (!prisma[table]) {
     console.log(prisma[table]);
     apiResponse.error = {
@@ -26,7 +26,7 @@ const checkTable = async (
         },
       ],
     };
-    return apiResponse;
+    return ;
   }
 };
 export default checkTable;

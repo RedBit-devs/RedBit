@@ -13,9 +13,9 @@ const deleteRecord = async <T>(
   table: string,
   id: string,
   apiResponse: ApiResponse
-): Promise<ApiResponse> => {
+) => {
   checkTable(table, apiResponse);
-  if (apiResponse.error) return apiResponse;
+  if (apiResponse.error) return ;
   let dbResponse;
   try {
     dbResponse = await prisma[table].delete({
@@ -25,7 +25,7 @@ const deleteRecord = async <T>(
     });
   } catch (error) {
     prismaErrorHandler(error, apiResponse, table, id);
-    return apiResponse;
+    return ;
   }
   apiResponse.data = {
     deleted: true,
@@ -33,7 +33,7 @@ const deleteRecord = async <T>(
     totalItems: 1,
     items: [dbResponse],
   };
-  return apiResponse;
+  return ;
 };
 
 export default deleteRecord;

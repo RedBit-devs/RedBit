@@ -13,9 +13,9 @@ const readRecord = async (
   table: string,
   id: string,
   apiResponse: ApiResponse
-): Promise<ApiResponse> => {
+) => {
   checkTable(table, apiResponse);
-  if (apiResponse.error) return apiResponse;
+  if (apiResponse.error) return ;
   let dbResponse;
   try {
     dbResponse = await prisma[table].findFirst({
@@ -25,7 +25,7 @@ const readRecord = async (
     });
   } catch (error) {
     prismaErrorHandler(error, apiResponse, table, id);
-    return apiResponse;
+    return ;
   }
   if (!dbResponse) {
     apiResponse.error = {
@@ -39,14 +39,14 @@ const readRecord = async (
         },
       ],
     };
-    return apiResponse;
+    return ;
   }
   apiResponse.data = {
     fields: prisma[table].fields,
     totalItems: 1,
     items: [dbResponse],
   };
-  return apiResponse;
+  return ;
 };
 
 export default readRecord;
