@@ -15,9 +15,8 @@ const prismaErrorHandler = async (
   apiResponse: ApiResponse,
   table: string,
   id?: string,
-  isTableExist?: boolean
 ) => {
-  if(isTableExist == false)
+  if(error.name == "no table")
   {
     apiResponse.error = {
       code: "400",

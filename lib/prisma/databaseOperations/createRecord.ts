@@ -17,9 +17,10 @@ const createRecord = async <T>(
   data: T,
   apiResponse: ApiResponse
 ) => {
-  const tableExists = await checkTable(table);
-  if (!tableExists){
-    return prismaErrorHandler({}, apiResponse, table,"", tableExists);
+  if (!(await checkTable(table))){
+    let error = new Error();
+    error.name = "no table";
+    return prismaErrorHandler(error, apiResponse, table);
   }
   let dbResponse;
   try {
