@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
  * @param {string} password - The password to be hashed.
  * @returns {Promise<string>} - A promise that resolves to the hashed password.
  */
-const hashPassword = async (password: string): Promise<string> => {
+const hashPassword = async (password: string,apiResponse: ApiResponse): Promise<string> => {
   const saltRounds = 12;
   const salt = await bcrypt.genSalt(saltRounds);
   try {
@@ -16,8 +16,19 @@ const hashPassword = async (password: string): Promise<string> => {
     await hash.toString();
     return hash;
   } catch (e) {
-    throw e;
+    apiResponse.error = {
+      code: "PasswordHashingFailed",
+      message: "Password hashing failed",
+      errors: [
+        {
+          domain: "users",
+          reason: "PasswordHashingFailed",
+          message: "Password hashing failed",
+        },
+      ],
+    }
   }
+  return "";
 };
 /**
  * Validates the given password.
@@ -109,7 +120,7 @@ const userValidation = async (
   apiResponse: ApiResponse
 ): Promise<boolean> => {
   (apiResponse as ApiResponse).error = {
-    code: "200",
+    code: "",
     message: "",
     errors: [],
   };

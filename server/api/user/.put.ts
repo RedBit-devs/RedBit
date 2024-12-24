@@ -22,7 +22,13 @@ export default defineEventHandler(async (event) => {
   }
 
   newUser.birthdate = new Date(newUser.birthdate);
-  newUser.password = await userValidation.hashPassword(newUser.password);
+  newUser.password = await userValidation.hashPassword(newUser.password,apiResponse);
+  if (apiResponse.error) {
+    setResponseStatus(event, 400);
+    return {
+      apiResponse,
+    };
+  }
   await createRecord("user", newUser, apiResponse);
   if (apiResponse.error) {
     setResponseStatus(event, 400);
