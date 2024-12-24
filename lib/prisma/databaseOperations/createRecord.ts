@@ -14,8 +14,7 @@ const createRecord = async <T>(
   data: T,
   apiResponse: ApiResponse
 ) => {
-  checkTable(table, apiResponse);
-  if (apiResponse.error) return 
+  if ((await checkTable(table, apiResponse))) return 
   let dbResponse;
   try {
     dbResponse = await prisma[table].create({
