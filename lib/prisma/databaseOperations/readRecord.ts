@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import prisma from "~/lib/prisma";
 import checkTable from "../databaseTableValidation";
+import prismaErrorHandler from "../databaseErrorHandling";
 
 /**
  * Read a single record in the given table with the given id.
@@ -24,32 +25,7 @@ const readRecord = async (
       },
     });
   } catch (error) {
-    console.log(error.code);
-    if (error instanceof Prisma.PrismaClientValidationError) {
-      apiResponse.error = {
-        code: "400",
-        message: `Something was not in the correct format`,
-        errors: [
-          {
-            domain: "Prisma",
-            reason: "ValidationError",
-            message: `Something was not in the correct format`,
-          },
-        ],
-      };
-    } else {
-      apiResponse.error = {
-        code: "500",
-        message: `An unknown error occurred: ${error.message}`,
-        errors: [
-          {
-            domain: "Prisma",
-            reason: "UnknownError",
-            message: "An unexpected error occurred on the server.",
-          },
-        ],
-      };
-    }
+    prismaErrorHandler(error, apiResponse, table, id);
     return apiResponse;
   }
   if (!dbResponse) {
