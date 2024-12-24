@@ -7,7 +7,7 @@ import prisma from "~/lib/prisma";
  *
  * @param {string} table - The name of the table to check.
  * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the error message if any of the checks fail.
- * @returns {Promise<ApiResponse>} - A promise that resolves with the ApiResponse that contains the error message if any of the checks fail.
+ * @returns {Promise<Boolean>} - A promise that resolves to a boolean indicating if the table exists or not.
  */
 const checkTable = async (
   table: string,

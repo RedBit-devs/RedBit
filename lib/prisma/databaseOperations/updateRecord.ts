@@ -8,7 +8,7 @@ import prismaErrorHandler from "../databaseErrorHandling";
  * @param data The data to be used for the update.
  * @param id The id of the record to be updated.
  * @param {ApiResponse} apiResponse The ApiResponse to populate with error or data information.
- * @returns {Promise<ApiResponse>} A Promise that resolves with the ApiResponse that contains the error or data information
+ * @returns {Promise<void>}
  */
 const updateRecord = async <T>(
   table: string,
