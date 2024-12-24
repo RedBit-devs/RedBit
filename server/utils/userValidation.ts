@@ -125,9 +125,9 @@ const userValidation = async (
     errors: [],
   };
 
-  let validationError = false;
+  let isValid = true;
   if (!(await isPasswordValid(newUser.password))) {
-    validationError = true;
+    isValid = false;
     apiResponse.error?.errors?.push({
       domain: "users",
       reason: "PasswordValidationFailed",
@@ -136,7 +136,7 @@ const userValidation = async (
     });
   }
   if (!(await isEmailValid(newUser.email))) {
-    validationError = true;
+    isValid = false;
     apiResponse.error?.errors?.push({
       domain: "users",
       reason: "EmailValidationFailed",
@@ -144,7 +144,7 @@ const userValidation = async (
     });
   }
   if (!(await isUsernameValid(newUser.username))) {
-    validationError = true;
+    isValid = false;
     apiResponse.error?.errors?.push({
       domain: "users",
       reason: "usernameValidationFailed",
@@ -153,7 +153,7 @@ const userValidation = async (
     });
   }
   if (!(await isNameValid(newUser.first_name))) {
-    validationError = true;
+    isValid = false;
     apiResponse.error?.errors?.push({
       domain: "users",
       reason: "NameValidationFailed",
@@ -162,7 +162,7 @@ const userValidation = async (
     });
   }
   if (!(await isNameValid(newUser.last_name))) {
-    validationError = true;
+    isValid = false;
     apiResponse.error?.errors?.push({
       domain: "users",
       reason: "NameValidationFailed",
@@ -170,14 +170,14 @@ const userValidation = async (
         "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
     });
   }
-  if (validationError && apiResponse.error) {
+  if (!isValid && apiResponse.error) {
     apiResponse.error.code = "400";
     apiResponse.error.message = "User Validation failed";
   }
   else {
     delete apiResponse.error;
   }
-  return validationError;
+  return isValid;
 };
 
 export default {
