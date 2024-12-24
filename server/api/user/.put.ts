@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
       apiResponse,
     };
   }
+  delete apiResponse.error;
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await userValidation.hashPassword(newUser.password);
