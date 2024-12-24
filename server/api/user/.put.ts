@@ -14,8 +14,8 @@ export default defineEventHandler(async (event) => {
     last_name: newUser.last_name,
     password: newUser.password,
   };
+  setResponseStatus(event, 400);
   if (!(await userValidation.userValidation(newUser, apiResponse))) {
-    setResponseStatus(event, 400);
     return {
       apiResponse,
     };
@@ -24,15 +24,12 @@ export default defineEventHandler(async (event) => {
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await userValidation.hashPassword(newUser.password,apiResponse);
   if (apiResponse.error) {
-    setResponseStatus(event, 400);
     return {
       apiResponse,
     };
   }
   await createRecord("user", newUser, apiResponse);
-  if (apiResponse.error) {
-    setResponseStatus(event, 400);
-  } else {
+  if (!apiResponse.error) {
     setResponseStatus(event, 201);
   }
   return {
