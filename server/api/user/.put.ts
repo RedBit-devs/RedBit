@@ -15,9 +15,15 @@ export default defineEventHandler(async (event) => {
     last_name: newUser.last_name,
     password: newUser.password,
   };
-
+  apiResponse.error = {
+    code: "200",
+    message: "",
+    errors: [],
+  };
+  
   if((await ValidateUser.userValidation(newUser,apiResponse)))
   {
+    console.log("here");
     setResponseStatus(event, 400);
     return {
       apiResponse,
