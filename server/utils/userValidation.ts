@@ -157,3 +157,8 @@ const userValidation = async (
   }
   return validationError;
 };
+
+export default {
+  userValidation,
+  hashPassword,
+};

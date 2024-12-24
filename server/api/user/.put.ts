@@ -1,4 +1,5 @@
 import createRecord from "~/lib/prisma/databaseOperations/createRecord";
+import userValidation from "~/server/utils/userValidation";
 
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
@@ -13,6 +14,12 @@ export default defineEventHandler(async (event) => {
     last_name: newUser.last_name,
     password: newUser.password,
   };
+  if (!(await userValidation.userValidation(newUser, apiResponse))) {
+    setResponseStatus(event, 400);
+    return {
+      apiResponse,
+    };
+  }
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await userValidation.hashPassword(newUser.password);
