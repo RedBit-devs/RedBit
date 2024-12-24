@@ -7,7 +7,6 @@ import { Prisma } from "@prisma/client";
  * @param {ApiResponse} apiResponse The ApiResponse object to be populated with the error message and reason.
  * @param {string} table The name of the table that the operation was performed on.
  * @param {string} [id] The id of the record that the operation was performed on.
- * @param {boolean} isTableExist - If the table exists or not. 
  * @returns {Promise<void>}
  */
 const prismaErrorHandler = async (
