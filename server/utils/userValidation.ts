@@ -95,11 +95,10 @@ const userValidation = async (
   apiResponse: ApiResponse
 ): Promise<boolean> => {
   (apiResponse as ApiResponse).error = {
-      code: "200",
-      message: "",
-      errors: [],
-    };
-  
+    code: "200",
+    message: "",
+    errors: [],
+  };
 
   let validationError = false;
   if (!(await isPasswordValid(newUser.password))) {
@@ -109,47 +108,42 @@ const userValidation = async (
       reason: "PasswordValidationFailed",
       message:
         "Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
-    },);
+    });
   }
   if (!(await isEmailValid(newUser.email))) {
     validationError = true;
-    apiResponse.error?.errors?.push(
-      {
-        domain: "users",
-        reason: "EmailValidationFailed",
-        message: "The provided email is not valid",
-      },
-    );
+    apiResponse.error?.errors?.push({
+      domain: "users",
+      reason: "EmailValidationFailed",
+      message: "The provided email is not valid",
+    });
   }
   if (!(await isUsernameValid(newUser.username))) {
     validationError = true;
-    apiResponse.error?.errors?.push(
-      {
-        domain: "users",
-        reason: "usernameValidationFailed",
-        message: "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
-      },
-    );
+    apiResponse.error?.errors?.push({
+      domain: "users",
+      reason: "usernameValidationFailed",
+      message:
+        "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
+    });
   }
   if (!(await isNameValid(newUser.first_name))) {
     validationError = true;
-    apiResponse.error?.errors?.push(
-      {
-        domain: "users",
-        reason: "NameValidationFailed",
-        message: "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-      },
-    );
-
+    apiResponse.error?.errors?.push({
+      domain: "users",
+      reason: "NameValidationFailed",
+      message:
+        "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+    });
   }
   if (!(await isNameValid(newUser.last_name))) {
     validationError = true;
-    apiResponse.error?.errors?.push(        {
+    apiResponse.error?.errors?.push({
       domain: "users",
       reason: "NameValidationFailed",
-      message: "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-    },);
-
+      message:
+        "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+    });
   }
   if (validationError && apiResponse.error) {
     apiResponse.error.code = "400";

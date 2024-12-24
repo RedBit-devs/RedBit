@@ -28,7 +28,7 @@ const updateRecord = async <T>(
       data: data,
     });
   } catch (error) {
-    prismaErrorHandler(error, apiResponse, table, id);    
+    prismaErrorHandler(error, apiResponse, table, id);
     return apiResponse;
   }
   apiResponse.data = {
