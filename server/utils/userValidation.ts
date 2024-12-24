@@ -163,6 +163,9 @@ const userValidation = async (
     apiResponse.error.code = "400";
     apiResponse.error.message = "User Validation failed";
   }
+  else {
+    delete apiResponse.error;
+  }
   return validationError;
 };
 
