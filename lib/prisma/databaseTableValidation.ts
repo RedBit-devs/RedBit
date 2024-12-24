@@ -1,14 +1,13 @@
 import prisma from "~/lib/prisma";
 
+
 /**
- * Checks if a table exists in the database.
+ * Checks if a given table exists in the Prisma client instance.
  *
- * If the table does not exist, an ApiResponse object is populated with an error message and the reason for the failure.
- *
- * @param {string} table - The name of the table to check.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the error message if any of the checks fail.
- * @returns {Promise<Boolean>} - A promise that resolves to a boolean indicating if the table exists or not.
+ * @param {string} table - The name of the table to check for existence.
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating whether the table exists.
  */
+
 const checkTable = async (
   table: string,
 ): Promise<boolean> => {
