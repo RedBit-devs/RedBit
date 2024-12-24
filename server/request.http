@@ -5,9 +5,9 @@ Content-Type: application/json
 
 {
     "username": "JohnDoe",
-    "email": "johndoddd@example.com",
+    "email": "johndodddexampl@e.com",
     "birthdate": "1990-02-12",
     "first_name": "John",
-    "last_name": "Doe",
-    "password": "passWord1"
+    "last_name": "Dds",
+    "password": "pasaSas#d1"
 }
