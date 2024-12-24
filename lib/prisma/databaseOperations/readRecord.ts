@@ -23,8 +23,7 @@ const readRecord = async (
       },
     });
   } catch (error) {
-    prismaErrorHandler(error, apiResponse, table, id);
-    return ;
+    return prismaErrorHandler(error, apiResponse, table, id);
   }
   if (!dbResponse) {
     apiResponse.error = {

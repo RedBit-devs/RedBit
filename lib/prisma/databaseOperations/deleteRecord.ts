@@ -23,8 +23,7 @@ const deleteRecord = async <T>(
       },
     });
   } catch (error) {
-    prismaErrorHandler(error, apiResponse, table, id);
-    return ;
+    return prismaErrorHandler(error, apiResponse, table, id);
   }
   apiResponse.data = {
     deleted: true,

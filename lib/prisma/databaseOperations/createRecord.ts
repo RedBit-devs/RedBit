@@ -24,8 +24,7 @@ const createRecord = async <T>(
       data: data,
     });
   } catch (error) {
-    prismaErrorHandler(error, apiResponse, table);
-    return 
+    return prismaErrorHandler(error, apiResponse, table);
   }
   apiResponse.data = {
     fields: prisma[table].fields,
