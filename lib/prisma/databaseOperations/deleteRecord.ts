@@ -14,7 +14,10 @@ const deleteRecord = async <T>(
   id: string,
   apiResponse: ApiResponse
 ) => {
-  if ((await checkTable(table, apiResponse))) return 
+  const tableExists = await checkTable(table);
+  if (!tableExists){
+    return prismaErrorHandler({}, apiResponse, table,"", tableExists);
+  }
   let dbResponse;
   try {
     dbResponse = await prisma[table].delete({
