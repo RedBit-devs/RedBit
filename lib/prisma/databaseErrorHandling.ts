@@ -78,7 +78,7 @@ const prismaErrorHandler = async (
         {
           domain: "Prisma",
           reason: "UnknownError",
-          message: "An unexpected error occurred on the server.",
+          message: "An unknown error occurred",
         },
       ],
     };
