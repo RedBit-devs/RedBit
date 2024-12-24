@@ -94,10 +94,17 @@ const userValidation = async (
   newUser: User,
   apiResponse: ApiResponse
 ): Promise<boolean> => {
+  (apiResponse as ApiResponse).error = {
+      code: "200",
+      message: "",
+      errors: [],
+    };
+  
+
   let validationError = false;
   if (!(await isPasswordValid(newUser.password))) {
     validationError = true;
-    apiResponse.error.errors.push({
+    apiResponse.error?.errors?.push({
       domain: "users",
       reason: "PasswordValidationFailed",
       message:
@@ -106,7 +113,7 @@ const userValidation = async (
   }
   if (!(await isEmailValid(newUser.email))) {
     validationError = true;
-    apiResponse.error.errors.push(
+    apiResponse.error?.errors?.push(
       {
         domain: "users",
         reason: "EmailValidationFailed",
@@ -116,7 +123,7 @@ const userValidation = async (
   }
   if (!(await isUsernameValid(newUser.username))) {
     validationError = true;
-    apiResponse.error.errors.push(
+    apiResponse.error?.errors?.push(
       {
         domain: "users",
         reason: "usernameValidationFailed",
@@ -126,7 +133,7 @@ const userValidation = async (
   }
   if (!(await isNameValid(newUser.first_name))) {
     validationError = true;
-    apiResponse.error.errors.push(
+    apiResponse.error?.errors?.push(
       {
         domain: "users",
         reason: "NameValidationFailed",
@@ -137,25 +144,16 @@ const userValidation = async (
   }
   if (!(await isNameValid(newUser.last_name))) {
     validationError = true;
-    apiResponse.error.errors.push(        {
+    apiResponse.error?.errors?.push(        {
       domain: "users",
       reason: "NameValidationFailed",
       message: "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
     },);
 
   }
-  if (validationError) {
+  if (validationError && apiResponse.error) {
     apiResponse.error.code = "400";
     apiResponse.error.message = "User Validation failed";
   }
   return validationError;
-};
-
-export default {
-  hashPassword,
-  isPasswordValid,
-  isEmailValid,
-  isUsernameValid,
-  isNameValid,
-  userValidation,
 };
