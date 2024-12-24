@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import prisma from "~/lib/prisma";
 import checkTable from "../databaseTableValidation";
 import prismaErrorHandler from "../databaseErrorHandling";
