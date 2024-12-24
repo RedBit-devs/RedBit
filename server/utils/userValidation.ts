@@ -1,4 +1,10 @@
 import bcrypt from "bcrypt";
+
+const EMAIL_PATTERN: RegExp = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const PASSWORD_PATTERN: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+const USERNAME_PATTERN: RegExp = /^[a-zA-Z0-9_]{3,32}/
+const NAME_PATTERN: RegExp = /^[a-zA-Z]{3,35}/
+
 /**
  * Hashes the given password using bcrypt algorithm.
  *
@@ -44,9 +50,7 @@ const hashPassword = async (password: string,apiResponse: ApiResponse): Promise<
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the password is valid.
  */
 const isPasswordValid = async (password: string): Promise<boolean> => {
-  const validPasswordPattern: RegExp =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-  const validPasswordCheck = validPasswordPattern.test(password);
+  const validPasswordCheck = PASSWORD_PATTERN.test(password);
   return validPasswordCheck;
 };
 
@@ -62,9 +66,7 @@ const isPasswordValid = async (password: string): Promise<boolean> => {
  * @returns {Promise<boolean>} - A promise resolving to a boolean indicating if the email is valid.
  */
 const isEmailValid = async (email: string): Promise<boolean> => {
-  const validEmailPattern: RegExp =
-    /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const validEmailCheck = validEmailPattern.test(email);
+  const validEmailCheck = EMAIL_PATTERN.test(email);
   return validEmailCheck;
 };
 
@@ -80,8 +82,7 @@ const isEmailValid = async (email: string): Promise<boolean> => {
  * @returns {Promise<boolean>} - A promise resolving to a boolean indicating if the username is valid.
  */
 const isUsernameValid = async (username: string): Promise<boolean> => {
-  const validUsernamePattern: RegExp = /^[a-zA-Z0-9_]{3,32}/;
-  const validUsernameCheck = validUsernamePattern.test(username);
+  const validUsernameCheck = USERNAME_PATTERN.test(username);
   return validUsernameCheck;
 };
 /**
@@ -96,8 +97,7 @@ const isUsernameValid = async (username: string): Promise<boolean> => {
  * @returns {Promise<boolean>} - A promise resolving to a boolean indicating if the name is valid.
  */
 const isNameValid = async (name: string): Promise<boolean> => {
-  const validNamePattern: RegExp = /^[a-zA-Z]{3,35}/;
-  const validNameCheck = validNamePattern.test(name);
+  const validNameCheck = NAME_PATTERN.test(name);
   return validNameCheck;
 };
 
