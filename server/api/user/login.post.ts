@@ -1,7 +1,9 @@
 import prisma from "~/lib/prisma";
 import { compareHashes, isEmailValid, isPasswordValid } from "~/server/utils/userValidation";
+import jwt from "jsonwebtoken"
 
 export default eventHandler(async (event) => {
+    const config = useRuntimeConfig()
 
     const { email, password } = await readBody(event);
     const apiResponse = {} as ApiResponse;
@@ -16,10 +18,8 @@ export default eventHandler(async (event) => {
     setResponseStatus(event, 400)
     apiResponse.error = {
         code: "400",
-        message: "Not all required pameters were provided",
-        errors: [
-
-        ]
+        message: "Some errors happend while trying to login",
+        errors: []
 
     }
 
@@ -46,18 +46,22 @@ export default eventHandler(async (event) => {
     }
 
     if (apiResponse.error.errors?.length) {
+        if (apiResponse.error.errors.length === 1) {
+            apiResponse.error.message = apiResponse.error.errors[0].message
+        }
         return apiResponse
     }
 
     const userCredentials = await prisma.user.findFirst({
         where: { email },
         select: {
+            id: true,
             email: true,
             password: true
         }
     })
 
-    
+
     if (!userCredentials) {
         apiResponse.error.errors?.push({
             domain: "user/login",
@@ -75,24 +79,41 @@ export default eventHandler(async (event) => {
     }
 
     if (apiResponse.error.errors?.length) {
+        if (apiResponse.error.errors.length === 1) {
+            apiResponse.error.message = apiResponse.error.errors[0].message
+        }
         return apiResponse
     } else {
         delete apiResponse.error
         setResponseStatus(event, 200)
     }
 
-
-    const {email: emailField, password: passwordField} = prisma.user.fields
-
+    apiResponse.params = {
+        ...apiResponse.params,
+        password: "",
+    }
     apiResponse.data = {
         fields: {
-            email: emailField,
-            password: passwordField
+            token: {
+                name: "token",
+                typeName: "String"
+            }
         },
         totalItems: 1,
         items: [
-            userCredentials,
-            
+            {
+                token:`Bearer ${jwt.sign(
+            {
+                user: userCredentials?.id
+            },
+            config.JWT_SECRET,
+            {
+                algorithm: "HS512",
+                expiresIn: config.JWT_EXP_TIME,
+            }
+        )
+        }`
+            }
         ]
     }
 
