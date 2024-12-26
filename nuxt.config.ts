@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   runtimeConfig:{
     JWT_SECRET:process.env.JWT_SECRET,
-    JWT_EXP_TIME:process.env.JWT_EXP_TIME
+    JWT_EXP_TIME:"20 days"
   },
   css: [
     '~/assets/css/main.css',
