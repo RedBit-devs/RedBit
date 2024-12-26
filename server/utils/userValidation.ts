@@ -36,6 +36,18 @@ const hashPassword = async (password: string,apiResponse: ApiResponse): Promise<
   }
   return "";
 };
+
+
+/**
+ * Compares two hashes
+ * @param {string} data The string to compare to the hash(not hashed)
+ * @param {string} hash The hash
+ * @returns {Promise<boolean>}
+ */
+const compareHashes = async (data: string, hash: string):Promise<boolean> => {
+  return await bcrypt.compare(data, hash)
+}
+
 /**
  * Validates the given password.
  *
@@ -188,9 +200,7 @@ export default {
 };
 
 export {
-  userValidation,
-  hashPassword,
   isEmailValid,
-  isUsernameValid,
-  isPasswordValid
+  isPasswordValid,
+  compareHashes
 };
