@@ -183,4 +183,14 @@ const userValidation = async (
 export default {
   userValidation,
   hashPassword,
+  isEmailValid,
+  isUsernameValid
+};
+
+export {
+  userValidation,
+  hashPassword,
+  isEmailValid,
+  isUsernameValid,
+  isPasswordValid
 };
