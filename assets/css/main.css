@@ -80,27 +80,27 @@ a:not(.btn, :has(span.iconify:only-child), :has(img:only-child)):hover::after {
 
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.5em;
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
 }
 
 h3 {
-    font-size: 1.25rem;
+    font-size: 1.25em;
 }
 
 h4 {
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 h5 {
-    font-size: .85rem;
+    font-size: .85em;
 }
 
 h6 {
-    font-size: .6rem;
+    font-size: .6em;
 }
 
 
