@@ -102,17 +102,17 @@ export default eventHandler(async (event) => {
         totalItems: 1,
         items: [
             {
-                token:`Bearer ${jwt.sign(
-            {
-                user: userCredentials?.id
-            },
-            config.JWT_SECRET,
-            {
-                algorithm: "HS512",
-                expiresIn: config.JWT_EXP_TIME,
-            }
-        )
-        }`
+                token: `Bearer ${jwt.sign(
+                    {
+                        userId: userCredentials?.id,
+                    },
+                    config.JWT_SECRET,
+                    {
+                        algorithm: "HS512",
+                        expiresIn: config.JWT_EXP_TIME,
+                    }
+                )
+                    }`
             }
         ]
     }
