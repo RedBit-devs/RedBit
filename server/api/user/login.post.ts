@@ -104,7 +104,10 @@ export default eventHandler(async (event) => {
             {
                 token: `Bearer ${jwt.sign(
                     {
-                        userId: userCredentials?.id,
+                        user:{
+                            id: userCredentials?.id,
+                            email: userCredentials?.email
+                        },
                     },
                     config.JWT_SECRET,
                     {
