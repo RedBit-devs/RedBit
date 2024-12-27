@@ -15,17 +15,18 @@
                         <label>Lastname</label>
                         <input type="text" placeholder="Type here">
                     </div>
-
+                    <div class="input" id="birthDate">
+                        <label>Birth date</label>
+                        <input type="date">
+                    </div>
                     <div class="input" id="email">
                         <label>Email</label>
                         <input type="text" placeholder="Type here">
                     </div>
-
                     <div class="input" id="username">
                         <label>Username</label>
                         <input type="text" placeholder="Type here">
                     </div>
-
                     <div class="input" id="password">
                         <label>Password</label>
                         <input type="password" placeholder="Type here">
@@ -101,7 +102,7 @@ h1 {
     margin-bottom: 1.5rem;
     gap: 1rem;
     display: grid;
-    grid-template-areas: "firstName lastName" "email email" "username username" "password password" "passwordAgain passwordAgain";
+    grid-template-areas: "firstName lastName" "birthDate birthDate" "email email" "username username" "password password" "passwordAgain passwordAgain";
 }
 
 #firstname {
@@ -110,6 +111,10 @@ h1 {
 
 #lastname {
     grid-area: lastName;
+}
+
+#birthDate {
+    grid-area: birthDate;
 }
 
 #email {
@@ -168,7 +173,7 @@ input {
     }
 
     .input-field {
-        grid-template-areas: "firstName firstName" "lastName lastName" "email email" "username username" "password password" "passwordAgain passwordAgain";
+        grid-template-areas: "firstName firstName" "lastName lastName" "birthDate birthDate" "email email" "username username" "password password" "passwordAgain passwordAgain";
     }
 }
 
