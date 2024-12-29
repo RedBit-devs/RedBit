@@ -128,15 +128,16 @@ const isNameValid = async (name: string): Promise<boolean> => {
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the checks passed or not.
  */
 const userValidation = async (
-  newUser: User,
-  apiResponse: ApiResponse
+  event: any
 ): Promise<boolean> => {
-  (apiResponse as ApiResponse).error = {
-    code: "",
-    message: "",
-    errors: [],
-  };
-
+  const apiResponse = event.context.apiResponse;
+  const newUser = event.context.apiResponse.params;
+  apiResponse.error = {
+    code: "400",
+    message: "Some errors occured",
+    errors: [
+    ],
+  }
   let isValid = true;
   if (!(await isPasswordValid(newUser.password))) {
     isValid = false;
@@ -189,6 +190,7 @@ const userValidation = async (
   else {
     delete apiResponse.error;
   }
+  event.context.apiResponse = apiResponse;
   return isValid;
 };
 
