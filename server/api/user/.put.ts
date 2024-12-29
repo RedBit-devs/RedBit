@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
   event.context.apiResponse = apiResponse;
   setResponseStatus(event, 400);
   if (!(await userValidation.userValidation(event,customErrorMessages))) {
+    ApiResponseHandler(event,customErrorMessages);
     return {
       apiResponse,
     };

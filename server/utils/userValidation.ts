@@ -133,63 +133,37 @@ const userValidation = async (
 ): Promise<boolean> => {
   const apiResponse:ApiResponse = event.context.apiResponse;
   const newUser: User = event.context.apiResponse.params;
-  apiResponse.error = {
-    code: "400",
-    message: "Some errors occured",
-    errors: [
-    ],
-  }
+
   let isValid = true;
   if (!(await isPasswordValid(newUser.password))) {
+    const error = new Error();
+    error.name = "User;PasswordValidationFailed";
+    customErrorMessages.push(error)
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "PasswordValidationFailed",
-      message:
-        "Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
-    });
   }
   if (!(await isEmailValid(newUser.email))) {
+    const error = new Error();
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "EmailValidationFailed",
-      message: "The provided email is not valid",
-    });
+    error.name = "User;EmailValidationFailed";
+    customErrorMessages.push(error)
   }
   if (!(await isUsernameValid(newUser.username))) {
+    const error = new Error();
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "usernameValidationFailed",
-      message:
-        "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
-    });
+    error.name = "User;UsernameValidationFailed";
+    customErrorMessages.push(error)
   }
   if (!(await isNameValid(newUser.first_name))) {
+    const error = new Error();
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "NameValidationFailed",
-      message:
-        "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-    });
+    error.name = "User;FirstNameValidationFailed";
+    customErrorMessages.push(error)
   }
   if (!(await isNameValid(newUser.last_name))) {
+    const error = new Error();
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "NameValidationFailed",
-      message:
-        "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-    });
-  }
-  if (!isValid && apiResponse.error) {
-    apiResponse.error.code = "400";
-    apiResponse.error.message = "User Validation failed";
-  }
-  else {
-    delete apiResponse.error;
+    error.name = "User;LastNameValidationFailed";
+    customErrorMessages.push(error)
   }
   event.context.apiResponse = apiResponse;
   return isValid;
