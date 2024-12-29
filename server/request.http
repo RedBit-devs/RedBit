@@ -9,7 +9,7 @@ Content-Type: application/json
     "birthdate": "1990-02-12",
     "first_name": "John",
     "last_name": "Dss",
-    "password": "pasaSas#d1"
+    "password": ""
 }
 
 ###

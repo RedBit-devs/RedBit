@@ -28,3 +28,7 @@ const ApiResponseHandler = (event: any, customErrorMessages: Error[]) => {
   }
   event.context.apiResponse = apiResponse
 }
+
+export {
+    ApiResponseHandler
+}
