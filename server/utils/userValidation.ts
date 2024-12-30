@@ -129,40 +129,50 @@ const isNameValid = async (name: string): Promise<boolean> => {
  */
 const userValidation = async (
   event: any,
-  customErrorMessages: Error[]
+  customErrorMessages: CustomErrorMessage[]
 ): Promise<boolean> => {
   const apiResponse:ApiResponse = event.context.apiResponse;
   const newUser: User = event.context.apiResponse.params;
 
   let isValid = true;
   if (!(await isPasswordValid(newUser.password))) {
-    const error = new Error();
-    error.name = "User;PasswordValidationFailed";
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      message: "PasswordValidationFailed"
+    };
     customErrorMessages.push(error)
     isValid = false;
   }
   if (!(await isEmailValid(newUser.email))) {
-    const error = new Error();
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      message: "EmailValidationFailed"
+    };
     isValid = false;
-    error.name = "User;EmailValidationFailed";
     customErrorMessages.push(error)
   }
   if (!(await isUsernameValid(newUser.username))) {
-    const error = new Error();
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      message: "UsernameValidationFailed"
+    };
     isValid = false;
-    error.name = "User;UsernameValidationFailed";
     customErrorMessages.push(error)
   }
   if (!(await isNameValid(newUser.first_name))) {
-    const error = new Error();
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      message: "FirstNameValidationFailed"
+    };
     isValid = false;
-    error.name = "User;FirstNameValidationFailed";
     customErrorMessages.push(error)
   }
   if (!(await isNameValid(newUser.last_name))) {
-    const error = new Error();
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      message: "LastNameValidationFailed"
+    };
     isValid = false;
-    error.name = "User;LastNameValidationFailed";
     customErrorMessages.push(error)
   }
   event.context.apiResponse = apiResponse;

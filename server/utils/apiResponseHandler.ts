@@ -10,7 +10,7 @@ const errorHttpStatusCodes = {
   452: "UserValidationFailed",
 }
 
-const ApiResponseHandler = (event: any, customErrorMessages: Error[]) => {
+const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[]) => {
   const apiResponse = event.context.apiResponse;
   apiResponse.error = {
     code: "400",
@@ -21,11 +21,11 @@ const ApiResponseHandler = (event: any, customErrorMessages: Error[]) => {
   {
     return
   }
-  if (customErrorMessages[0].name.startsWith("Prisma")) {
+  if (customErrorMessages[0].espectedFrom ==="Prisma") {
     //future prisma api response handling
-  }else if(customErrorMessages[0].name.startsWith("User")){
+  }else if(customErrorMessages[0].espectedFrom ==="User"){
     for (let i = 0; i < customErrorMessages.length; i++) {
-      const reason = customErrorMessages[i].name.split(";")[1];
+      const reason = customErrorMessages[i].message;
       if (reason in errorReasonAndMessages) {
         apiResponse.error.errors.push({
           domain: apiResponse.context,

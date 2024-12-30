@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     last_name: newUser.last_name,
     password: newUser.password,
   };
-  const customErrorMessages: Error[] = [];
+  const customErrorMessages: CustomErrorMessage[] = [];
   event.context.apiResponse = apiResponse;
   setResponseStatus(event, 400);
   if (!(await userValidation.userValidation(event,customErrorMessages))) {
