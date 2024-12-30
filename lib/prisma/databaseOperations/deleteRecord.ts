@@ -13,7 +13,7 @@ const deleteRecord = async <T>(
   table: string,
   id: string,
   apiResponse: ApiResponse,
-  errorMessages: CustomErrorMessage[]
+  customErrorMessages: CustomErrorMessage[]
 ) => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
@@ -21,7 +21,7 @@ const deleteRecord = async <T>(
       message: "TableNotFound",
       table: table
     };
-    errorMessages.push(error)
+    customErrorMessages.push(error)
     return
   }
   let dbResponse;
@@ -32,7 +32,7 @@ const deleteRecord = async <T>(
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error, apiResponse, table, id);
+    return prismaErrorHandler(error, table, customErrorMessages,id);
   }
   apiResponse.data = {
     deleted: true,

@@ -11,61 +11,41 @@ import { Prisma } from "@prisma/client";
  */
 const prismaErrorHandler = async (
   error: any,
-  apiResponse: ApiResponse,
-  table: string,
+ch  table: string,
+  customErrorMessages: CustomErrorMessage[],
   id?: string,
 ) => {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === "P2002") {
-      apiResponse.error = {
-        code: "400",
-        message: `The unique constraint failed on the ${table} table with the following values: ${error.meta?.target}`,
-        errors: [
-          {
-            domain: "Prisma",
-            reason: "UniqueConstraintFailed",
-            message: `The unique constraint failed on the ${table} table with the following values: ${error.meta?.target}`,
-          },
-        ],
+      const customError:CustomErrorMessage = {
+        espectedFrom: "Prisma",
+        message: "UniqueConstraintFailed",
+        table: table,
+        target: error.meta?.target
       };
+      customErrorMessages.push(customError)
     } else if (error.code === "P2025") {
-      apiResponse.error = {
-        code: "400",
-        message: `Oparation failed on ${table} table because the record with  id: ${id} doesn't exist`,
-        errors: [
-          {
-            domain: "Prisma",
-            reason: "identifierNotFound",
-            message: `Oparation failed on ${table} table because the record with  id: ${id} doesn't exist`,
-          },
-        ],
+      const customError:CustomErrorMessage = {
+        espectedFrom: "Prisma",
+        message: "IdentifierNotFound",
+        table: table,
+        target: id
       };
-    }
+      customErrorMessages.push(customError)
   } else if (error instanceof Prisma.PrismaClientValidationError) {
-    apiResponse.error = {
-      code: "400",
-      message: `Something was not in the correct format`,
-      errors: [
-        {
-          domain: "Prisma",
-          reason: "ValidationError",
-          message: `Something was not in the correct format ${error.cause}`,
-        },
-      ],
+    const customError:CustomErrorMessage = {
+      espectedFrom: "Prisma",
+      message: "ValidationError",
+      table: table,
     };
+    customErrorMessages.push(customError)
   } else {
-    apiResponse.error = {
-      code: "500",
-      message: `An unknown error occurred: ${error.message}`,
-      errors: [
-        {
-          domain: "Prisma",
-          reason: "UnknownError",
-          message: "An unknown error occurred",
-        },
-      ],
+    const customError:CustomErrorMessage = {
+      espectedFrom: "Prisma",
+      message: "UnknownError",
     };
-  }
+    customErrorMessages.push(customError)
+  }}
 };
 
 export default prismaErrorHandler;

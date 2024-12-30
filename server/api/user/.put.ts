@@ -32,8 +32,8 @@ export default defineEventHandler(async (event) => {
       apiResponse,
     };
   }
-  await createRecord("usr", newUser, apiResponse,customErrorMessages);
-  if (customErrorMessages) {
+  await createRecord("user", newUser, apiResponse,customErrorMessages);
+  if (customErrorMessages.length > 0) {
     ApiResponseHandler(event,customErrorMessages);
   }
   if (!apiResponse.error) {

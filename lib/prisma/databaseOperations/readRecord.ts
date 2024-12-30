@@ -13,7 +13,7 @@ const readRecord = async (
   table: string,
   id: string,
   apiResponse: ApiResponse,
-  errorMessages: CustomErrorMessage[]
+  customErrorMessages: CustomErrorMessage[]
 ) => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
@@ -21,7 +21,7 @@ const readRecord = async (
       message: "TableNotFound",
       table: table
     };
-    errorMessages.push(error)
+    customErrorMessages.push(error)
     return
   }
   let dbResponse;
@@ -32,7 +32,7 @@ const readRecord = async (
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error, apiResponse, table, id);
+    return prismaErrorHandler(error, table, customErrorMessages,id);
   }
   if (!dbResponse) {
     apiResponse.error = {
