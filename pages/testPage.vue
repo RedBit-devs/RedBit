@@ -1,18 +1,21 @@
 <template>
-    <div>
+    <div class="content">
+        <ServerSelector />
         <ChatSelector />
     </div>
 </template>
 
 <script setup>
-import ChatSelector from '../components/ChatSelector.vue';
-import FriendListCard from '../components/FriendListCard.vue';
-import FriendListSelfCard from '../components/FriendListSelfCard.vue';
-
+import ServerSelector from '~/components/ServerSelector.vue';
+import ChatSelector from '~/components/ChatSelector.vue';
 
 definePageMeta({
     layout: false
 })
 </script>
 
-<style scoped></style>
+<style>
+.content {
+    display: flex;
+}
+</style>

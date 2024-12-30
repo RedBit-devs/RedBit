@@ -26,7 +26,7 @@
     flex-direction: column;
     background-color: var(--clr-ui-secondary);
     min-height: 100vh;
-
+    width: 5.75rem;
 }
 
 .logo img {

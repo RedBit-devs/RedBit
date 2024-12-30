@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="friends">
         <FriendListCard />
         <FriendListCard />
         <FriendListCard />
@@ -15,4 +15,10 @@ import FriendListCard from './FriendListCard.vue';
 
 </script>
 
-<style scoped></style>
+<style>
+.friends {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+}
+</style>

@@ -14,10 +14,11 @@
 
 <style scoped>
 .friend {
+    width: max-content;
     display: flex;
-    gap: .7rem;
+    gap: 1rem;
     align-items: center;
-    margin: 1rem 0 1rem 0;
+    margin: .6rem 0 .6rem .6rem;
     font-weight: 300;
 
 }

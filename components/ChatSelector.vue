@@ -1,12 +1,14 @@
 <template>
     <div class="container">
-        <div class="searchFirend">
-            <input type="text" placeholder="Keresés a barátok közt">
+        <div class="friendContent">
+            <div class="searchFriend">
+                <input type="text" placeholder="Keresés a barátok közt">
+            </div>
+            <div class="chatList">
+                <FriendList />
+            </div>
+            <FriendListSelfCard />
         </div>
-        <div class="chatList">
-            <FriendList />
-        </div>
-        <FriendListSelfCard />
     </div>
 </template>
 
@@ -19,18 +21,19 @@ import FriendListSelfCard from './FriendListSelfCard.vue';
 
 <style scoped>
 .container {
-    height: 100% !important;
     background-color: var(--clr-ui-primary);
-    width: fit-content;
+    width: 21.438rem;
+}
 
+.friendContent {
+    display: flex;
+    flex-direction: column;
 }
 
 
-.chatList {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: 1rem;
+.searchFriend {
+    margin: .3rem;
+    text-align: center;
 }
 
 input {
@@ -38,7 +41,8 @@ input {
     border: none;
     border-radius: var(--border-rounded);
     height: 2.875rem;
-    padding: .3rem;
+    text-align: center;
     color: white;
+    width: 18.75rem;
 }
 </style>
