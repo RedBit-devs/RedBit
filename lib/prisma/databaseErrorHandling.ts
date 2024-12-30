@@ -11,7 +11,7 @@ import { Prisma } from "@prisma/client";
  */
 const prismaErrorHandler = async (
   error: any,
-ch  table: string,
+  table: string,
   customErrorMessages: CustomErrorMessage[],
   id?: string,
 ) => {
