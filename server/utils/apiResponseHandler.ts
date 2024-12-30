@@ -3,7 +3,8 @@ const errorReasonAndMessages ={
   EmailValidationFailed : "Email is not valid",
   UsernameValidationFailed : "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
   FirstNameValidationFailed:"First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-  LastNameValidationFailed:"Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters"
+  LastNameValidationFailed:"Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+  TableNotFound:"Can't read from the {table} table because it doesn't exist"
 }
 
 const errorHttpStatusCodes = {
@@ -22,7 +23,15 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
     return
   }
   if (customErrorMessages[0].espectedFrom ==="Prisma") {
-    //future prisma api response handling
+    const reason = customErrorMessages[0].message;
+    if (reason in errorReasonAndMessages) {
+      apiResponse.error.errors.push({
+        domain: "Prisma",
+        reason: reason,
+        message:
+          errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages].replace("{table}",customErrorMessages[0].table as string)
+      });
+  }
   }else if(customErrorMessages[0].espectedFrom ==="User"){
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].message;

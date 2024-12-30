@@ -15,21 +15,6 @@ const prismaErrorHandler = async (
   table: string,
   id?: string,
 ) => {
-  if(error.name == "no table")
-  {
-    apiResponse.error = {
-      code: "400",
-      message: `Can't read from the ${table} table because it doesn't exist`,
-      errors: [
-        {
-          domain: "Prisma",
-          reason: "TableNotFound",
-          message: `Can't read from the ${table} table because it doesn't exist`,
-        },
-      ],
-    };
-    return
-  }
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === "P2002") {
       apiResponse.error = {

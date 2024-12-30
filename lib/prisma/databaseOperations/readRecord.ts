@@ -12,12 +12,17 @@ import prismaErrorHandler from "../databaseErrorHandling";
 const readRecord = async (
   table: string,
   id: string,
-  apiResponse: ApiResponse
+  apiResponse: ApiResponse,
+  errorMessages: CustomErrorMessage[]
 ) => {
   if (!(await checkTable(table))){
-    let error = new Error();
-    error.name = "no table";
-    return prismaErrorHandler(error, apiResponse, table);
+    const error:CustomErrorMessage = {
+      espectedFrom: "Prisma",
+      message: "TableNotFound",
+      table: table
+    };
+    errorMessages.push(error)
+    return
   }
   let dbResponse;
   try {

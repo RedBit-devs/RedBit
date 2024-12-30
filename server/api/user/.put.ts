@@ -32,7 +32,10 @@ export default defineEventHandler(async (event) => {
       apiResponse,
     };
   }
-  await createRecord("user", newUser, apiResponse);
+  await createRecord("usr", newUser, apiResponse,customErrorMessages);
+  if (customErrorMessages) {
+    ApiResponseHandler(event,customErrorMessages);
+  }
   if (!apiResponse.error) {
     setResponseStatus(event, 201);
   }
