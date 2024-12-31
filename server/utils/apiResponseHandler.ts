@@ -13,13 +13,14 @@ const errorReasonAndMessages ={
 
 const errorHttpStatusCodes = {
   452: "UserValidationFailed",
+  453: "PrismaResponseFailed",
 }
 
 const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[]) => {
   const apiResponse = event.context.apiResponse;
   apiResponse.error = {
     code: "400",
-    message: "Some errors occured",
+    message: "Bad request",
     errors: [],
   }
   if (customErrorMessages.length == 0) 
@@ -28,6 +29,7 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
   }
   if (customErrorMessages[0].espectedFrom ==="Prisma") {
     const reason = customErrorMessages[0].message;
+    const httpcode = 453
     if (reason in errorReasonAndMessages) {
       apiResponse.error.errors.push({
         domain: "Prisma",
@@ -35,8 +37,12 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
         message:
           errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages].replace("{table}",customErrorMessages[0].table as string).replace("{target}",customErrorMessages[0].target as string),
       });
+
+      event.node.res.statusCode = httpcode,
+      event.node.res.statusMessage = errorHttpStatusCodes[httpcode as keyof typeof errorHttpStatusCodes]
   }
-  }else if(customErrorMessages[0].espectedFrom ==="User"){
+  }else if(customErrorMessages[0].espectedFrom === "User"){
+    const httpcode = 452
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].message;
       if (reason in errorReasonAndMessages) {
@@ -47,6 +53,8 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
             errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages],
         });
     }
+    event.node.res.statusCode = httpcode,
+    event.node.res.statusMessage = errorHttpStatusCodes[httpcode as keyof typeof errorHttpStatusCodes]
   }
   } else{
     apiResponse.error = {
