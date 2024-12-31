@@ -27,18 +27,22 @@
 
 <style scoped>
 .selfContainer {
+
     display: flex;
     align-items: center;
-    gap: .7rem;
+    gap: 1.5rem;
     padding-inline: .5rem;
     position: absolute;
     bottom: 0;
-    padding: 1rem 0 1rem 1rem;
+    padding: 1rem 1rem .5rem 1rem;
+    align-self: center;
 }
 
 .items {
     display: flex;
     gap: 1rem;
+    justify-content: center;
+    align-items: center;
 
 }
 
@@ -47,7 +51,12 @@
 }
 
 img {
-    height: 2.875rem;
+    height: 4rem;
     border-radius: 50%;
+}
+
+span {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 </style>

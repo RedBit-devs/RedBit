@@ -1,7 +1,6 @@
 <template>
     <div class="content">
-        <ServerSelector />
-        <ChatSelector />
+        <ChatInputFiled />
     </div>
 </template>
 
