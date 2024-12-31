@@ -29,7 +29,7 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
   }
   if (customErrorMessages[0].espectedFrom ==="Prisma") {
     const reason = customErrorMessages[0].message;
-    const httpcode = 453
+    const httpCode = 453
     if (reason in errorReasonAndMessages) {
       apiResponse.error.errors.push({
         domain: "Prisma",
@@ -38,11 +38,10 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
           errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages].replace("{table}",customErrorMessages[0].table as string).replace("{target}",customErrorMessages[0].target as string),
       });
 
-      event.node.res.statusCode = httpcode,
-      event.node.res.statusMessage = errorHttpStatusCodes[httpcode as keyof typeof errorHttpStatusCodes]
+      setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
   }
   }else if(customErrorMessages[0].espectedFrom === "User"){
-    const httpcode = 452
+    const httpCode = 452
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].message;
       if (reason in errorReasonAndMessages) {
@@ -53,8 +52,7 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
             errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages],
         });
     }
-    event.node.res.statusCode = httpcode,
-    event.node.res.statusMessage = errorHttpStatusCodes[httpcode as keyof typeof errorHttpStatusCodes]
+    setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
   }
   } else{
     apiResponse.error = {
@@ -72,6 +70,19 @@ const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
   event.context.apiResponse = apiResponse
 }
 
+const setHttpCodeAndMessage = (event: any,apiResponse: ApiResponse,httpCode: number, message: string) => {
+  if (!httpCode || !message) {
+    return
+  }
+  if (apiResponse.error) {
+    apiResponse.error.code = httpCode.toString()
+    apiResponse.error.message = message
+  }
+  if (event.node.res) {
+    event.node.res.statusCode = httpCode
+    event.node.res.statusMessage = message
+  }
+}
 export {
   ApiResponseHandler
 }
