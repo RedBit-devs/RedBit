@@ -12,7 +12,8 @@ const NAME_PATTERN: RegExp = /^[a-zA-Z]{3,35}/
  * and uses it to hash the provided password. The resulting hash is returned.
  *
  * @param {string} password - The password to be hashed.
- * @returns {Promise<string>} - A promise that resolves to the hashed password.
+ * @param {CustomErrorMessage[]} customErrorMessages - The array of customErrorMessages to be filled with the error message if the hashing fails.
+ * @returns {Promise<string>} - A promise that resolves to the hashed password or an empty string.
  */
 const hashPassword = async (password: string,customErrorMessages: CustomErrorMessage[]): Promise<string> => {
   const saltRounds = 12;
@@ -110,15 +111,14 @@ const isNameValid = async (name: string): Promise<boolean> => {
 /**
  * Validates a user data for creation.
  *
+ * Checks if the user object has all the required parameters.
  * Checks if the password is valid according to the password requirements.
  * Checks if the email is valid according to the email requirements.
  * Checks if the username is valid according to the username requirements.
  * Checks if the first name and last name are valid according to the name requirements.
  *
- * If any of the checks fail, an ApiResponse object is populated with an error message and the reason for the failure.
- *
- * @param {User} newUser - The user to be validated.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the error message if any of the checks fail.
+ * @param {any} event - The event object containing user data to validate, and context for the API response.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any validation failures.
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the checks passed or not.
  */
 const userValidation = async (
@@ -181,6 +181,12 @@ const userValidation = async (
   return isValid;
 };
 
+/**
+ * Checks if the user object has all the required parameters.
+ *
+ * @param {User} newUser - The user object to be checked.
+ * @returns {boolean} - A boolean indicating if the user object has all the required parameters.
+ */
 const paramsCheck = (newUser: User): boolean =>{
   let isCredentialsValid = true
   if (!newUser.password) {
