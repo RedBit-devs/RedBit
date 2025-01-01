@@ -19,14 +19,16 @@ const errorHttpStatusCodes = {
 
 const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[]) => {
   const apiResponse = event.context.apiResponse;
+  if (customErrorMessages.length == 0)
+  {
+    const httpCode = 200
+    setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
+    return
+  }
   apiResponse.error = {
     code: "400",
     message: "Bad request",
     errors: [],
-  }
-  if (customErrorMessages.length == 0) 
-  {
-    return
   }
   if (customErrorMessages[0].espectedFrom ==="Prisma") {
     const reason = customErrorMessages[0].message;
@@ -56,6 +58,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
     setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
   }
   } else{
+    const httpCode = 500
     apiResponse.error = {
       code: "500",
       message: `An unknown error occurred`,
@@ -67,6 +70,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
         },
       ],
     };
+    setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
   }
   event.context.apiResponse = apiResponse
 }

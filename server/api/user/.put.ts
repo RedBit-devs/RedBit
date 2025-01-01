@@ -5,7 +5,7 @@ import {apiResponseHandler} from "~/server/utils/apiResponseHandler";
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
   const apiResponse = {} as ApiResponse;
-  apiResponse.context = "CreateUser";
+  apiResponse.context = "UserCreate";
   apiResponse.method = "PUT";
   apiResponse.params = {
     username: newUser.username,
@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
   };
   const customErrorMessages: CustomErrorMessage[] = [];
   event.context.apiResponse = apiResponse;
-  setResponseStatus(event, 400);
   if (!(await userValidation.userValidation(event,customErrorMessages))) {
     apiResponseHandler(event,customErrorMessages);
     return {
@@ -36,9 +35,6 @@ export default defineEventHandler(async (event) => {
   await createRecord("user", newUser, apiResponse,customErrorMessages);
   if (customErrorMessages.length > 0) {
     apiResponseHandler(event,customErrorMessages);
-  }
-  if (!apiResponse.error) {
-    setResponseStatus(event, 201);
   }
   return {
     apiResponse,
