@@ -4,6 +4,7 @@ const errorReasonAndMessages ={
   UsernameValidationFailed : "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
   FirstNameValidationFailed:"First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
   LastNameValidationFailed:"Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
+  PasswordHashingFailed:"Some error occurred while hashing the password",
   TableNotFound:"Can't read from the {table} table because it doesn't exist",
   UniqueConstraintFailed: "The unique constraint failed on the {table} table with the following values: {target}",
   IdentifierNotFound: "Oparation failed on {table} table because the record with  id: {target} doesn't exist",
@@ -16,7 +17,7 @@ const errorHttpStatusCodes = {
   453: "PrismaResponseFailed",
 }
 
-const ApiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[]) => {
+const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[]) => {
   const apiResponse = event.context.apiResponse;
   apiResponse.error = {
     code: "400",
@@ -84,5 +85,5 @@ const setHttpCodeAndMessage = (event: any,apiResponse: ApiResponse,httpCode: num
   }
 }
 export {
-  ApiResponseHandler
+  apiResponseHandler
 }

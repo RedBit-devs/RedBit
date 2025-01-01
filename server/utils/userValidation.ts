@@ -14,7 +14,7 @@ const NAME_PATTERN: RegExp = /^[a-zA-Z]{3,35}/
  * @param {string} password - The password to be hashed.
  * @returns {Promise<string>} - A promise that resolves to the hashed password.
  */
-const hashPassword = async (password: string,apiResponse: ApiResponse): Promise<string> => {
+const hashPassword = async (password: string,customErrorMessages: CustomErrorMessage[]): Promise<string> => {
   const saltRounds = 12;
   const salt = await bcrypt.genSalt(saltRounds);
   try {
@@ -22,17 +22,11 @@ const hashPassword = async (password: string,apiResponse: ApiResponse): Promise<
     await hash.toString();
     return hash;
   } catch (e) {
-    apiResponse.error = {
-      code: "PasswordHashingFailed",
-      message: "Password hashing failed",
-      errors: [
-        {
-          domain: "users",
-          reason: "PasswordHashingFailed",
-          message: "Password hashing failed",
-        },
-      ],
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      message: "PasswordHashingFailed"
     }
+    customErrorMessages.push(error)
   }
   return "";
 };
