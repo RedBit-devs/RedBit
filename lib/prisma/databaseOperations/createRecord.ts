@@ -5,11 +5,12 @@ import prismaErrorHandler from "../databaseErrorHandling";
 /**
  * Creates a new record in the given table with the given data.
  *
- * If the table does not exist, an ApiResponse object is populated with an error message and the reason for the failure.
+ * If the table does not exist creates a new custom error.
  *
  * @param {string} table - The name of the table to create in.
  * @param {T} data - The data to be used for the create.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the error message if any of the checks fail.
+ * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @returns {Promise<void>}
  */
 const createRecord = async <T>(

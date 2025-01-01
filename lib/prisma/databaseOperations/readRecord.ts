@@ -4,9 +4,13 @@ import prismaErrorHandler from "../databaseErrorHandling";
 
 /**
  * Read a single record in the given table with the given id.
+ * 
+ * If the table does not exist creates a new custom error.
+ * 
  * @param table The name of the table to update.
  * @param id The id of the record to be updated.
- * @param {ApiResponse} apiResponse The ApiResponse to populate with error or data information.
+ * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @returns {Promise<void>}
  */
 const readRecord = async (
