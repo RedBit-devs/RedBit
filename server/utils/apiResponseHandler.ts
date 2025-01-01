@@ -18,6 +18,21 @@ const errorHttpStatusCodes = {
   453: "PrismaResponseFailed",
 }
 
+/**
+ * Handles API response creation based on custom error messages and event context.
+ *
+ * Depending on the presence and source of custom error messages, the function constructs
+ * an appropriate ApiResponse object with corresponding HTTP status codes and error details.
+ *
+ * - If no custom errors are present, sets a success response with HTTP 200.
+ * - If errors originate from Prisma, sets an HTTP 453 response with Prisma-related error details.
+ * - If errors originate from User validation, sets an HTTP 452 response with user-related error details.
+ * - For unknown errors, sets an HTTP 500 response with a generic error message.
+ *
+ * @param {any} event - The event object containing the context and ApiResponse reference.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array of error messages detailing the issues encountered.
+ */
+
 const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[]) => {
   const apiResponse = event.context.apiResponse;
   if (customErrorMessages.length == 0)
@@ -76,6 +91,14 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
   event.context.apiResponse = apiResponse
 }
 
+/**
+ * Sets the http code and message of the response.
+ *
+ * @param {any} event - The event object containing the context and ApiResponse reference and the node response.
+ * @param {ApiResponse} apiResponse - The ApiResponse object to set the http code and message on.
+ * @param {number} httpCode - The http status code to set.
+ * @param {string} message - The http status message to set.
+ */
 const setHttpCodeAndMessage = (event: any,apiResponse: ApiResponse,httpCode: number, message: string) => {
   if (!httpCode || !message) {
     return
