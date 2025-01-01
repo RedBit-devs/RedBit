@@ -129,7 +129,15 @@ const userValidation = async (
   const newUser: User = event.context.apiResponse.params;
 
   let isValid = true;
-  if (!(await isPasswordValid(newUser.password))) {
+  if (!paramsCheck(newUser)) {
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      message: "MissingParameters"
+    };
+    customErrorMessages.push(error)
+    isValid = false;
+  }
+  if (newUser.password && !(await isPasswordValid(newUser.password))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
       message: "PasswordValidationFailed"
@@ -137,7 +145,7 @@ const userValidation = async (
     customErrorMessages.push(error)
     isValid = false;
   }
-  if (!(await isEmailValid(newUser.email))) {
+  if (newUser.email && !(await isEmailValid(newUser.email))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
       message: "EmailValidationFailed"
@@ -145,7 +153,7 @@ const userValidation = async (
     isValid = false;
     customErrorMessages.push(error)
   }
-  if (!(await isUsernameValid(newUser.username))) {
+  if (newUser.username && !(await isUsernameValid(newUser.username))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
       message: "UsernameValidationFailed"
@@ -153,7 +161,7 @@ const userValidation = async (
     isValid = false;
     customErrorMessages.push(error)
   }
-  if (!(await isNameValid(newUser.first_name))) {
+  if (newUser.first_name && !(await isNameValid(newUser.first_name))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
       message: "FirstNameValidationFailed"
@@ -161,7 +169,7 @@ const userValidation = async (
     isValid = false;
     customErrorMessages.push(error)
   }
-  if (!(await isNameValid(newUser.last_name))) {
+  if (newUser.last_name && !(await isNameValid(newUser.last_name))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
       message: "LastNameValidationFailed"
@@ -172,6 +180,26 @@ const userValidation = async (
   event.context.apiResponse = apiResponse;
   return isValid;
 };
+
+const paramsCheck = (newUser: User): boolean =>{
+  let isCredentialsValid = true
+  if (!newUser.password) {
+    isCredentialsValid = false
+  }
+  if (!newUser.email) {
+    isCredentialsValid = false
+  }
+  if (!newUser.username) {
+    isCredentialsValid = false
+  }
+  if (!newUser.first_name) {
+    isCredentialsValid = false
+  }
+  if (!newUser.last_name) {
+    isCredentialsValid = false
+  }
+  return isCredentialsValid
+}
 
 export default {
   userValidation,
