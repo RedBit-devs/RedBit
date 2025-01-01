@@ -1,11 +1,12 @@
 import { Prisma } from "@prisma/client";
 
 /**
- * Handles Database specific errors and converts them into an ApiResponse object with an error that contains the error message and reason.
- *
+ * Handles Prisma errors and converts them into custom error messages that can be
+ * processed by the API response handler.
+ * 
  * @param {any} error The error to be handled.
- * @param {ApiResponse} apiResponse The ApiResponse object to be populated with the error message and reason.
  * @param {string} table The name of the table that the operation was performed on.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @param {string} [id] The id of the record that the operation was performed on.
  * @returns {Promise<void>}
  */
