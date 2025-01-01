@@ -35,17 +35,13 @@ const readRecord = async (
     return prismaErrorHandler(error, table, customErrorMessages,id);
   }
   if (!dbResponse) {
-    apiResponse.error = {
-      code: "400",
-      message: `Can't read from ${table} table because the record with  id: ${id} doesn't exist`,
-      errors: [
-        {
-          domain: "Prisma",
-          reason: "identifierNotFound",
-          message: `Can't read from ${table} table because the record with  id: ${id} doesn't exist`,
-        },
-      ],
+    const customError:CustomErrorMessage = {
+      espectedFrom: "Prisma",
+      message: "IdentifierNotFound",
+      table: table,
+      target: id
     };
+    customErrorMessages.push(customError)
     return ;
   }
   apiResponse.data = {

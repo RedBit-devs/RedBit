@@ -27,7 +27,8 @@ export default defineEventHandler(async (event) => {
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await userValidation.hashPassword(newUser.password,customErrorMessages);
-  if (apiResponse.error) {
+  if (customErrorMessages.length > 0) {
+    apiResponseHandler(event,customErrorMessages);
     return {
       apiResponse,
     };
