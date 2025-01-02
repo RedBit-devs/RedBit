@@ -1,40 +1,71 @@
 <template>
-    <div class="wrapper">
-        <NuxtLink to="/" id="goBack">
-            <Icon name="mdi:arrow-left-thick" style="color: white;" size="400%" />
-        </NuxtLink>
-        <div class="content">
-            <div class=" login-box">
-                <h1 class="login-title">Login</h1>
-                <div class="input-field">
-                    <div class="input">
-                        <label>Email</label>
-                        <input type="text" placeholder="Type here" id="email">
+        <div class="wrapper">
+            <NuxtLink to="/" id="goBack">
+                <Icon name="mdi:arrow-left-thick" style="color: white;" size="400%" />
+            </NuxtLink>
+            <div class="content">
+                <div class=" login-box">
+                    <h1 class="login-title">Login</h1>
+                    <div class="input-field">
+                        <div class="input">
+                            <label>Email</label>
+                            <input ref="emailRef" type="email" value="johndodddexampl@e.com" placeholder="Type here"
+                                id="email">
+                        </div>
+                        <div class="input">
+                            <label>Password</label>
+                            <input ref="passwordRef" type="password" value="pasaSas#d1" placeholder="Type here"
+                                id="password">
+                        </div>
                     </div>
-                    <div class="input">
-                        <label>Password</label>
-                        <input type="password" placeholder="Type here" id="password">
-                    </div>
-                </div>
-                <div class="submit">
-                    <button class="btn ui-secondary"> Submit</button>
-                </div>
+                    <div class="submit">
+                        <button @click="sendLoginRequest()" class="btn ui-secondary"> Submit</button>
 
-            </div>
-            <div class="register">
-                <label>Not registered yet?</label>
-                <NuxtLink to="/registerPage" class="btn secondary">
-                    Register
-                </NuxtLink>
+                        <NuxtLink to="test">test</NuxtLink>
+                    </div>
+
+                </div>
+                <div class="register">
+                    <label>Not registered yet?</label>
+                    <NuxtLink to="/registerPage" class="btn secondary">
+                        Register
+                    </NuxtLink>
+                </div>
             </div>
         </div>
-    </div>
+
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({
     layout: false
 })
+
+const emailRef = ref(null)
+const passwordRef = ref(null)
+const { token, setToken } = useToken()
+
+const sendLoginRequest = async () => {
+
+    if (!emailRef.value.value || !passwordRef.value.value) return;
+
+    const response: ApiResponse = await $fetch("/api/user/login", {
+
+        method: 'POST',
+        body: {
+            email: emailRef.value.value,
+            password: passwordRef.value.value
+        }
+    })
+
+    setToken(response.data.items[0].token.split(" ")[1]);
+
+
+    //TODO this should navigate to the chat
+    navigateTo('/test')
+
+}
+
 </script>
 
 <style scoped>
