@@ -20,8 +20,6 @@
                     </div>
                     <div class="submit">
                         <button @click="sendLoginRequest()" class="btn ui-secondary"> Submit</button>
-
-                        <NuxtLink to="test">test</NuxtLink>
                     </div>
 
                 </div>
