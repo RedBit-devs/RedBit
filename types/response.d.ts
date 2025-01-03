@@ -20,7 +20,7 @@ type ApiResponse =
         totalPages?: Number;
         nextLink?: String;
         previousLink?: String;
-        items: Array?;
+        items: any[];
       };
       error?: never;
     }
