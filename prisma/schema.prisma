@@ -125,6 +125,7 @@ model Chat_Group {
   server_id String
 
   Server Server @relation(fields: [server_id], references: [id])
+
   @@map("chat_groups")
 }
 
@@ -146,31 +147,24 @@ model Chat_Room {
 }
 
 model Message {
-  id           String       @id @default(cuid())
-  text         String
-  created_at   DateTime     @default(now())
-  updated_at   DateTime     @default(now()) @updatedAt
-  type         Message_Type
-  user_id      String
-  chat_Room_id String
+  id         String       @id @default(cuid())
+  text       String
+  created_at DateTime     @default(now())
+  updated_at DateTime     @default(now()) @updatedAt
+  type       Message_Type
 
-  User      User      @relation(fields: [user_id], references: [id])
-  Chat_Room Chat_Room @relation(fields: [chat_Room_id], references: [id])
-  Message   Reply[]   @relation("message")
-  Reply     Reply[]   @relation("reply")
+  user_id      String  
+  chat_room_id String  
+  reply_to_id  String? 
+
+  Message Message? @relation("reply", fields: [reply_to_id], references: [id]) //The referenced message
+
+  Replyes Message[] @relation("reply") //The list of replyes to this message
+
+  User      User      @relation(fields: [user_id], references: [id]) //reference to the author of the message
+  Chat_Room Chat_Room @relation(fields: [chat_room_id], references: [id]) //reference to the chat room which has the message
 
   @@map("messages")
-}
-
-model Reply {
-  repply_id  String
-  message_id String
-
-  Reply   Message @relation("reply", fields: [repply_id], references: [id])
-  Message Message @relation("message", fields: [message_id], references: [id])
-
-  @@id([repply_id, message_id])
-  @@map("replies")
 }
 
 model Ban {
