@@ -1,6 +1,6 @@
 type CustomErrorMessage = {
     espectedFrom: string;
-    reason: CustomErrorReasons;
+    reason: string;
     table?: string;
     target?: unknown;
 }
