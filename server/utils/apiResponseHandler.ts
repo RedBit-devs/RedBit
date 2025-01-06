@@ -38,11 +38,10 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
   if (customErrorMessages.length == 0)
   {
     const httpCode = 200
-    const message = "Success"
+    const message = "Ok"
+    event.setResponseStatus(event, httpCode)
     apiResponse.error.code = httpCode.toString()
     apiResponse.error.message = message
-    event.node.res.statusCode = httpCode
-    event.node.res.statusMessage = message
   }
   apiResponse.error = {
     code: "400",
