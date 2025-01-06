@@ -34,7 +34,7 @@
 
 </template>
 
-<script setup lang="ts">
+<script setup >
 definePageMeta({
     layout: false
 })
@@ -47,7 +47,7 @@ const sendLoginRequest = async () => {
 
     if (!emailRef.value.value || !passwordRef.value.value) return;
 
-    const response: ApiResponse = await $fetch("/api/user/login", {
+    const response = await $fetch("/api/user/login", {
 
         method: 'POST',
         body: {
