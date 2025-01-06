@@ -52,6 +52,8 @@ model User {
   messages       Message[]
   bans           Ban[]
   roles          User_Role_Connect[]
+
+  @@map("users")
 }
 
 model Friend_Connect {
@@ -65,6 +67,7 @@ model Friend_Connect {
   User2 User @relation("friended_by", fields: [user2_id], references: [id])
 
   @@id([user1_id, user2_id])
+  @@map("friends_connect")
 }
 
 model Server {
@@ -83,6 +86,8 @@ model Server {
   owner_id String
 
   Owner User @relation(fields: [owner_id], references: [id])
+
+  @@map("servers")
 }
 
 model Invite {
@@ -93,6 +98,8 @@ model Invite {
   server_id String
 
   Server Server @relation(fields: [server_id], references: [id])
+
+  @@map("invites")
 }
 
 model Server_User_Connect {
@@ -105,6 +112,7 @@ model Server_User_Connect {
   Server Server @relation(fields: [server_id], references: [id])
 
   @@id([server_id, user_id])
+  @@map("server_user_connect")
 }
 
 model Chat_Group {
@@ -117,6 +125,7 @@ model Chat_Group {
   server_id String
 
   Server Server @relation(fields: [server_id], references: [id])
+  @@map("chat_groups")
 }
 
 model Chat_Room {
@@ -132,6 +141,8 @@ model Chat_Room {
   chat_Group_id String
 
   Chat_Group Chat_Group @relation(fields: [chat_Group_id], references: [id])
+
+  @@map("chat_rooms")
 }
 
 model Message {
@@ -147,6 +158,8 @@ model Message {
   Chat_Room Chat_Room @relation(fields: [chat_Room_id], references: [id])
   Message   Reply[]   @relation("message")
   Reply     Reply[]   @relation("reply")
+
+  @@map("messages")
 }
 
 model Reply {
@@ -157,6 +170,7 @@ model Reply {
   Message Message @relation("message", fields: [message_id], references: [id])
 
   @@id([repply_id, message_id])
+  @@map("replies")
 }
 
 model Ban {
@@ -170,6 +184,7 @@ model Ban {
   User   User   @relation(fields: [user_id], references: [id])
 
   @@id([server_id, user_id])
+  @@map("bans")
 }
 
 model Role {
@@ -182,6 +197,8 @@ model Role {
   server_id String
 
   Server Server @relation(fields: [server_id], references: [id])
+
+  @@map("roles")
 }
 
 model User_Role_Connect {
@@ -192,4 +209,5 @@ model User_Role_Connect {
   User User @relation(fields: [user_id], references: [id])
 
   @@id([role_id, user_id])
+  @@map("user_role_connect")
 }
