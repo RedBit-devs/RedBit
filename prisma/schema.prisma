@@ -4,14 +4,20 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+/**
+ * About the nameing:
+ * - Every field starting with a lower letter is actually stored on the database
+ * - Every field starting with a capital letter is provided by the ORM
+ */
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  url       = env("DATABASE_URL") //URL used during the generic use of the database
+  directUrl = env("DIRECT_URL") //URL used during actions like `prisma migrate`
 }
 
 enum Visibility {
@@ -45,26 +51,27 @@ model User {
   password        String
   email_verified  Boolean  @default(false)
 
-  servers_joined Server_User_Connect[]
-  servers_owned  Server[]
-  friend_of      Friend_Connect[]      @relation("friend_of")
-  friended_by    Friend_Connect[]      @relation("friended_by")
-  messages       Message[]
-  bans           Ban[]
-  roles          User_Role_Connect[]
+  Servers_joined Server_User_Connect[] //List of servers joined by the user
+  Servers_owned  Server[] //List of servers owned by the user
+  Friend_of      Friend_Connect[]      @relation("friend_of") // These friend fields are a bit wierd basically both can reference the same thing "Friend_of" contains the users targeted by the friendships
+  Friended_by    Friend_Connect[]      @relation("friended_by") // ---*-*-*-*-*---- "Friended_by" contains the initiators of the frendships
+  Messages       Message[] //List of all messages sent by the user
+  Bans           Ban[]                 @relation("sufferer") //List of bans suffered by the user
+  Bans_created   Ban[]                 @relation("initiator") //List of bans created by the user
+  Roles          User_Role_Connect[] //List of roles assigned to the user
 
   @@map("users")
 }
 
 model Friend_Connect {
-  befriended_at DateTime?
+  befriended_at DateTime?   // Should only be set when the friendship has been made
   created_at    DateTime  @default(now())
 
   user1_id String
   user2_id String
 
-  User1 User @relation("friend_of", fields: [user1_id], references: [id])
-  User2 User @relation("friended_by", fields: [user2_id], references: [id])
+  User1 User @relation("friended_by", fields: [user1_id], references: [id])  // reference to the user who created the friendship
+  User2 User @relation("friend_of", fields: [user2_id], references: [id])   // reference to the user who is targeted by the friendship
 
   @@id([user1_id, user2_id])
   @@map("friends_connect")
@@ -77,15 +84,15 @@ model Server {
   description String?
   visibility  Visibility
 
-  servers     Server_User_Connect[]
-  bans        Ban[]
-  invites     Invite[]
-  chat_groups Chat_Group[]
-  roles       Role[]
-
   owner_id String
 
-  Owner User @relation(fields: [owner_id], references: [id])
+  Users_connected     Server_User_Connect[]  //list of users connected to the server
+  Bans        Ban[] // list of bans from this server
+  Invites     Invite[] // list of invites
+  Chat_groups Chat_Group[] // list of chat groups in the server
+  Roles       Role[] // list of roles on the server
+
+  Owner User @relation(fields: [owner_id], references: [id]) // reference to the owner of the server
 
   @@map("servers")
 }
@@ -97,7 +104,7 @@ model Invite {
 
   server_id String
 
-  Server Server @relation(fields: [server_id], references: [id])
+  Server Server @relation(fields: [server_id], references: [id]) // reference to the server to which the invitation belongs
 
   @@map("invites")
 }
@@ -108,8 +115,8 @@ model Server_User_Connect {
   server_id String
   user_id   String
 
-  User   User   @relation(fields: [user_id], references: [id])
-  Server Server @relation(fields: [server_id], references: [id])
+  User   User   @relation(fields: [user_id], references: [id]) // reference to the user in the connection
+  Server Server @relation(fields: [server_id], references: [id]) // reference to the server in the connection
 
   @@id([server_id, user_id])
   @@map("server_user_connect")
@@ -118,13 +125,12 @@ model Server_User_Connect {
 model Chat_Group {
   id   String @id @default(cuid())
   name String
-  //rules Int @default(0) ezzz így nem lesz jó, hacsak nem egyetlen álltalános rangot akarunk csatornánként
-
-  chat_rooms Chat_Room[]
 
   server_id String
 
-  Server Server @relation(fields: [server_id], references: [id])
+  Chat_rooms Chat_Room[]  // list of chatrooms connected to this group
+
+  Server Server @relation(fields: [server_id], references: [id]) // reference to the server where the chat group belongs
 
   @@map("chat_groups")
 }
@@ -135,13 +141,12 @@ model Chat_Room {
   type        Chat_Room_Type
   description String?
   archived    Boolean        @default(false)
-  //rules Int szintén
 
-  messages Message[]
+  chat_group_id String
 
-  chat_Group_id String
+  Messages Message[]  // list of messages in the chat room
 
-  Chat_Group Chat_Group @relation(fields: [chat_Group_id], references: [id])
+  Chat_Group Chat_Group @relation(fields: [chat_group_id], references: [id]) // reference to the chat group where the room belongs
 
   @@map("chat_rooms")
 }
@@ -153,14 +158,13 @@ model Message {
   updated_at DateTime     @default(now()) @updatedAt
   type       Message_Type
 
-  user_id      String  
-  chat_room_id String  
-  reply_to_id  String? 
-
-  Message Message? @relation("reply", fields: [reply_to_id], references: [id]) //The referenced message
+  user_id      String // id of the author of the message
+  chat_room_id String // id of the chat room of the message
+  reply_to_id  String? // if message is a reply give the referenced messages id as a value to this filed
 
   Replyes Message[] @relation("reply") //The list of replyes to this message
 
+  Message   Message?  @relation("reply", fields: [reply_to_id], references: [id]) //The referenced message
   User      User      @relation(fields: [user_id], references: [id]) //reference to the author of the message
   Chat_Room Chat_Room @relation(fields: [chat_room_id], references: [id]) //reference to the chat room which has the message
 
@@ -171,27 +175,30 @@ model Ban {
   created_at DateTime @default(now())
   reason     String
 
-  user_id   String
-  server_id String
+  sufferer_id  String
+  initiator_id String
+  server_id    String
 
-  Server Server @relation(fields: [server_id], references: [id])
-  User   User   @relation(fields: [user_id], references: [id])
+  Server    Server @relation(fields: [server_id], references: [id])  // reference to the server of origin of the ban
+  Sufferer  User   @relation("sufferer", fields: [sufferer_id], references: [id]) // reference to the target of the ban
+  Initiator User   @relation("initiator", fields: [initiator_id], references: [id]) // reference to the creator of the ban
 
-  @@id([server_id, user_id])
+  @@id([server_id, sufferer_id])
   @@map("bans")
 }
 
 model Role {
-  id          String @id @default(cuid())
+  id          String @unique @default(cuid())
   name        String
   permissions Int    @default(0)
 
-  users User_Role_Connect[]
-
   server_id String
 
-  Server Server @relation(fields: [server_id], references: [id])
+  Users User_Role_Connect[] // list of users which got this role
 
+  Server Server @relation(fields: [server_id], references: [id]) // reference to the server of the role
+
+  @@id([id, server_id])
   @@map("roles")
 }
 
@@ -199,8 +206,8 @@ model User_Role_Connect {
   role_id String
   user_id String
 
-  Role Role @relation(fields: [role_id], references: [id])
-  User User @relation(fields: [user_id], references: [id])
+  Role Role @relation(fields: [role_id], references: [id]) // reference to the role
+  User User @relation(fields: [user_id], references: [id]) // reference to the user who has the role
 
   @@id([role_id, user_id])
   @@map("user_role_connect")
