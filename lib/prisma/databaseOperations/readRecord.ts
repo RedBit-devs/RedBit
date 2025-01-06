@@ -22,7 +22,7 @@ const readRecord = async (
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
       espectedFrom: "Prisma",
-      message: "TableNotFound",
+      reason: "TableNotFound",
       table: table
     };
     customErrorMessages.push(error)
@@ -41,7 +41,7 @@ const readRecord = async (
   if (!dbResponse) {
     const customError:CustomErrorMessage = {
       espectedFrom: "Prisma",
-      message: "IdentifierNotFound",
+      reason: "IdentifierNotFound",
       table: table,
       target: id
     };

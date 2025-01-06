@@ -47,7 +47,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
     errors: [],
   }
   if (customErrorMessages[0].espectedFrom ==="Prisma") {
-    const reason = customErrorMessages[0].message;
+    const reason = customErrorMessages[0].reason;
     const httpCode = 453
     if (reason in errorReasonAndMessages) {
       apiResponse.error.errors.push({
@@ -62,7 +62,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
   }else if(customErrorMessages[0].espectedFrom === "User"){
     const httpCode = 452
     for (let i = 0; i < customErrorMessages.length; i++) {
-      const reason = customErrorMessages[i].message;
+      const reason = customErrorMessages[i].reason;
       if (reason in errorReasonAndMessages) {
         apiResponse.error.errors.push({
           domain: apiResponse.context,

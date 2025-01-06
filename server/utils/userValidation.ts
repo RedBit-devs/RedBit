@@ -25,7 +25,7 @@ const hashPassword = async (password: string,customErrorMessages: CustomErrorMes
   } catch (e) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
-      message: "PasswordHashingFailed"
+      reason: "PasswordHashingFailed"
     }
     customErrorMessages.push(error)
   }
@@ -132,7 +132,7 @@ const userValidation = async (
   if (!paramsCheck(newUser)) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
-      message: "MissingParameters"
+      reason: "MissingParameters"
     };
     customErrorMessages.push(error)
     isValid = false;
@@ -140,7 +140,7 @@ const userValidation = async (
   if (newUser.password && !(await isPasswordValid(newUser.password))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
-      message: "PasswordValidationFailed"
+      reason: "PasswordValidationFailed"
     };
     customErrorMessages.push(error)
     isValid = false;
@@ -148,7 +148,7 @@ const userValidation = async (
   if (newUser.email && !(await isEmailValid(newUser.email))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
-      message: "EmailValidationFailed"
+      reason: "EmailValidationFailed"
     };
     isValid = false;
     customErrorMessages.push(error)
@@ -156,7 +156,7 @@ const userValidation = async (
   if (newUser.username && !(await isUsernameValid(newUser.username))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
-      message: "UsernameValidationFailed"
+      reason: "UsernameValidationFailed"
     };
     isValid = false;
     customErrorMessages.push(error)
@@ -164,7 +164,7 @@ const userValidation = async (
   if (newUser.first_name && !(await isNameValid(newUser.first_name))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
-      message: "FirstNameValidationFailed"
+      reason: "FirstNameValidationFailed"
     };
     isValid = false;
     customErrorMessages.push(error)
@@ -172,7 +172,7 @@ const userValidation = async (
   if (newUser.last_name && !(await isNameValid(newUser.last_name))) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
-      message: "LastNameValidationFailed"
+      reason: "LastNameValidationFailed"
     };
     isValid = false;
     customErrorMessages.push(error)

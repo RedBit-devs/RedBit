@@ -24,7 +24,7 @@ const updateRecord = async <T>(
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
       espectedFrom: "Prisma",
-      message: "TableNotFound",
+      reason: "TableNotFound",
       table: table
     };
     customErrorMessages.push(error)

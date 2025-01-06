@@ -20,7 +20,7 @@ const prismaErrorHandler = async (
     if (error.code === "P2002") {
       const customError:CustomErrorMessage = {
         espectedFrom: "Prisma",
-        message: "UniqueConstraintFailed",
+        reason: "UniqueConstraintFailed",
         table: table,
         target: error.meta?.target
       };
@@ -28,7 +28,7 @@ const prismaErrorHandler = async (
     } else if (error.code === "P2025") {
       const customError:CustomErrorMessage = {
         espectedFrom: "Prisma",
-        message: "IdentifierNotFound",
+        reason: "IdentifierNotFound",
         table: table,
         target: id
       };
@@ -36,14 +36,14 @@ const prismaErrorHandler = async (
   } else if (error instanceof Prisma.PrismaClientValidationError) {
     const customError:CustomErrorMessage = {
       espectedFrom: "Prisma",
-      message: "ValidationError",
+      reason: "ValidationError",
       table: table,
     };
     customErrorMessages.push(customError)
   } else {
     const customError:CustomErrorMessage = {
       espectedFrom: "Prisma",
-      message: "UnknownError",
+      reason: "UnknownError",
     };
     customErrorMessages.push(customError)
   }}
