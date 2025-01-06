@@ -9,12 +9,12 @@
                     <div class="input-field">
                         <div class="input">
                             <label>Email</label>
-                            <input ref="emailRef" type="email" value="johndodddexampl@e.com" placeholder="Type here"
+                            <input ref="emailRef" type="email" placeholder="Type here"
                                 id="email">
                         </div>
                         <div class="input">
                             <label>Password</label>
-                            <input ref="passwordRef" type="password" value="pasaSas#d1" placeholder="Type here"
+                            <input ref="passwordRef" type="password" placeholder="Type here"
                                 id="password">
                         </div>
                     </div>
