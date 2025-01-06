@@ -29,6 +29,7 @@ enum Message_Type {
   file
   image
   video
+  deleted
 }
 
 model User {
