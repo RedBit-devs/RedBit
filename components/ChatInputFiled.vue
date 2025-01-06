@@ -19,6 +19,7 @@
     margin: .5rem;
     display: flex;
     gap: 1rem;
+    width: 100%;
 
 }
 
@@ -29,7 +30,7 @@
     border: none;
     padding: .5rem;
     color: var(--clr-text-primary);
-
+    width: 100%;
 }
 
 span {
