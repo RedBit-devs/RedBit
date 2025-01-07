@@ -4,11 +4,11 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-/**
- * About the nameing:
- * - Every field starting with a lower letter is actually stored on the database
- * - Every field starting with a capital letter is provided by the ORM
- */
+//
+// About the nameing:
+//  - Every field starting with a lower letter is actually stored on the database
+//  - Every field starting with a capital letter is provided by the ORM
+//  
 
 generator client {
   provider = "prisma-client-js"
