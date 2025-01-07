@@ -20,24 +20,18 @@ export default defineEventHandler(async (event) => {
   event.context.apiResponse = apiResponse;
   if (!(await userValidation(event,customErrorMessages))) {
     apiResponseHandler(event,customErrorMessages);
-    return {
-      apiResponse,
-    };
+    return apiResponse
   }
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await hashPassword(newUser.password,customErrorMessages);
   if (customErrorMessages.length > 0) {
     apiResponseHandler(event,customErrorMessages);
-    return {
-      apiResponse,
-    };
+    return apiResponse
   }
   await createRecord("user", newUser, apiResponse,customErrorMessages);
   if (customErrorMessages.length > 0) {
     apiResponseHandler(event,customErrorMessages);
   }
-  return {
-    apiResponse,
-  };
+  return apiResponse
 });
