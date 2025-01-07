@@ -206,6 +206,9 @@ const paramsCheck = (newUser: User): boolean =>{
   if (!newUser.last_name) {
     isCredentialsValid = false
   }
+  if (!newUser.birthdate) {
+    isCredentialsValid = false
+  }
   return isCredentialsValid
 }
 
