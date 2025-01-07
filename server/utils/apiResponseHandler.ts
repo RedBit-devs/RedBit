@@ -11,11 +11,13 @@ const errorReasonAndMessages ={
   IdentifierNotFound: "Oparation failed on {table} table because the record with  id: {target} doesn't exist",
   ValidationError: "Something was not in the correct format",
   UnknownError: "An unknown error occurred",
+  BadCustomErrorMessage: "The given custom error message is not in the expected custom error object,The given custom error reason was: {reason}",
 }
 
 const errorHttpStatusCodes = {
   452: "UserValidationFailed",
   453: "PrismaResponseFailed",
+  454: "BadCustomErrorMessage",
 }
 
 /**
@@ -60,6 +62,9 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
 
       setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
   }
+  else{
+    badCustomErrorMessage(event,apiResponse,customErrorMessages[0].reason)
+  }
   }else if(customErrorMessages[0].espectedFrom === "User"){
     const httpCode = 452
     for (let i = 0; i < customErrorMessages.length; i++) {
@@ -70,9 +75,14 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
           reason: reason,
           message:
             errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages],
-        });
+        }); 
     }
-    setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
+    else{
+      badCustomErrorMessage(event,apiResponse,customErrorMessages[i].reason)
+    }
+    if(!event.node.res.statusMessage){
+      setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
+    }
   }
   } else{
     const httpCode = 500
@@ -113,6 +123,24 @@ const setHttpCodeAndMessage = (event: any,apiResponse: ApiResponse,httpCode: num
     event.node.res.statusMessage = message
   }
 }
+const badCustomErrorMessage = (event: any,apiResponse: ApiResponse,reason: string) => {
+  const httpCode = 454
+  const actualReason = "BadCustomErrorMessage"
+  if(!apiResponse.error?.errors)
+  {
+    return
+  }
+  apiResponse.error.errors.push({
+    domain: event.context.apiResponse.context,
+    reason: actualReason,
+    message:
+    errorReasonAndMessages[actualReason as keyof typeof errorReasonAndMessages].replace("{reason}",reason),
+  });
+  //It is basicly an optional property and we set it only if it is not set because we don't want to override it
+  setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
+}
+
+
 export {
   apiResponseHandler
 }
