@@ -12,9 +12,10 @@ const NAME_PATTERN: RegExp = /^[a-zA-Z]{3,35}/
  * and uses it to hash the provided password. The resulting hash is returned.
  *
  * @param {string} password - The password to be hashed.
- * @returns {Promise<string>} - A promise that resolves to the hashed password.
+ * @param {CustomErrorMessage[]} customErrorMessages - The array of customErrorMessages to be filled with the error message if the hashing fails.
+ * @returns {Promise<string>} - A promise that resolves to the hashed password or an empty string.
  */
-const hashPassword = async (password: string,apiResponse: ApiResponse): Promise<string> => {
+const hashPassword = async (password: string,customErrorMessages: CustomErrorMessage[]): Promise<string> => {
   const saltRounds = 12;
   const salt = await bcrypt.genSalt(saltRounds);
   try {
@@ -22,17 +23,11 @@ const hashPassword = async (password: string,apiResponse: ApiResponse): Promise<
     await hash.toString();
     return hash;
   } catch (e) {
-    apiResponse.error = {
-      code: "PasswordHashingFailed",
-      message: "Password hashing failed",
-      errors: [
-        {
-          domain: "users",
-          reason: "PasswordHashingFailed",
-          message: "Password hashing failed",
-        },
-      ],
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      reason: "PasswordHashingFailed"
     }
+    customErrorMessages.push(error)
   }
   return "";
 };
@@ -116,91 +111,96 @@ const isNameValid = async (name: string): Promise<boolean> => {
 /**
  * Validates a user data for creation.
  *
+ * Checks if the user object has all the required parameters.
  * Checks if the password is valid according to the password requirements.
  * Checks if the email is valid according to the email requirements.
  * Checks if the username is valid according to the username requirements.
  * Checks if the first name and last name are valid according to the name requirements.
  *
- * If any of the checks fail, an ApiResponse object is populated with an error message and the reason for the failure.
- *
- * @param {User} newUser - The user to be validated.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the error message if any of the checks fail.
+ * @param {any} event - The event object containing user data to validate, and context for the API response.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any validation failures.
+ * @param {boolean} isNewUser - A boolean indicating if the user is being created or not.
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the checks passed or not.
  */
 const userValidation = async (
-  newUser: User,
-  apiResponse: ApiResponse
+  event: any,
+  customErrorMessages: CustomErrorMessage[],
 ): Promise<boolean> => {
-  (apiResponse as ApiResponse).error = {
-    code: "",
-    message: "",
-    errors: [],
-  };
-
+  const apiResponse:ApiResponse = event.context.apiResponse;
+  const user: User = event.context.apiResponse.params;
   let isValid = true;
-  if (!(await isPasswordValid(newUser.password))) {
+  if (paramsCheck(user)) {
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      reason: "MissingParameters"
+    };
+    customErrorMessages.push(error)
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "PasswordValidationFailed",
-      message:
-        "Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
-    });
   }
-  if (!(await isEmailValid(newUser.email))) {
+  if (user.password && !(await isPasswordValid(user.password))) {
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      reason: "PasswordValidationFailed"
+    };
+    customErrorMessages.push(error)
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "EmailValidationFailed",
-      message: "The provided email is not valid",
-    });
   }
-  if (!(await isUsernameValid(newUser.username))) {
+  if (user.email && !(await isEmailValid(user.email))) {
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      reason: "EmailValidationFailed"
+    };
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "usernameValidationFailed",
-      message:
-        "Username is not in the correct format it must be between 3 and 32 characters long and can only contain letters, numbers and underscores",
-    });
+    customErrorMessages.push(error)
   }
-  if (!(await isNameValid(newUser.first_name))) {
+  if (user.username && !(await isUsernameValid(user.username))) {
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      reason: "UsernameValidationFailed"
+    };
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "NameValidationFailed",
-      message:
-        "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-    });
+    customErrorMessages.push(error)
   }
-  if (!(await isNameValid(newUser.last_name))) {
+  if (user.first_name && !(await isNameValid(user.first_name))) {
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      reason: "FirstNameValidationFailed"
+    };
     isValid = false;
-    apiResponse.error?.errors?.push({
-      domain: "users",
-      reason: "NameValidationFailed",
-      message:
-        "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-    });
+    customErrorMessages.push(error)
   }
-  if (!isValid && apiResponse.error) {
-    apiResponse.error.code = "400";
-    apiResponse.error.message = "User Validation failed";
+  if (user.last_name && !(await isNameValid(user.last_name))) {
+    const error:CustomErrorMessage = {
+      espectedFrom: "User",
+      reason: "LastNameValidationFailed"
+    };
+    isValid = false;
+    customErrorMessages.push(error)
   }
-  else {
-    delete apiResponse.error;
-  }
+  event.context.apiResponse = apiResponse;
   return isValid;
 };
 
-export default {
-  userValidation,
-  hashPassword,
-  isEmailValid,
-  isUsernameValid
-};
+/**
+ * Checks if the user object has all the required parameters.
+ *
+ * @param {User} newUser - The user object to be checked.
+ * @returns {boolean} - A boolean indicating if the user object has all the required parameters.
+ */
+const paramsCheck = (user : User): boolean => {
+  if (!Object.values(user).every(value => value !== undefined && value !== null && value !== "")) {
+    return true
+  } 
+  else {
+    return false
+  }
+}
+
 
 export {
   isEmailValid,
   isPasswordValid,
-  compareHashes
+  compareHashes,
+  userValidation,
+  hashPassword
 };

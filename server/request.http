@@ -4,12 +4,12 @@ PUT {{baseUrl}}/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "JohnDoe",
-    "email": "johndodddexampl@e.com",
+    "username": "sssg",
+    "email": "josshndoddd@ddexample.com",
     "birthdate": "1990-02-12",
-    "first_name": "John",
-    "last_name": "Dds",
-    "password": "pasaSas#d1"
+    "first_name": "Jsssn",
+    "last_name": "sss",
+    "password": "sss2ssS#ss"
 }
 
 ###
