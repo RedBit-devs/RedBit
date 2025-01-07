@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
   event.context.customErrorMessages = customErrorMessages;
   event.context.apiResponse = apiResponse;
-  if (!(await userValidation.userValidation(event,customErrorMessages))) {
+  if (!(await userValidation.userValidation(event,customErrorMessages,true))) {
     apiResponseHandler(event,customErrorMessages);
     return {
       apiResponse,
