@@ -125,13 +125,11 @@ const isNameValid = async (name: string): Promise<boolean> => {
 const userValidation = async (
   event: any,
   customErrorMessages: CustomErrorMessage[],
-  isNewUser: boolean
 ): Promise<boolean> => {
   const apiResponse:ApiResponse = event.context.apiResponse;
   const user: User = event.context.apiResponse.params;
-
   let isValid = true;
-  if (!paramsCheck(user) && isNewUser) {
+  if (paramsCheck(user)) {
     const error:CustomErrorMessage = {
       espectedFrom: "User",
       reason: "MissingParameters"
@@ -189,27 +187,13 @@ const userValidation = async (
  * @param {User} newUser - The user object to be checked.
  * @returns {boolean} - A boolean indicating if the user object has all the required parameters.
  */
-const paramsCheck = (newUser: User): boolean =>{
-  let isCredentialsValid = true
-  if (!newUser.password) {
-    isCredentialsValid = false
+const paramsCheck = (user : User): boolean => {
+  if (!Object.values(user).every(value => value !== undefined && value !== null && value !== "")) {
+    return true
+  } 
+  else {
+    return false
   }
-  if (!newUser.email) {
-    isCredentialsValid = false
-  }
-  if (!newUser.username) {
-    isCredentialsValid = false
-  }
-  if (!newUser.first_name) {
-    isCredentialsValid = false
-  }
-  if (!newUser.last_name) {
-    isCredentialsValid = false
-  }
-  if (!newUser.birthdate) {
-    isCredentialsValid = false
-  }
-  return isCredentialsValid
 }
 
 
