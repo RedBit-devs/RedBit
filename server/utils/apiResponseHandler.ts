@@ -11,13 +11,15 @@ const errorReasonAndMessages ={
   IdentifierNotFound: "Oparation failed on {table} table because the record with  id: {target} doesn't exist",
   ValidationError: "Something was not in the correct format",
   UnknownError: "An unknown error occurred",
-  BadCustomErrorMessage: "The given custom error message is not in the expected custom error object,The given custom error reason was: {reason}",
+  BadCustomErrorReason: "The given custom error reason is not in the expected custom error object,The given custom error reason was: {reason}",
+  BadCustomErrorExpectedFrom: "The given custom error expected from is not in the api response handler,The given custom error expected from was: {expectedFrom}",
 }
 
 const errorHttpStatusCodes = {
   452: "UserValidationFailed",
   453: "PrismaResponseFailed",
-  454: "BadCustomErrorMessage",
+  454: "BadCustomErrorReason",
+  455: "BadCustomErrorExpectedFrom",
 }
 
 /**
@@ -63,7 +65,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
       setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
   }
   else{
-    badCustomErrorMessage(event,apiResponse,customErrorMessages[0].reason)
+    badCustomErrorReason(event,apiResponse,customErrorMessages[0].reason)
   }
   }else if(customErrorMessages[0].espectedFrom === "User"){
     const httpCode = 452
@@ -78,22 +80,24 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
         }); 
     }
     else{
-      badCustomErrorMessage(event,apiResponse,customErrorMessages[i].reason)
+      badCustomErrorReason(event,apiResponse,customErrorMessages[i].reason)
     }
     if(!event.node.res.statusMessage){
       setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
     }
   }
   } else{
-    const httpCode = 500
+    const httpCode = 455
+    const reason = "BadCustomErrorExpectedFrom"
     apiResponse.error = {
-      code: "500",
-      message: `An unknown error occurred`,
+      code: httpCode.toString(),
+      message: errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes],
       errors: [
         {
           domain: event.context.apiResponse.context,
-          reason: "UnknownError",
-          message: "An unknown error occurred",
+          reason:reason,
+          message: 
+            errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages].replace("{expectedFrom}",customErrorMessages[0].espectedFrom),
         },
       ],
     };
@@ -123,7 +127,7 @@ const setHttpCodeAndMessage = (event: any,apiResponse: ApiResponse,httpCode: num
     event.node.res.statusMessage = message
   }
 }
-const badCustomErrorMessage = (event: any,apiResponse: ApiResponse,reason: string) => {
+const badCustomErrorReason = (event: any,apiResponse: ApiResponse,reason: string) => {
   const httpCode = 454
   const actualReason = "BadCustomErrorMessage"
   if(!apiResponse.error?.errors)
