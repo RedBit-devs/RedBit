@@ -209,15 +209,11 @@ const paramsCheck = (newUser: User): boolean =>{
   return isCredentialsValid
 }
 
-export default {
-  userValidation,
-  hashPassword,
-  isEmailValid,
-  isUsernameValid
-};
 
 export {
   isEmailValid,
   isPasswordValid,
-  compareHashes
+  compareHashes,
+  userValidation,
+  hashPassword
 };
