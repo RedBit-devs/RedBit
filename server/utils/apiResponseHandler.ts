@@ -31,7 +31,8 @@ const errorHttpStatusCodes = {
  * - If no custom errors are present, sets a success response with HTTP 200.
  * - If errors originate from Prisma, sets an HTTP 453 response with Prisma-related error details.
  * - If errors originate from User validation, sets an HTTP 452 response with user-related error details.
- * - For unknown errors, sets an HTTP 500 response with a generic error message.
+ * - If the error is not expected from any known source , sets an HTTP 455 response with the releted error details.
+ * - If the error reason is not in the expected custom error object , sets an HTTP 454 response with the releted error details.
  *
  * @param {any} event - The event object containing the context and ApiResponse reference.
  * @param {CustomErrorMessage[]} customErrorMessages - An array of error messages detailing the issues encountered.
@@ -140,7 +141,6 @@ const badCustomErrorReason = (event: any,apiResponse: ApiResponse,reason: string
     message:
     errorReasonAndMessages[actualReason as keyof typeof errorReasonAndMessages].replace("{reason}",reason),
   });
-  //It is basicly an optional property and we set it only if it is not set because we don't want to override it
   setHttpCodeAndMessage(event,apiResponse,httpCode, errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes])
 }
 
