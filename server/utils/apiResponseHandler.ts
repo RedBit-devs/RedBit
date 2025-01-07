@@ -33,6 +33,7 @@ const errorHttpStatusCodes = {
  * - If errors originate from User validation, sets an HTTP 452 response with user-related error details.
  * - If the error is not expected from any known source , sets an HTTP 455 response with the releted error details.
  * - If the error reason is not in the expected custom error object , sets an HTTP 454 response with the releted error details.
+ * - Unknown errors are expected errors in the error messages thats why there are no handling for that specific type of error
  *
  * @param {any} event - The event object containing the context and ApiResponse reference.
  * @param {CustomErrorMessage[]} customErrorMessages - An array of error messages detailing the issues encountered.
