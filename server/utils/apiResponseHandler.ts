@@ -39,10 +39,13 @@ const errorHttpStatusCodes = {
  * @param {CustomErrorMessage[]} customErrorMessages - An array of error messages detailing the issues encountered.
  */
 
-const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[]) => {
+const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[], data?: any) => {
   const apiResponse = event.context.apiResponse;
   if (customErrorMessages.length == 0)
   {
+    if (data) {
+      apiResponse.data = data;
+    }
     return
   }
   apiResponse.error = {

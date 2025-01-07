@@ -18,7 +18,7 @@ const deleteRecord = async <T>(
   id: string,
   apiResponse: ApiResponse,
   customErrorMessages: CustomErrorMessage[]
-) => {
+): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
       espectedFrom: "Prisma",
@@ -36,15 +36,10 @@ const deleteRecord = async <T>(
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error, table, customErrorMessages,id);
+    prismaErrorHandler(error, table, customErrorMessages,id);
+    return
   }
-  apiResponse.data = {
-    deleted: true,
-    fields: prisma[table].fields,
-    totalItems: 1,
-    items: [dbResponse],
-  };
-  return ;
+  return dbResponse
 };
 
 export default deleteRecord;

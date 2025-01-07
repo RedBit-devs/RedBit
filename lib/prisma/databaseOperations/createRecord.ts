@@ -18,7 +18,7 @@ const createRecord = async <T>(
   data: T,
   apiResponse: ApiResponse,
   customErrorMessages: CustomErrorMessage[]
-) => {
+): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
       espectedFrom: "Prisma",
@@ -34,14 +34,10 @@ const createRecord = async <T>(
       data: data,
     });
   } catch (error) {
-    return prismaErrorHandler(error, table, customErrorMessages);
+    prismaErrorHandler(error, table, customErrorMessages);
+    return
   }
-  apiResponse.data = {
-    fields: prisma[table].fields,
-    totalItems: 1,
-    items: [dbResponse],
-  };
-  return 
+  return dbResponse
 };
 
 export default createRecord;

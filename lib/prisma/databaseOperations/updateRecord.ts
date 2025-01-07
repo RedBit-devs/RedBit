@@ -20,7 +20,7 @@ const updateRecord = async <T>(
   id: string,
   apiResponse: ApiResponse,
   customErrorMessages: CustomErrorMessage[]
-) => {
+): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
       espectedFrom: "Prisma",
@@ -39,14 +39,10 @@ const updateRecord = async <T>(
       data: data,
     });
   } catch (error) {
-    return prismaErrorHandler(error, table, customErrorMessages,id);
+    prismaErrorHandler(error, table, customErrorMessages,id);
+    return
   }
-  apiResponse.data = {
-    fields: prisma[table].fields,
-    totalItems: 1,
-    items: [dbResponse],
-  };
-  return ;
+  return dbResponse
 };
 
 export default updateRecord;

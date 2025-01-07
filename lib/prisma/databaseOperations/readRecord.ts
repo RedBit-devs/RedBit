@@ -18,7 +18,7 @@ const readRecord = async (
   id: string,
   apiResponse: ApiResponse,
   customErrorMessages: CustomErrorMessage[]
-) => {
+): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
       espectedFrom: "Prisma",
@@ -36,7 +36,8 @@ const readRecord = async (
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error, table, customErrorMessages,id);
+    prismaErrorHandler(error, table, customErrorMessages,id);
+    return
   }
   if (!dbResponse) {
     const customError:CustomErrorMessage = {
@@ -48,12 +49,7 @@ const readRecord = async (
     customErrorMessages.push(customError)
     return ;
   }
-  apiResponse.data = {
-    fields: prisma[table].fields,
-    totalItems: 1,
-    items: [dbResponse],
-  };
-  return ;
+  return dbResponse
 };
 
 export default readRecord;
