@@ -46,6 +46,12 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
     if (data) {
       apiResponse.data = data;
     }
+    else{
+      apiResponse.data = {
+        totalItems: 0,
+        items: []
+      };
+    }
     return
   }
   apiResponse.error = {
