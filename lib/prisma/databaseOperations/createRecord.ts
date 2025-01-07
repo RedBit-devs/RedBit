@@ -11,12 +11,11 @@ import prismaErrorHandler from "../databaseErrorHandling";
  * @param {T} data - The data to be used for the create.
  * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
- * @returns {Promise<void>}
+ * @returns {Promise<any>}
  */
 const createRecord = async <T>(
   table: string,
   data: T,
-  apiResponse: ApiResponse,
   customErrorMessages: CustomErrorMessage[]
 ): Promise<any> => {
   if (!(await checkTable(table))){

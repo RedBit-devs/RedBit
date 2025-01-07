@@ -11,12 +11,11 @@ import prismaErrorHandler from "../databaseErrorHandling";
  * @param id The id of the record to be deleted.
  * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
- * @returns {Promise<void>}
+ * @returns {Promise<any>}
  */
 const deleteRecord = async <T>(
   table: string,
   id: string,
-  apiResponse: ApiResponse,
   customErrorMessages: CustomErrorMessage[]
 ): Promise<any> => {
   if (!(await checkTable(table))){
