@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <ChatInputFiled />
+        <ChatMenu />
     </div>
 </template>
 

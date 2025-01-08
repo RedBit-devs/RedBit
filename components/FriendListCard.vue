@@ -18,7 +18,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
-    margin: .6rem 0 .6rem .6rem;
+    padding: .6rem 0 .6rem .6rem;
     font-weight: 300;
 
 }
@@ -26,5 +26,9 @@
 .profPic img {
     height: 2.875rem;
     border-radius: 50%;
+}
+
+h5 {
+    color: var(--clr-text-secondary);
 }
 </style>

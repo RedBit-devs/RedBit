@@ -14,7 +14,7 @@
 
 <script setup>
 import FriendList from './FriendList.vue';
-import FriendListSelfCard from './FriendListSelfCard.vue';
+import FriendListSelfCard from './UserCard.vue';
 
 
 </script>
@@ -23,6 +23,7 @@ import FriendListSelfCard from './FriendListSelfCard.vue';
 .container {
     background-color: var(--clr-ui-primary);
     width: 21.438rem;
+    min-height: 100vh;
 }
 
 .friendContent {

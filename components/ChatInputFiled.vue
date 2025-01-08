@@ -1,11 +1,11 @@
 <template>
     <div class="inputField">
         <button class="btn ui-primary">
-            <Icon name="ic:round-insert-drive-file" />
+            <Icon name="ic:round-insert-drive-file" size="150%" />
         </button>
         <input type="text" class="textInput">
         <button class="btn ui-primary">
-            <Icon name="material-symbols-light:subdirectory-arrow-left-rounded" />
+            <Icon name="material-symbols-light:subdirectory-arrow-left-rounded" size="150%" />
         </button>
     </div>
 </template>
@@ -14,7 +14,7 @@
 
 </script>
 
-<style>
+<style scoped>
 .inputField {
     margin: .5rem;
     display: flex;
@@ -31,10 +31,5 @@
     padding: .5rem;
     color: var(--clr-text-primary);
     width: 100%;
-}
-
-span {
-    height: 1.5rem;
-    width: 1.5rem;
 }
 </style>
