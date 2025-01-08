@@ -29,8 +29,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY
 ###
 
 ###
-@id = cm5o5i2nm0000wzhh5a0f5265
-GET  {{baseUrl}}/user/{{{id}}} HTTP/1.1
+GET  {{baseUrl}}/user/cm5o5i2nm0000wzhh5a0f5265 HTTP/1.1
 
 ###
 
