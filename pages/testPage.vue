@@ -8,12 +8,10 @@
 import ServerSelector from '~/components/ServerSelector.vue';
 import ChatSelector from '~/components/ChatSelector.vue';
 
-definePageMeta({
-    layout: false
-})
+
 </script>
 
-<style>
+<style scoped>
 .content {
     display: flex;
 }
