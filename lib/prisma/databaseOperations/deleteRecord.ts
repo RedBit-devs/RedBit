@@ -4,20 +4,28 @@ import prismaErrorHandler from "../databaseErrorHandling";
 
 /**
  * Deletes a record in the given table with the given id.
+ * 
+ * If the table does not exist creates a new custom error.
+ * 
  * @param table The name of the table to delete from.
  * @param id The id of the record to be deleted.
- * @param {ApiResponse} apiResponse The ApiResponse to populate with error or data information.
- * @returns {Promise<void>}
+ * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
+ * @returns {Promise<any>}
  */
 const deleteRecord = async <T>(
   table: string,
   id: string,
-  apiResponse: ApiResponse
-) => {
+  customErrorMessages: CustomErrorMessage[]
+): Promise<any> => {
   if (!(await checkTable(table))){
-    let error = new Error();
-    error.name = "no table";
-    return prismaErrorHandler(error, apiResponse, table);
+    const error:CustomErrorMessage = {
+      espectedFrom: "Prisma",
+      reason: "TableNotFound",
+      table: table
+    };
+    customErrorMessages.push(error)
+    return
   }
   let dbResponse;
   try {
@@ -27,15 +35,10 @@ const deleteRecord = async <T>(
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error, apiResponse, table, id);
+    prismaErrorHandler(error, table, customErrorMessages,id);
+    return
   }
-  apiResponse.data = {
-    deleted: true,
-    fields: prisma[table].fields,
-    totalItems: 1,
-    items: [dbResponse],
-  };
-  return ;
+  return dbResponse
 };
 
 export default deleteRecord;

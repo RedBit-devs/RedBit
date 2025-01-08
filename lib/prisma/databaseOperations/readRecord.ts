@@ -4,20 +4,28 @@ import prismaErrorHandler from "../databaseErrorHandling";
 
 /**
  * Read a single record in the given table with the given id.
+ * 
+ * If the table does not exist creates a new custom error.
+ * 
  * @param table The name of the table to update.
  * @param id The id of the record to be updated.
- * @param {ApiResponse} apiResponse The ApiResponse to populate with error or data information.
- * @returns {Promise<void>}
+ * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
+ * @returns {Promise<any>}
  */
 const readRecord = async (
   table: string,
   id: string,
-  apiResponse: ApiResponse
-) => {
+  customErrorMessages: CustomErrorMessage[]
+): Promise<any> => {
   if (!(await checkTable(table))){
-    let error = new Error();
-    error.name = "no table";
-    return prismaErrorHandler(error, apiResponse, table);
+    const error:CustomErrorMessage = {
+      espectedFrom: "Prisma",
+      reason: "TableNotFound",
+      table: table
+    };
+    customErrorMessages.push(error)
+    return
   }
   let dbResponse;
   try {
@@ -27,28 +35,20 @@ const readRecord = async (
       },
     });
   } catch (error) {
-    return prismaErrorHandler(error, apiResponse, table, id);
+    prismaErrorHandler(error, table, customErrorMessages,id);
+    return
   }
   if (!dbResponse) {
-    apiResponse.error = {
-      code: "400",
-      message: `Can't read from ${table} table because the record with  id: ${id} doesn't exist`,
-      errors: [
-        {
-          domain: "Prisma",
-          reason: "identifierNotFound",
-          message: `Can't read from ${table} table because the record with  id: ${id} doesn't exist`,
-        },
-      ],
+    const customError:CustomErrorMessage = {
+      espectedFrom: "Prisma",
+      reason: "IdentifierNotFound",
+      table: table,
+      target: id
     };
+    customErrorMessages.push(customError)
     return ;
   }
-  apiResponse.data = {
-    fields: prisma[table].fields,
-    totalItems: 1,
-    items: [dbResponse],
-  };
-  return ;
+  return dbResponse
 };
 
 export default readRecord;
