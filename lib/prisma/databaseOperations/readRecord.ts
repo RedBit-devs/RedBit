@@ -38,16 +38,6 @@ const readRecord = async (
     prismaErrorHandler(error, table, customErrorMessages,id);
     return
   }
-  if (!dbResponse) {
-    const customError:CustomErrorMessage = {
-      espectedFrom: "Prisma",
-      reason: "IdentifierNotFound",
-      table: table,
-      target: id
-    };
-    customErrorMessages.push(customError)
-    return ;
-  }
   return dbResponse
 };
 

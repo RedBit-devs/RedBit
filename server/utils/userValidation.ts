@@ -187,7 +187,7 @@ const userValidation = async (
  * @param {User} newUser - The user object to be checked.
  * @returns {boolean} - A boolean indicating if the user object has all the required parameters.
  */
-const paramsCheck = (user : User): boolean => {
+const paramsCheck = (user : any): boolean => {
   if (!Object.values(user).every(value => value !== undefined && value !== null && value !== "")) {
     return true
   } 
@@ -202,5 +202,6 @@ export {
   isPasswordValid,
   compareHashes,
   userValidation,
-  hashPassword
+  hashPassword,
+  paramsCheck
 };
