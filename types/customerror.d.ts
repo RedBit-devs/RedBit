@@ -1,5 +1,5 @@
 type CustomErrorMessage = {
-    espectedFrom: string;
+    expectedFrom: string;
     reason: string;
     table?: string;
     target?: unknown;

@@ -23,8 +23,10 @@ const hashPassword = async (password: string, customErrorMessages: CustomErrorMe
     await hash.toString();
     return hash;
   } catch (e) {
-    const error: CustomErrorMessage = {
-      espectedFrom: "User",
+
+    const error:CustomErrorMessage = {
+      expectedFrom: "User",
+
       reason: "PasswordHashingFailed"
     }
     customErrorMessages.push(error)
@@ -130,48 +132,55 @@ const userValidation = async (
   const user: User = event.context.apiResponse.params;
   let isValid = true;
   if (paramsCheck(user)) {
-    const error: CustomErrorMessage = {
-      espectedFrom: "User",
+
+    const error:CustomErrorMessage = {
+      expectedFrom: "User",
+
       reason: "MissingParameters"
     };
     customErrorMessages.push(error)
     isValid = false;
   }
   if (user.password && !(await isPasswordValid(user.password))) {
-    const error: CustomErrorMessage = {
-      espectedFrom: "User",
+    const error:CustomErrorMessage = {
+      expectedFrom: "User",
+
       reason: "PasswordValidationFailed"
     };
     customErrorMessages.push(error)
     isValid = false;
   }
   if (user.email && !(await isEmailValid(user.email))) {
-    const error: CustomErrorMessage = {
-      espectedFrom: "User",
+    const error:CustomErrorMessage = {
+      expectedFrom: "User",
+
       reason: "EmailValidationFailed"
     };
     isValid = false;
     customErrorMessages.push(error)
   }
   if (user.username && !(await isUsernameValid(user.username))) {
-    const error: CustomErrorMessage = {
-      espectedFrom: "User",
+    const error:CustomErrorMessage = {
+      expectedFrom: "User",
+
       reason: "UsernameValidationFailed"
     };
     isValid = false;
     customErrorMessages.push(error)
   }
   if (user.first_name && !(await isNameValid(user.first_name))) {
-    const error: CustomErrorMessage = {
-      espectedFrom: "User",
+    const error:CustomErrorMessage = {
+      expectedFrom: "User",
+
       reason: "FirstNameValidationFailed"
     };
     isValid = false;
     customErrorMessages.push(error)
   }
   if (user.last_name && !(await isNameValid(user.last_name))) {
-    const error: CustomErrorMessage = {
-      espectedFrom: "User",
+    const error:CustomErrorMessage = {
+      expectedFrom: "User",
+
       reason: "LastNameValidationFailed"
     };
     isValid = false;
@@ -187,6 +196,7 @@ const userValidation = async (
  * @param {any} params - The user object to be checked.
  * @returns {boolean} - A boolean indicating if the user object has all the required parameters.
  */
+
 const paramsCheck = (params: any): boolean => {
   if (!Object.values(params).every(value => value !== undefined && value !== null && value !== "")) {
     return true

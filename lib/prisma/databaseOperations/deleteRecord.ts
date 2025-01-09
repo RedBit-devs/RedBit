@@ -9,7 +9,6 @@ import prismaErrorHandler from "../databaseErrorHandling";
  * 
  * @param table The name of the table to delete from.
  * @param id The id of the record to be deleted.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @returns {Promise<any>}
  */
@@ -20,7 +19,7 @@ const deleteRecord = async <T>(
 ): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
-      espectedFrom: "Prisma",
+      expectedFrom: "Prisma",
       reason: "TableNotFound",
       table: table
     };
