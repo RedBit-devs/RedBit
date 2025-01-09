@@ -23,12 +23,10 @@
                         <label>Email</label>
                         <input type="text" placeholder="Type here">
                     </div>
-
                     <div class="input" id="username">
                         <label>Username</label>
                         <input type="text" placeholder="Type here">
                     </div>
-
                     <div class="input" id="password">
                         <label>Password</label>
                         <input type="password" placeholder="Type here">
