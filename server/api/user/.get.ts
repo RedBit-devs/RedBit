@@ -2,8 +2,11 @@ import readRecord from "~/lib/prisma/databaseOperations/readRecord";
 import { paramsCheck } from "~/server/utils/userValidation";
 
 export default defineEventHandler(async (event) => {
-  const userId:string = getRouterParam(event, 'id')?? "";
-  console.log(userId);
+  if(!event.context.auth)
+  {
+    console.log("here")
+  }
+  const userId = event.context.auth.user.id
   const apiResponse = {} as ApiResponse;
   apiResponse.context = "User/Get";
   apiResponse.method = "GET";
