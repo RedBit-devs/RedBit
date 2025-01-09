@@ -5,14 +5,17 @@ import {userValidation,hashPassword} from "~/server/utils/userValidation";
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
   const apiResponse = {} as ApiResponse;
-  apiResponse.context = "UserCreate";
+  apiResponse.context = "User/Create";
   apiResponse.method = "PUT";
+  console.log(newUser);
+  console.log(newUser.first_name);
+  
   apiResponse.params = {
     username: newUser.username,
     email: newUser.email,
     birthdate: newUser.birthdate,
-    first_name: newUser.first_name,
-    last_name: newUser.last_name,
+    firstName: newUser.first_name,
+    lastName: newUser.last_name,
     password: newUser.password,
   };
   const customErrorMessages: CustomErrorMessage[] = [];
@@ -30,6 +33,8 @@ export default defineEventHandler(async (event) => {
     return apiResponse
   }
   const data = await createRecord("user", newUser,customErrorMessages);
+  console.log(data);
+  
   apiResponseHandler(event,customErrorMessages,data);
   return apiResponse
 });

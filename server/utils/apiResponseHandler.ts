@@ -53,7 +53,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
         items: []
       };
     }
-    return
+    return ;
   }
   apiResponse.error = {
     code: "400",
