@@ -30,6 +30,10 @@
                     </NuxtLink>
                 </div>
             </div>
+                <div v-if="errors.value" class="toaster">
+                    <Toast v-for="(error, i) in errors.value" :key="i" class="danger" :title="error.reason" :content="error.message"/>
+                </div>
+        
         </div>
 
 </template>
@@ -44,11 +48,11 @@ const passwordRef = ref(null)
 const { token, setToken } = useToken()
 
 const sendLoginRequest = async () => {
-
+    
     if (!emailRef.value.value || !passwordRef.value.value) return;
 
     const response = await $fetch("/api/user/login", {
-
+        ignoreResponseError: true,
         method: 'POST',
         body: {
             email: emailRef.value.value,
@@ -56,6 +60,17 @@ const sendLoginRequest = async () => {
         }
     })
 
+    
+    //TODO show errors in toast
+    if (response.error) {
+        
+        errors.value = response.error.errors;
+
+        console.log(errors.value);
+        return setToken(null);
+
+        
+    }
     setToken(response.data.items[0].token.split(" ")[1]);
 
 
