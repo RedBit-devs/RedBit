@@ -28,10 +28,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY
 
 ###
 
-###
+
 GET  {{baseUrl}}/user/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzVpMm5tMDAwMHd6aGg1YTBmNTI2NSIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3MzY0MTI1NTEsImV4cCI6MTczODE0MDU1MX0.WmJngBn4j_BZ5_vA621LszGQBLDJbFTo45fi2TTzlwcgqiFuslKTv7gHJqq1_yMN8QzqqJdV5ln5xPz2qsMhlw
 
 ###
 
 
+GET  {{baseUrl}}user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd@ddexample.com HTTP/1.1
+
+###
