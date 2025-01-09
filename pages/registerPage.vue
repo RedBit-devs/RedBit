@@ -77,6 +77,7 @@ const sendRegisterRequest = async () => {
     console.log('here');
     
     const response = await $fetch("/api/user/", {
+        ignoreResponseError : true,
 
         method: 'PUT',
         body: {
@@ -91,8 +92,11 @@ const sendRegisterRequest = async () => {
         
     })
 
+    if (!response.error) {
+        navigateTo('/loginPage')    
+    }
+    return;
     
-    navigateTo('/loginPage')
 }
 
 </script>

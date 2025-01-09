@@ -5,7 +5,7 @@ import {userValidation,hashPassword} from "~/server/utils/userValidation";
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
   const apiResponse = {} as ApiResponse;
-  apiResponse.context = "UserCreate";
+  apiResponse.context = "User/Create";
   apiResponse.method = "PUT";
   console.log(newUser);
   console.log(newUser.first_name);
