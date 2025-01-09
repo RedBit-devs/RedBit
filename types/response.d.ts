@@ -1,7 +1,7 @@
 type CustomError = {
   domain: String; // Unique identifier for the service raising this error.
   reason: String; // {"reason": "ResourceNotFoundException"} Unique identifier for this error. Different from the error.code property in that this is not an http response code.
-  message: String; // Human readable message
+  message: string; // Human readable message
 };
 
 type ResponseData = {
@@ -38,4 +38,12 @@ type ApiResponse =
       errors?: CustomError[];
     };
     data?: never;
+  };
+
+type ApiResponseV2 =
+  {
+    context?: string;
+    method?: string;
+    params?: Object;
+    data: ResponseData
   };
