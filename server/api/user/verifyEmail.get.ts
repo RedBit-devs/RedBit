@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
     if (paramsCheck(apiResponse.params)) {
         errorMessages.push({
-            espectedFrom: "User",
+            expectedFrom: "User",
             reason: "MissingParameters"
         })
 
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
 
     if (!findEmailResponse) {
         errorMessages.push({
-            espectedFrom: "Prisma",
+            expectedFrom: "Prisma",
             reason: "IdentifierNotFound",
             table: "User",
             target: id
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
 
     if (findEmailResponse && findEmailResponse.email != email) {
         errorMessages.push({
-            espectedFrom: "User",
+            expectedFrom: "User",
             reason: "DataDontMatch"
         })
     }
