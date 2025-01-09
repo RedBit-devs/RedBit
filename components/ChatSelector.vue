@@ -1,19 +1,17 @@
 <template>
     <div class="container">
-        <div class="friendContent">
-            <div class="searchFriend">
+        <div class="CHATContent">
+            <div class="searchChat">
                 <input type="text" placeholder="Search between chats">
             </div>
             <div class="chatList">
-                <FriendListCard />
+                <ChatCard />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-
-
 
 </script>
 
@@ -23,13 +21,13 @@
     width: 21.438rem;
 }
 
-.friendContent {
+.chatContent {
     display: flex;
     flex-direction: column;
 }
 
 
-.searchFriend {
+.searchChat {
     margin: .3rem;
     text-align: center;
 }
