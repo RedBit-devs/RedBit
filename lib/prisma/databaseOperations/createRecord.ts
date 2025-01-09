@@ -9,7 +9,6 @@ import prismaErrorHandler from "../databaseErrorHandling";
  *
  * @param {string} table - The name of the table to create in.
  * @param {T} data - The data to be used for the create.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @returns {Promise<any>}
  */
@@ -20,7 +19,7 @@ const createRecord = async <T>(
 ): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
-      espectedFrom: "Prisma",
+      expectedFrom: "Prisma",
       reason: "TableNotFound",
       table: table
     };

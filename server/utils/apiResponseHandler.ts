@@ -13,6 +13,7 @@ const errorReasonAndMessages ={
   UnknownError: "An unknown error occurred",
   BadCustomErrorReason: "The given custom error reason is not in the expected custom error object,The given custom error reason was: {reason}",
   BadCustomErrorExpectedFrom: "The given custom error expected from is not in the api response handler,The given custom error expected from was: {expectedFrom}",
+  DataDontMatch:"Provided data does not match expected data"
 }
 
 const errorHttpStatusCodes = {
@@ -39,7 +40,7 @@ const errorHttpStatusCodes = {
  * @param {CustomErrorMessage[]} customErrorMessages - An array of error messages detailing the issues encountered.
  */
 
-const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[], data?: any) => {
+const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[], data?: ResponseData) => {
   const apiResponse = event.context.apiResponse;
   if (customErrorMessages.length == 0)
   {
@@ -59,7 +60,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
     message: "Bad request",
     errors: [],
   }
-  if (customErrorMessages[0].espectedFrom ==="Prisma") {
+  if (customErrorMessages[0].expectedFrom ==="Prisma") {
     const reason = customErrorMessages[0].reason;
     const httpCode = 453
     if (reason in errorReasonAndMessages) {
@@ -75,7 +76,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
   else{
     badCustomErrorReason(event,apiResponse,customErrorMessages[0].reason)
   }
-  }else if(customErrorMessages[0].espectedFrom === "User"){
+  }else if(customErrorMessages[0].expectedFrom === "User"){
     const httpCode = 452
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
@@ -105,7 +106,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
           domain: event.context.apiResponse.context,
           reason:reason,
           message: 
-            errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages].replace("{expectedFrom}",customErrorMessages[0].espectedFrom),
+            errorReasonAndMessages[reason as keyof typeof errorReasonAndMessages].replace("{expectedFrom}",customErrorMessages[0].expectedFrom),
         },
       ],
     };

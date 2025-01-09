@@ -9,7 +9,6 @@ import prismaErrorHandler from "../databaseErrorHandling";
  * 
  * @param table The name of the table to update.
  * @param id The id of the record to be updated.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @returns {Promise<any>}
  */
@@ -20,7 +19,7 @@ const readRecord = async (
 ): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
-      espectedFrom: "Prisma",
+      expectedFrom: "Prisma",
       reason: "TableNotFound",
       table: table
     };
@@ -37,16 +36,6 @@ const readRecord = async (
   } catch (error) {
     prismaErrorHandler(error, table, customErrorMessages,id);
     return
-  }
-  if (!dbResponse) {
-    const customError:CustomErrorMessage = {
-      espectedFrom: "Prisma",
-      reason: "IdentifierNotFound",
-      table: table,
-      target: id
-    };
-    customErrorMessages.push(customError)
-    return ;
   }
   return dbResponse
 };
