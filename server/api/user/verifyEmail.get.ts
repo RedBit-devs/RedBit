@@ -2,13 +2,14 @@
 //http://localhost:3000/api/user/verifyEmail?id={userId}&email={email}
 
 import prisma from "~/lib/prisma";
+import { paramsCheck } from "~/server/utils/userValidation";
 
 export default defineEventHandler(async (event) => {
 
     let { id, email }: { id: string, email: string } = getQuery(event)
 
     const apiResponse = {} as ApiResponse;
-    apiResponse.context = "verifyEmail";
+    apiResponse.context = "user/verifyEmail";
     apiResponse.method = "GET";
     apiResponse.params = {
         id: id,
@@ -19,7 +20,7 @@ export default defineEventHandler(async (event) => {
     event.context.customErrorMessages = errorMessages;
     event.context.apiResponse = apiResponse;
 
-    if (!id || !email) {
+    if (paramsCheck(apiResponse.params)) {
         errorMessages.push({
             espectedFrom: "User",
             reason: "MissingParameters"
