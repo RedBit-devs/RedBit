@@ -24,7 +24,7 @@ const hashPassword = async (password: string,customErrorMessages: CustomErrorMes
     return hash;
   } catch (e) {
     const error:CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "PasswordHashingFailed"
     }
     customErrorMessages.push(error)
@@ -131,7 +131,7 @@ const userValidation = async (
   let isValid = true;
   if (paramsCheck(user)) {
     const error:CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "MissingParameters"
     };
     customErrorMessages.push(error)
@@ -139,7 +139,7 @@ const userValidation = async (
   }
   if (user.password && !(await isPasswordValid(user.password))) {
     const error:CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "PasswordValidationFailed"
     };
     customErrorMessages.push(error)
@@ -147,7 +147,7 @@ const userValidation = async (
   }
   if (user.email && !(await isEmailValid(user.email))) {
     const error:CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "EmailValidationFailed"
     };
     isValid = false;
@@ -155,7 +155,7 @@ const userValidation = async (
   }
   if (user.username && !(await isUsernameValid(user.username))) {
     const error:CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "UsernameValidationFailed"
     };
     isValid = false;
@@ -163,7 +163,7 @@ const userValidation = async (
   }
   if (user.first_name && !(await isNameValid(user.first_name))) {
     const error:CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "FirstNameValidationFailed"
     };
     isValid = false;
@@ -171,7 +171,7 @@ const userValidation = async (
   }
   if (user.last_name && !(await isNameValid(user.last_name))) {
     const error:CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "LastNameValidationFailed"
     };
     isValid = false;

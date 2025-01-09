@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   event.context.apiResponse = apiResponse;
   if (paramsCheck(apiResponse.params)) {
     const error: CustomErrorMessage = {
-      espectedFrom: "User",
+      expectedFrom: "User",
       reason: "MissingParameters",
     }
     customErrorMessages.push(error);

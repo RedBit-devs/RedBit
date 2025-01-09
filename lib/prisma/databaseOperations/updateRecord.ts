@@ -21,7 +21,7 @@ const updateRecord = async <T>(
 ): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
-      espectedFrom: "Prisma",
+      expectedFrom: "Prisma",
       reason: "TableNotFound",
       table: table
     };
