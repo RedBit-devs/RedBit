@@ -96,7 +96,7 @@ const {title, content} = defineProps({
     height: 100%;
     overflow-y: auto;
     padding-right: 1rem;
-    
+    overflow-wrap: break-word;
 }
 .content:not(:has(p)){
     display: grid;
