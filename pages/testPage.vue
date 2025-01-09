@@ -5,8 +5,9 @@
 </template>
 
 <script setup>
-import ServerSelector from '~/components/ServerSelector.vue';
-import ChatSelector from '~/components/ChatSelector.vue';
+ definePageMeta({
+    layout :'chat'
+ })
 
 
 </script>

@@ -6,16 +6,18 @@
         <div class="items">
             <div class="name">
                 <h4>Kicsi kacs</h4>
-                <h5>Úszik</h5>
+                <p>Úszik</p>
             </div>
-            <div class="mircophone">
-                <Icon name="mingcute:mic-line" />
-            </div>
-            <div class="headset">
-                <Icon name="mingcute:headphone-line" />
-            </div>
-            <div class="settings">
-                <Icon name="mingcute:settings-5-line" />
+            <div class="buttons">
+                <div class="mircophone">
+                    <Icon name="mingcute:mic-line" size="150%"/>
+                </div>
+                <div class="headset">
+                    <Icon name="mingcute:headphone-line" size="150%"/>
+                </div>
+                <div class="settings">
+                    <Icon name="mingcute:settings-5-line" size="150%"/>
+                </div>
             </div>
         </div>
     </div>
@@ -27,13 +29,10 @@
 
 <style scoped>
 .selfContainer {
-
+    background-color: var(--clr-ui-primary);
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    padding-inline: .5rem;
-    position: absolute;
-    bottom: 0;
     padding: 1rem 1rem .5rem 1rem;
     align-self: center;
 }
@@ -43,11 +42,18 @@
     gap: 1rem;
     justify-content: center;
     align-items: center;
-
+    justify-content: space-between;
+    width: 100%;
 }
+
 
 .name {
     text-align: center;
+}
+
+.buttons{
+    display: flex;
+    gap: 1rem;
 }
 
 img {
@@ -55,8 +61,7 @@ img {
     border-radius: 50%;
 }
 
-span {
-    width: 1.5rem;
-    height: 1.5rem;
+p {
+    color: var(--clr-text-secondary);
 }
 </style>

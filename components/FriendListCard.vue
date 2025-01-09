@@ -3,7 +3,7 @@
         <div class="profPic"><img src="../img/probalogo.png" alt=""></div>
         <div class="name">
             <h3>Kicsi kacsa</h3>
-            <h5>Éppen úszik</h5>
+            <p>Éppen úszik</p>
         </div>
     </div>
 </template>
@@ -19,7 +19,6 @@
     gap: 1rem;
     align-items: center;
     padding: .6rem 0 .6rem .6rem;
-    font-weight: 300;
 
 }
 
@@ -28,7 +27,7 @@
     border-radius: 50%;
 }
 
-h5 {
+p {
     color: var(--clr-text-secondary);
 }
 </style>
