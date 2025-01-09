@@ -28,3 +28,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY
 
 ###
 
+GET  {{baseUrl}}user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd@ddexample.com HTTP/1.1
+
+###
+

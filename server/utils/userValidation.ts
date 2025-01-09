@@ -15,7 +15,7 @@ const NAME_PATTERN: RegExp = /^[a-zA-Z]{3,35}/
  * @param {CustomErrorMessage[]} customErrorMessages - The array of customErrorMessages to be filled with the error message if the hashing fails.
  * @returns {Promise<string>} - A promise that resolves to the hashed password or an empty string.
  */
-const hashPassword = async (password: string,customErrorMessages: CustomErrorMessage[]): Promise<string> => {
+const hashPassword = async (password: string, customErrorMessages: CustomErrorMessage[]): Promise<string> => {
   const saltRounds = 12;
   const salt = await bcrypt.genSalt(saltRounds);
   try {
@@ -23,7 +23,7 @@ const hashPassword = async (password: string,customErrorMessages: CustomErrorMes
     await hash.toString();
     return hash;
   } catch (e) {
-    const error:CustomErrorMessage = {
+    const error: CustomErrorMessage = {
       espectedFrom: "User",
       reason: "PasswordHashingFailed"
     }
@@ -39,7 +39,7 @@ const hashPassword = async (password: string,customErrorMessages: CustomErrorMes
  * @param {string} hash The hash
  * @returns {Promise<boolean>}
  */
-const compareHashes = async (data: string, hash: string):Promise<boolean> => {
+const compareHashes = async (data: string, hash: string): Promise<boolean> => {
   return await bcrypt.compare(data, hash)
 }
 
@@ -126,11 +126,11 @@ const userValidation = async (
   event: any,
   customErrorMessages: CustomErrorMessage[],
 ): Promise<boolean> => {
-  const apiResponse:ApiResponse = event.context.apiResponse;
+  const apiResponse: ApiResponse = event.context.apiResponse;
   const user: User = event.context.apiResponse.params;
   let isValid = true;
   if (paramsCheck(user)) {
-    const error:CustomErrorMessage = {
+    const error: CustomErrorMessage = {
       espectedFrom: "User",
       reason: "MissingParameters"
     };
@@ -138,7 +138,7 @@ const userValidation = async (
     isValid = false;
   }
   if (user.password && !(await isPasswordValid(user.password))) {
-    const error:CustomErrorMessage = {
+    const error: CustomErrorMessage = {
       espectedFrom: "User",
       reason: "PasswordValidationFailed"
     };
@@ -146,7 +146,7 @@ const userValidation = async (
     isValid = false;
   }
   if (user.email && !(await isEmailValid(user.email))) {
-    const error:CustomErrorMessage = {
+    const error: CustomErrorMessage = {
       espectedFrom: "User",
       reason: "EmailValidationFailed"
     };
@@ -154,7 +154,7 @@ const userValidation = async (
     customErrorMessages.push(error)
   }
   if (user.username && !(await isUsernameValid(user.username))) {
-    const error:CustomErrorMessage = {
+    const error: CustomErrorMessage = {
       espectedFrom: "User",
       reason: "UsernameValidationFailed"
     };
@@ -162,7 +162,7 @@ const userValidation = async (
     customErrorMessages.push(error)
   }
   if (user.first_name && !(await isNameValid(user.first_name))) {
-    const error:CustomErrorMessage = {
+    const error: CustomErrorMessage = {
       espectedFrom: "User",
       reason: "FirstNameValidationFailed"
     };
@@ -170,7 +170,7 @@ const userValidation = async (
     customErrorMessages.push(error)
   }
   if (user.last_name && !(await isNameValid(user.last_name))) {
-    const error:CustomErrorMessage = {
+    const error: CustomErrorMessage = {
       espectedFrom: "User",
       reason: "LastNameValidationFailed"
     };
@@ -184,13 +184,13 @@ const userValidation = async (
 /**
  * Checks if the user object has all the required parameters.
  *
- * @param {User} newUser - The user object to be checked.
+ * @param {any} params - The user object to be checked.
  * @returns {boolean} - A boolean indicating if the user object has all the required parameters.
  */
-const paramsCheck = (user : User): boolean => {
-  if (!Object.values(user).every(value => value !== undefined && value !== null && value !== "")) {
+const paramsCheck = (params: any): boolean => {
+  if (!Object.values(params).every(value => value !== undefined && value !== null && value !== "")) {
     return true
-  } 
+  }
   else {
     return false
   }
@@ -202,5 +202,6 @@ export {
   isPasswordValid,
   compareHashes,
   userValidation,
-  hashPassword
+  hashPassword,
+  paramsCheck
 };
