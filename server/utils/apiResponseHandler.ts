@@ -23,9 +23,9 @@ const errorReasonAndMessages = {
   ValidationError: "Something was not in the correct format",
   UnknownError: "An unknown error occurred",
   BadCustomErrorReason:
-    "The given custom error reason is not in the expected custom error object,The given custom error reason was: {reason}",
+    "The given custom error reason is not in the expected custom error object",
   BadCustomErrorExpectedFrom:
-    "The given custom error expected from is not in the api response handler,The given custom error expected from was: {expectedFrom}",
+    "The given custom error expected from is not in the api response handler",
   DataDontMatch: "Provided data does not match expected data",
   AuthValidationFailed: "Authentication failed you are not logged in",
 };
@@ -81,7 +81,7 @@ const apiResponseHandler = (
     const httpCode = 453;
     if (reason in errorReasonAndMessages) {
       apiResponse.error.errors.push({
-        domain: "Prisma",
+        domain: errorExpectedFroms.Prisma,
         reason: reason,
         message: errorReasonAndMessages[
           reason as keyof typeof errorReasonAndMessages
@@ -126,7 +126,7 @@ const apiResponseHandler = (
     }
   } else {
     const httpCode = 455;
-    const reason = "BadCustomErrorExpectedFrom";
+    const reason = errorReasons.BadCustomErrorExpectedFrom;
     apiResponse.error = {
       code: httpCode.toString(),
       message:
@@ -137,7 +137,7 @@ const apiResponseHandler = (
           reason: reason,
           message: errorReasonAndMessages[
             reason as keyof typeof errorReasonAndMessages
-          ].replace("{expectedFrom}", customErrorMessages[0].expectedFrom),
+          ]
         },
       ],
     };
@@ -183,7 +183,7 @@ const badCustomErrorReason = (
   reason: string
 ) => {
   const httpCode = 454;
-  const actualReason = "BadCustomErrorMessage";
+  const actualReason = errorReasons.BadCustomErrorReason;
   if (!apiResponse.error?.errors) {
     return;
   }
@@ -192,7 +192,7 @@ const badCustomErrorReason = (
     reason: actualReason,
     message: errorReasonAndMessages[
       actualReason as keyof typeof errorReasonAndMessages
-    ].replace("{reason}", reason),
+    ]
   });
   setHttpCodeAndMessage(
     event,
