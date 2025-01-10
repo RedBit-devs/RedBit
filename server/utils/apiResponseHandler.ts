@@ -3,6 +3,7 @@ import {
   errorExpectedFroms,
   errorReasons,
 } from "~/types/customErrorMessage";
+import auth from "../middleware/auth";
 const errorReasonAndMessages = {
   PasswordValidationFailed:
     "Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
@@ -27,6 +28,7 @@ const errorReasonAndMessages = {
   BadCustomErrorExpectedFrom:
     "The given custom error expected from is not in the api response handler,The given custom error expected from was: {expectedFrom}",
   DataDontMatch: "Provided data does not match expected data",
+  AuthValidationFailed: "Authentication failed you are not logged in",
 };
 
 const errorHttpStatusCodes = {
