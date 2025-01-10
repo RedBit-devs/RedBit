@@ -27,18 +27,10 @@ enum errorExpectedFroms {
     User = "User",
 }
 
-const errorHttpStatusCodes = {
-    452: "UserValidationFailed",
-    453: "PrismaResponseFailed",
-    454: "BadCustomErrorReason",
-    455: "BadCustomErrorExpectedFrom",
-}
-
 
 
 export {
     type CustomErrorMessagetest,
     errorReasons,
-    errorExpectedFroms,
-    errorHttpStatusCodes
+    errorExpectedFroms
 }
