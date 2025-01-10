@@ -1,7 +1,7 @@
-type CustomErrorMessagetest = {
+type CustomErrorMessage = {
     expectedFrom: errorExpectedFroms;
     reason: errorReasons;
-    table?: tableNames;
+    table?: string;
     target?: unknown;
 }
 
@@ -33,7 +33,7 @@ enum tableNames {
 
 
 export {
-    type CustomErrorMessagetest,
+    type CustomErrorMessage,
     errorReasons,
     errorExpectedFroms,
     tableNames

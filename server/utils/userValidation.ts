@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import {type CustomErrorMessage, errorExpectedFroms, errorReasons, } from "~/types/customErrorMessage";
 
 const EMAIL_PATTERN: RegExp = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_PATTERN: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -25,9 +26,9 @@ const hashPassword = async (password: string, customErrorMessages: CustomErrorMe
   } catch (e) {
 
     const error:CustomErrorMessage = {
-      expectedFrom: "User",
+      expectedFrom: errorExpectedFroms.User,
 
-      reason: "PasswordHashingFailed"
+      reason: errorReasons.PasswordHashingFailed
     }
     customErrorMessages.push(error)
   }
@@ -134,54 +135,54 @@ const userValidation = async (
   if (paramsCheck(user)) {
 
     const error:CustomErrorMessage = {
-      expectedFrom: "User",
+      expectedFrom: errorExpectedFroms.User,
 
-      reason: "MissingParameters"
+      reason: errorReasons.MissingParameters
     };
     customErrorMessages.push(error)
     isValid = false;
   }
   if (user.password && !(await isPasswordValid(user.password))) {
     const error:CustomErrorMessage = {
-      expectedFrom: "User",
+      expectedFrom: errorExpectedFroms.User,
 
-      reason: "PasswordValidationFailed"
+      reason: errorReasons.PasswordValidationFailed
     };
     customErrorMessages.push(error)
     isValid = false;
   }
   if (user.email && !(await isEmailValid(user.email))) {
     const error:CustomErrorMessage = {
-      expectedFrom: "User",
+      expectedFrom: errorExpectedFroms.User,
 
-      reason: "EmailValidationFailed"
+      reason: errorReasons.EmailValidationFailed
     };
     isValid = false;
     customErrorMessages.push(error)
   }
   if (user.username && !(await isUsernameValid(user.username))) {
     const error:CustomErrorMessage = {
-      expectedFrom: "User",
+      expectedFrom: errorExpectedFroms.User,
 
-      reason: "UsernameValidationFailed"
+      reason: errorReasons.UsernameValidationFailed
     };
     isValid = false;
     customErrorMessages.push(error)
   }
   if (user.first_name && !(await isNameValid(user.first_name))) {
     const error:CustomErrorMessage = {
-      expectedFrom: "User",
+      expectedFrom: errorExpectedFroms.User,
 
-      reason: "FirstNameValidationFailed"
+      reason: errorReasons.FirstNameValidationFailed
     };
     isValid = false;
     customErrorMessages.push(error)
   }
   if (user.last_name && !(await isNameValid(user.last_name))) {
     const error:CustomErrorMessage = {
-      expectedFrom: "User",
+      expectedFrom: errorExpectedFroms.User,
 
-      reason: "LastNameValidationFailed"
+      reason: errorReasons.LastNameValidationFailed
     };
     isValid = false;
     customErrorMessages.push(error)

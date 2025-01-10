@@ -1,6 +1,7 @@
 import prisma from "~/lib/prisma";
 import checkTable from "../databaseTableValidation";
 import prismaErrorHandler from "../databaseErrorHandling";
+import {type CustomErrorMessage, errorExpectedFroms, errorReasons, } from "~/types/customErrorMessage";
 
 /**
  * Updates a single record in the given table with the given data.
@@ -21,8 +22,8 @@ const updateRecord = async <T>(
 ): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
-      expectedFrom: "Prisma",
-      reason: "TableNotFound",
+      expectedFrom: errorExpectedFroms.Prisma,
+      reason: errorReasons.TableNotFound,
       table: table
     };
     customErrorMessages.push(error)

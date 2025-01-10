@@ -1,6 +1,7 @@
 import prisma from "~/lib/prisma";
 import checkTable from "../databaseTableValidation";
 import prismaErrorHandler from "../databaseErrorHandling";
+import {type CustomErrorMessage, errorExpectedFroms, errorReasons, } from "~/types/customErrorMessage";
 
 /**
  * Read a single record in the given table with the given id.
@@ -19,8 +20,8 @@ const readRecord = async (
 ): Promise<any> => {
   if (!(await checkTable(table))){
     const error:CustomErrorMessage = {
-      expectedFrom: "Prisma",
-      reason: "TableNotFound",
+      expectedFrom: errorExpectedFroms.Prisma,
+      reason: errorReasons.TableNotFound,
       table: table
     };
     customErrorMessages.push(error)

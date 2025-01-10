@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import {type CustomErrorMessage, errorExpectedFroms, errorReasons, } from "~/types/customErrorMessage";
 
 /**
  * Handles Prisma errors and converts them into custom error messages that can be
@@ -19,31 +20,31 @@ const prismaErrorHandler = async (
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === "P2002") {
       const customError:CustomErrorMessage = {
-        expectedFrom: "Prisma",
-        reason: "UniqueConstraintFailed",
+        expectedFrom: errorExpectedFroms.Prisma,
+        reason: errorReasons.UniqueConstraintFailed,
         table: table,
         target: error.meta?.target
       };
       customErrorMessages.push(customError)
     } else if (error.code === "P2025") {
       const customError:CustomErrorMessage = {
-        expectedFrom: "Prisma",
-        reason: "IdentifierNotFound",
+        expectedFrom: errorExpectedFroms.Prisma,
+        reason: errorReasons.IdentifierNotFound,
         table: table,
         target: id
       };
       customErrorMessages.push(customError)
   } else if (error instanceof Prisma.PrismaClientValidationError) {
     const customError:CustomErrorMessage = {
-      expectedFrom: "Prisma",
-      reason: "ValidationError",
+      expectedFrom: errorExpectedFroms.Prisma,
+      reason: errorReasons.ValidationError,
       table: table,
     };
     customErrorMessages.push(customError)
   } else {
     const customError:CustomErrorMessage = {
-      expectedFrom: "Prisma",
-      reason: "UnknownError",
+      expectedFrom: errorExpectedFroms.Prisma,
+      reason: errorReasons.UnknownError,
     };
     customErrorMessages.push(customError)
   }}

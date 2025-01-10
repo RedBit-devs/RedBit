@@ -1,3 +1,4 @@
+import {type CustomErrorMessage, errorExpectedFroms, errorReasons } from "~/types/customErrorMessage";
 const errorReasonAndMessages ={
   PasswordValidationFailed : "Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
   EmailValidationFailed : "Email is not valid",
@@ -60,7 +61,7 @@ const apiResponseHandler = (event: any, customErrorMessages: CustomErrorMessage[
     message: "Bad request",
     errors: [],
   }
-  if (customErrorMessages[0].expectedFrom ==="Prisma") {
+  if (customErrorMessages[0].expectedFrom === "Prisma") {
     const reason = customErrorMessages[0].reason;
     const httpCode = 453
     if (reason in errorReasonAndMessages) {

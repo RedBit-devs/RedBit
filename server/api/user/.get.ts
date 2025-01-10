@@ -1,6 +1,6 @@
 import readRecord from "~/lib/prisma/databaseOperations/readRecord";
 import { paramsCheck } from "~/server/utils/userValidation";
-import {type CustomErrorMessagetest, errorExpectedFroms, errorReasons } from "~/types/customErrorMessage";
+import {type CustomErrorMessage, errorExpectedFroms, errorReasons } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
   if(!event.context.auth)
@@ -21,15 +21,10 @@ export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
   event.context.apiResponse = apiResponse;
   if (paramsCheck(apiResponse.params)) {
-    const error: CustomErrorMessage = {
-      expectedFrom: "User",
-      reason: "MissingParameters",
-    }
-    const errorTest:CustomErrorMessagetest = {
+    const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
       reason: errorReasons.MissingParameters
     }
-    console.log(errorTest)
     customErrorMessages.push(error);
     apiResponseHandler(event, customErrorMessages);
     return apiResponse;
