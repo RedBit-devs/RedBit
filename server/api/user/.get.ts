@@ -11,8 +11,8 @@ export default defineEventHandler(async (event) => {
   if (!event.context.auth) {
     const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.AuthValidationFailed
-    }
+      reason: errorReasons.AuthValidationFailed,
+    };
   }
   const userId = event.context.auth.user.id;
   const apiResponse = {} as ApiResponse;

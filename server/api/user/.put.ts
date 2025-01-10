@@ -3,8 +3,6 @@ import { apiResponseHandler } from "~/server/utils/apiResponseHandler";
 import { userValidation, hashPassword } from "~/server/utils/userValidation";
 import {
   type CustomErrorMessage,
-  errorExpectedFroms,
-  errorReasons,
 } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
