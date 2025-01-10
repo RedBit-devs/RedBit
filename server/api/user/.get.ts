@@ -7,6 +7,7 @@ import {
 } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
+  const customErrorMessages: CustomErrorMessage[] = [];
   if (!event.context.auth) {
     const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
@@ -20,7 +21,6 @@ export default defineEventHandler(async (event) => {
   apiResponse.params = {
     id: userId,
   };
-  const customErrorMessages: CustomErrorMessage[] = [];
   event.context.apiResponse = apiResponse;
   if (paramsCheck(apiResponse.params)) {
     const error: CustomErrorMessage = {

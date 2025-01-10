@@ -21,6 +21,7 @@ enum errorReasons {
   BadCustomErrorReason = "BadCustomErrorReason",
   BadCustomErrorExpectedFrom = "BadCustomErrorExpectedFrom",
   DataDontMatch = "DataDontMatch",
+  AuthValidationFailed = "AuthValidationFailed",
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",
