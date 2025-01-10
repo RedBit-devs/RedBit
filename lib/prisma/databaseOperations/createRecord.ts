@@ -1,7 +1,11 @@
 import prisma from "~/lib/prisma";
 import checkTable from "../databaseTableValidation";
 import prismaErrorHandler from "../databaseErrorHandling";
-import {type CustomErrorMessage, errorExpectedFroms, errorReasons, } from "~/types/customErrorMessage";
+import {
+  type CustomErrorMessage,
+  errorExpectedFroms,
+  errorReasons,
+} from "~/types/customErrorMessage";
 
 /**
  * Creates a new record in the given table with the given data.
@@ -18,14 +22,14 @@ const createRecord = async <T>(
   data: T,
   customErrorMessages: CustomErrorMessage[]
 ): Promise<any> => {
-  if (!(await checkTable(table))){
-    const error:CustomErrorMessage = {
+  if (!(await checkTable(table))) {
+    const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.Prisma,
       reason: errorReasons.TableNotFound,
-      table: table
+      table: table,
     };
-    customErrorMessages.push(error)
-    return
+    customErrorMessages.push(error);
+    return;
   }
   let dbResponse;
   try {
@@ -34,9 +38,9 @@ const createRecord = async <T>(
     });
   } catch (error) {
     prismaErrorHandler(error, table, customErrorMessages);
-    return
+    return;
   }
-  return dbResponse
+  return dbResponse;
 };
 
 export default createRecord;
