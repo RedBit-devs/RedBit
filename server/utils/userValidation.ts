@@ -27,7 +27,6 @@ const hashPassword = async (password: string, customErrorMessages: CustomErrorMe
 
     const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-
       reason: errorReasons.PasswordHashingFailed
     }
     customErrorMessages.push(error)
@@ -136,7 +135,6 @@ const userValidation = async (
 
     const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-
       reason: errorReasons.MissingParameters
     };
     customErrorMessages.push(error)
@@ -145,7 +143,6 @@ const userValidation = async (
   if (user.password && !(await isPasswordValid(user.password))) {
     const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-
       reason: errorReasons.PasswordValidationFailed
     };
     customErrorMessages.push(error)
@@ -154,7 +151,6 @@ const userValidation = async (
   if (user.email && !(await isEmailValid(user.email))) {
     const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-
       reason: errorReasons.EmailValidationFailed
     };
     isValid = false;
@@ -163,7 +159,6 @@ const userValidation = async (
   if (user.username && !(await isUsernameValid(user.username))) {
     const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-
       reason: errorReasons.UsernameValidationFailed
     };
     isValid = false;
@@ -172,7 +167,6 @@ const userValidation = async (
   if (user.first_name && !(await isNameValid(user.first_name))) {
     const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-
       reason: errorReasons.FirstNameValidationFailed
     };
     isValid = false;
@@ -181,7 +175,6 @@ const userValidation = async (
   if (user.last_name && !(await isNameValid(user.last_name))) {
     const error:CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-
       reason: errorReasons.LastNameValidationFailed
     };
     isValid = false;

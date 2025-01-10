@@ -14,10 +14,6 @@ export default defineEventHandler(async (event) => {
   apiResponse.params = {
     id: userId,
   };
-  apiResponse.params = {
-    id: ""
-  }
-  console.log(userId);
   const customErrorMessages: CustomErrorMessage[] = [];
   event.context.apiResponse = apiResponse;
   if (paramsCheck(apiResponse.params)) {
