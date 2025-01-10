@@ -1,7 +1,7 @@
 type CustomErrorMessagetest = {
     expectedFrom: errorExpectedFroms;
     reason: errorReasons;
-    table?: string;
+    table?: tableNames;
     target?: unknown;
 }
 
@@ -26,11 +26,15 @@ enum errorExpectedFroms {
     Prisma = "Prisma",
     User = "User",
 }
+enum tableNames {
+    user = "user",
+}
 
 
 
 export {
     type CustomErrorMessagetest,
     errorReasons,
-    errorExpectedFroms
+    errorExpectedFroms,
+    tableNames
 }
