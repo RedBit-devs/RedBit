@@ -130,11 +130,10 @@ const isNameValid = async (name: string): Promise<boolean> => {
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the checks passed or not.
  */
 const userValidation = async (
-  event: any,
+  apiResponse: ApiResponse,
   customErrorMessages: CustomErrorMessage[]
 ): Promise<boolean> => {
-  const apiResponse: ApiResponse = event.context.apiResponse;
-  const user: User = event.context.apiResponse.params;
+  const user: User = apiResponse.params as User;
   let isValid = true;
   if (paramsCheck(user)) {
     const error: CustomErrorMessage = {
@@ -184,7 +183,6 @@ const userValidation = async (
     isValid = false;
     customErrorMessages.push(error);
   }
-  event.context.apiResponse = apiResponse;
   return isValid;
 };
 
