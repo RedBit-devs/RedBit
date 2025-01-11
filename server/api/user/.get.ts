@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
       expectedFrom: errorExpectedFroms.User,
       reason: errorReasons.AuthValidationFailed,
     };
+    customErrorMessages.push(error);
   }
   const userId = event.context.auth.user.id;
   const apiResponse = {} as ApiResponse;

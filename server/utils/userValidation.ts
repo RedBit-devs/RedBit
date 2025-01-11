@@ -127,7 +127,6 @@ const isNameValid = async (name: string): Promise<boolean> => {
  *
  * @param {any} event - The event object containing user data to validate, and context for the API response.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any validation failures.
- * @param {boolean} isNewUser - A boolean indicating if the user is being created or not.
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the checks passed or not.
  */
 const userValidation = async (
@@ -190,10 +189,10 @@ const userValidation = async (
 };
 
 /**
- * Checks if the user object has all the required parameters.
+ * Checks if the object has all the required parameters.
  *
- * @param {any} params - The user object to be checked.
- * @returns {boolean} - A boolean indicating if the user object has all the required parameters.
+ * @param {any} params - The object to be checked.
+ * @returns {boolean} - A boolean indicating if the object has all the required parameters.
  */
 
 const paramsCheck = (params: any): boolean => {

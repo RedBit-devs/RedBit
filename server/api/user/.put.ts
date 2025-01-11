@@ -8,7 +8,7 @@ import {
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
   const apiResponse = {} as ApiResponse;
-  apiResponse.context = "UserCreate";
+  apiResponse.context = "User/Create";
   apiResponse.method = "PUT";
   apiResponse.params = {
     username: newUser.username,
