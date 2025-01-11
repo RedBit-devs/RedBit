@@ -3,7 +3,8 @@ import {
   errorExpectedFroms,
   errorReasons,
 } from "~/types/customErrorMessage";
-const errorReasonAndMessages = {
+
+const userErrorReasonAndMessages = {
   PasswordValidationFailed:
     "Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
   EmailValidationFailed: "Email is not valid",
@@ -15,6 +16,11 @@ const errorReasonAndMessages = {
     "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
   MissingParameters: "Some required parameters were missing",
   PasswordHashingFailed: "Some error occurred while hashing the password",
+  DataDontMatch: "Provided data does not match expected data",
+  AuthValidationFailed: "Authentication failed you are not logged in",
+};
+
+const prismaErrorReasonAndMessages = {
   TableNotFound: "Can't read from the {table} table because it doesn't exist",
   UniqueConstraintFailed:
     "The unique constraint failed on the {table} table with the following values: {target}",
@@ -22,14 +28,14 @@ const errorReasonAndMessages = {
     "Oparation failed on {table} table because the record with  id: {target} doesn't exist",
   ValidationError: "Something was not in the correct format",
   UnknownError: "An unknown error occurred",
+};
+
+const devErrorReasonAndMessages = {
   BadCustomErrorReason:
     "The given custom error reason is not in the expected custom error object",
   BadCustomErrorExpectedFrom:
     "The given custom error expected from is not in the api response handler",
-  DataDontMatch: "Provided data does not match expected data",
-  AuthValidationFailed: "Authentication failed you are not logged in",
 };
-
 const errorHttpStatusCodes = {
   452: "UserValidationFailed",
   453: "PrismaResponseFailed",
@@ -79,12 +85,12 @@ const apiResponseHandler = (
   if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Prisma) {
     const reason = customErrorMessages[0].reason;
     const httpCode = 453;
-    if (reason in errorReasonAndMessages) {
+    if (reason in prismaErrorReasonAndMessages) {
       apiResponse.error.errors.push({
         domain: errorExpectedFroms.Prisma,
         reason: reason,
-        message: errorReasonAndMessages[
-          reason as keyof typeof errorReasonAndMessages
+        message: prismaErrorReasonAndMessages[
+          reason as keyof typeof prismaErrorReasonAndMessages
         ]
           .replace("{table}", customErrorMessages[0].table as string)
           .replace("{target}", customErrorMessages[0].target as string),
@@ -97,23 +103,23 @@ const apiResponseHandler = (
         errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes]
       );
     } else {
-      badCustomErrorReason(event, apiResponse, customErrorMessages[0].reason);
+      badCustomErrorReason(event, apiResponse);
     }
   } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.User) {
     const httpCode = 452;
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
-      if (reason in errorReasonAndMessages) {
+      if (reason in userErrorReasonAndMessages) {
         apiResponse.error.errors.push({
           domain: apiResponse.context,
           reason: reason,
           message:
-            errorReasonAndMessages[
-              reason as keyof typeof errorReasonAndMessages
+            userErrorReasonAndMessages[
+              reason as keyof typeof userErrorReasonAndMessages
             ],
         });
       } else {
-        badCustomErrorReason(event, apiResponse, customErrorMessages[i].reason);
+        badCustomErrorReason(event, apiResponse);
       }
       if (!event.node.res.statusMessage) {
         setHttpCodeAndMessage(
@@ -133,11 +139,12 @@ const apiResponseHandler = (
         errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes],
       errors: [
         {
-          domain: event.context.apiResponse.context,
+          domain: apiResponse.context,
           reason: reason,
-          message: errorReasonAndMessages[
-            reason as keyof typeof errorReasonAndMessages
-          ]
+          message:
+            devErrorReasonAndMessages[
+              reason as keyof typeof devErrorReasonAndMessages
+            ],
         },
       ],
     };
@@ -177,22 +184,19 @@ const setHttpCodeAndMessage = (
     event.node.res.statusMessage = message;
   }
 };
-const badCustomErrorReason = (
-  event: any,
-  apiResponse: ApiResponse,
-  reason: string
-) => {
+const badCustomErrorReason = (event: any, apiResponse: ApiResponse) => {
   const httpCode = 454;
-  const actualReason = errorReasons.BadCustomErrorReason;
+  const reason = errorReasons.BadCustomErrorReason;
   if (!apiResponse.error?.errors) {
     return;
   }
   apiResponse.error.errors.push({
     domain: event.context.apiResponse.context,
-    reason: actualReason,
-    message: errorReasonAndMessages[
-      actualReason as keyof typeof errorReasonAndMessages
-    ]
+    reason: reason,
+    message:
+      devErrorReasonAndMessages[
+        reason as keyof typeof devErrorReasonAndMessages
+      ],
   });
   setHttpCodeAndMessage(
     event,
