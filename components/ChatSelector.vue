@@ -30,6 +30,7 @@
 .searchChat {
     margin: .3rem;
     text-align: center;
+
 }
 
 input {
@@ -45,5 +46,22 @@ input {
 .chatList {
     display: flex;
     flex-direction: column;
+}
+
+@media only screen and (max-width:1350px) {
+    .container {
+        width: 20rem;
+    }
+}
+
+
+@media only screen and (max-width:1120px) {
+    .container {
+        width: 18rem;
+    }
+
+    input {
+        width: 15.75rem;
+    }
 }
 </style>
