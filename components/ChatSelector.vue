@@ -42,7 +42,7 @@ input {
     width: 18.75rem;
 }
 
-.chatList{
+.chatList {
     display: flex;
     flex-direction: column;
 }

@@ -1,13 +1,13 @@
 <template>
     <div class="content">
-        <ChatMenu />
+
     </div>
 </template>
 
 <script setup>
- definePageMeta({
-    layout :'chat'
- })
+definePageMeta({
+    layout: 'chat'
+})
 
 
 </script>

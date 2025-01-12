@@ -3,14 +3,15 @@
 </script>
 
 <template>
-<div id="screen">
-    <div id="sidebar">
-        <ServerSelector />
-        <ChatSelector />
-        <UserCard id="userCard" />
+    <div id="screen">
+        <div id="sidebar">
+            <ServerSelector />
+            <ChatSelector />
+            <DiscoverServers />
+            <UserCard id="userCard" />
+        </div>
+        <slot></slot>
     </div>
-    <slot></slot>
-</div>
 </template>
 
 <style scoped>
@@ -19,12 +20,14 @@
     grid-template-columns: min-content 1fr;
     min-height: 100vh;
 }
-#sidebar{
+
+#sidebar {
     display: grid;
     grid-template-areas: "servers chats" "discover user";
     grid-template-rows: 1fr min-content;
 }
-#userCard{
+
+#userCard {
     grid-area: user;
 }
 </style>
