@@ -75,7 +75,9 @@ const apiResponseHandler = (
         items: [],
       };
     }
-    return;
+    
+    return ;
+
   }
   apiResponse.error = {
     code: "400",
