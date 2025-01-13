@@ -3,6 +3,11 @@
 
 import prisma from "~/lib/prisma";
 import { paramsCheck } from "~/server/utils/userValidation";
+import {
+  type CustomErrorMessage,
+  errorExpectedFroms,
+  errorReasons,
+} from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
   let { id, email }: { id: string; email: string } = getQuery(event);
@@ -21,8 +26,8 @@ export default defineEventHandler(async (event) => {
 
   if (paramsCheck(apiResponse.params)) {
     errorMessages.push({
-      expectedFrom: "User",
-      reason: "MissingParameters",
+      expectedFrom: errorExpectedFroms.User,
+      reason: errorReasons.MissingParameters,
     });
 
     apiResponseHandler(event, errorMessages);
@@ -40,8 +45,8 @@ export default defineEventHandler(async (event) => {
 
   if (!findEmailResponse) {
     errorMessages.push({
-      expectedFrom: "Prisma",
-      reason: "IdentifierNotFound",
+      expectedFrom: errorExpectedFroms.Prisma,
+      reason: errorReasons.IdentifierNotFound,
       table: "User",
       target: id,
     });
@@ -49,8 +54,8 @@ export default defineEventHandler(async (event) => {
 
   if (findEmailResponse && findEmailResponse.email != email) {
     errorMessages.push({
-      expectedFrom: "User",
-      reason: "DataDontMatch",
+      expectedFrom: errorExpectedFroms.User,
+      reason: errorReasons.DataDontMatch,
     });
   }
 
