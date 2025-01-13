@@ -5,10 +5,10 @@ Content-Type: application/json
 
 {
     "username": "sssg",
-    "email": "josshndoddd@ddexample.com",
+    "email": "josshndodddd@dexample.com",
     "birthdate": "1990-02-12",
-    "firstName": "Jsssn",
-    "lastName": "sss",
+    "first_name": "Jsssn",
+    "last_name": "gggg",
     "password": "sss2ssS#ss"
 }
 

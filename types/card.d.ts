@@ -1,12 +1,12 @@
 type Bubble = {
-    url: string
-    name: string
-    imageUrl: string
-}
+  url: string;
+  name: string;
+  imageUrl: string;
+};
 
 type CardData = {
-    imageUrl?: string
-    headerText?: string
-    bubbles?: Bubble[]
-    description?: string
-}
+  imageUrl?: string;
+  headerText?: string;
+  bubbles?: Bubble[];
+  description?: string;
+};
