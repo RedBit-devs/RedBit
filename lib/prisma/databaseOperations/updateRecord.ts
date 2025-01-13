@@ -1,12 +1,17 @@
 import prisma from "~/lib/prisma";
 import checkTable from "../databaseTableValidation";
 import prismaErrorHandler from "../databaseErrorHandling";
+import {
+  type CustomErrorMessage,
+  errorExpectedFroms,
+  errorReasons,
+} from "~/types/customErrorMessage";
 
 /**
  * Updates a single record in the given table with the given data.
- * 
+ *
  * If the table does not exist creates a new custom error.
- * 
+ *
  * @param table The name of the table to update.
  * @param data The data to be used for the update.
  * @param id The id of the record to be updated.
@@ -19,14 +24,14 @@ const updateRecord = async <T>(
   id: string,
   customErrorMessages: CustomErrorMessage[]
 ): Promise<any> => {
-  if (!(await checkTable(table))){
-    const error:CustomErrorMessage = {
-      expectedFrom: "Prisma",
-      reason: "TableNotFound",
-      table: table
+  if (!(await checkTable(table))) {
+    const error: CustomErrorMessage = {
+      expectedFrom: errorExpectedFroms.Prisma,
+      reason: errorReasons.TableNotFound,
+      table: table,
     };
-    customErrorMessages.push(error)
-    return
+    customErrorMessages.push(error);
+    return;
   }
   let dbResponse;
   try {
@@ -37,10 +42,10 @@ const updateRecord = async <T>(
       data: data,
     });
   } catch (error) {
-    prismaErrorHandler(error, table, customErrorMessages,id);
-    return
+    prismaErrorHandler(error, table, customErrorMessages, id);
+    return;
   }
-  return dbResponse
+  return dbResponse;
 };
 
 export default updateRecord;
