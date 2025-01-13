@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="CHATContent">
+        <div class="chatContent">
             <div class="searchChat">
                 <input type="text" placeholder="Search between chats">
             </div>
