@@ -64,17 +64,14 @@ const passwordRef = ref(null)
 const passwordAgainRef = ref(null)
 
 const sendRegisterRequest = async () => {
-    console.log("hereee");
     
     if (!firstnameRef.value.value ||
         !lastnameRef.value.value ||
         !birthDateRef.value.value || !emailRef.value.value ||
         !usernameRef.value.value || !passwordRef.value.value ||
         !passwordAgainRef.value.value) return;
-        console.log("heree");
         
     if (!(passwordRef.value.value === passwordAgainRef.value.value)) return;
-    console.log('here');
     
     const response = await $fetch("/api/user/", {
         ignoreResponseError : true,

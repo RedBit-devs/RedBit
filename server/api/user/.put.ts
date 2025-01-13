@@ -7,8 +7,7 @@ export default defineEventHandler(async (event) => {
   const apiResponse = {} as ApiResponse;
   apiResponse.context = "User/Create";
   apiResponse.method = "PUT";
-  console.log(newUser);
-  console.log(newUser.first_name);
+
   
   apiResponse.params = {
     username: newUser.username,
@@ -33,7 +32,6 @@ export default defineEventHandler(async (event) => {
     return apiResponse
   }
   const data = await createRecord("user", newUser,customErrorMessages);
-  console.log(data);
   
   apiResponseHandler(event,customErrorMessages,data);
   return apiResponse
