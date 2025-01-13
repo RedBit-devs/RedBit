@@ -1,6 +1,11 @@
 import prisma from "~/lib/prisma";
 import checkTable from "../databaseTableValidation";
 import prismaErrorHandler from "../databaseErrorHandling";
+import {
+  type CustomErrorMessage,
+  errorExpectedFroms,
+  errorReasons,
+} from "~/types/customErrorMessage";
 
 /**
  * Creates a new record in the given table with the given data.
@@ -9,7 +14,6 @@ import prismaErrorHandler from "../databaseErrorHandling";
  *
  * @param {string} table - The name of the table to create in.
  * @param {T} data - The data to be used for the create.
- * @param {ApiResponse} apiResponse - The ApiResponse object to be populated with the data information on success.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @returns {Promise<any>}
  */
@@ -18,14 +22,14 @@ const createRecord = async <T>(
   data: T,
   customErrorMessages: CustomErrorMessage[]
 ): Promise<any> => {
-  if (!(await checkTable(table))){
-    const error:CustomErrorMessage = {
-      espectedFrom: "Prisma",
-      reason: "TableNotFound",
-      table: table
+  if (!(await checkTable(table))) {
+    const error: CustomErrorMessage = {
+      expectedFrom: errorExpectedFroms.Prisma,
+      reason: errorReasons.TableNotFound,
+      table: table,
     };
-    customErrorMessages.push(error)
-    return
+    customErrorMessages.push(error);
+    return;
   }
   let dbResponse;
   try {
@@ -34,9 +38,9 @@ const createRecord = async <T>(
     });
   } catch (error) {
     prismaErrorHandler(error, table, customErrorMessages);
-    return
+    return;
   }
-  return dbResponse
+  return dbResponse;
 };
 
 export default createRecord;

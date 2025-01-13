@@ -107,26 +107,4 @@ apiResponse.data={
 
 
 return apiResponse
-/*
-    apiResponse.params = {
-        ...apiResponse.params,
-        password: "",
-    }
-    apiResponse.data = {
-        fields: {
-            token: {
-                name: "token",
-                typeName: "String"
-            }
-        },
-        totalItems: 1,
-        items: [
-            {
-                token: token
-            }
-        ]
-    }
-
-    return apiResponse
-    */
 })
