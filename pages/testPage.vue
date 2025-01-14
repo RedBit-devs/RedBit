@@ -1,7 +1,8 @@
 <template>
     <div class="content">
         <ChatFieldNavbar />
-        <ChatCard />
+
+        <ChatInputFiled />
     </div>
 </template>
 
