@@ -10,12 +10,14 @@ export default defineEventHandler(async (event) => {
   const apiResponse = {} as ApiResponse;
   apiResponse.context = "User/Create";
   apiResponse.method = "PUT";
+
+  
   apiResponse.params = {
     username: newUser.username,
     email: newUser.email,
     birthdate: newUser.birthdate,
-    first_name: newUser.first_name,
-    last_name: newUser.last_name,
+    firstName: newUser.first_name,
+    lastName: newUser.last_name,
     password: newUser.password,
   };
   const customErrorMessages: CustomErrorMessage[] = [];
@@ -32,7 +34,10 @@ export default defineEventHandler(async (event) => {
     apiResponseHandler(event, customErrorMessages);
     return apiResponse;
   }
-  const data = await createRecord("user", newUser, customErrorMessages);
-  apiResponseHandler(event, customErrorMessages, data);
-  return apiResponse;
+  
+  const data = await createRecord("user", newUser,customErrorMessages);
+  
+  apiResponseHandler(event,customErrorMessages,data);
+  return apiResponse
+
 });

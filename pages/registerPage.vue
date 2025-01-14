@@ -9,35 +9,35 @@
                 <div class="input-field">
                     <div class="input" id="firstname">
                         <label>Firstname</label>
-                        <input type="text" placeholder="Type here">
+                        <input ref="firstnameRef" type="text" placeholder="Type here">
                     </div>
                     <div class="input" id="lastname">
                         <label>Lastname</label>
-                        <input type="text" placeholder="Type here">
+                        <input ref="lastnameRef" type="text" placeholder="Type here">
                     </div>
                     <div class="input" id="birthDate">
                         <label>Birth date</label>
-                        <input type="date">
+                        <input ref="birthDateRef" type="date">
                     </div>
                     <div class="input" id="email">
                         <label>Email</label>
-                        <input type="text" placeholder="Type here">
+                        <input ref="emailRef" type="text" placeholder="Type here">
                     </div>
                     <div class="input" id="username">
                         <label>Username</label>
-                        <input type="text" placeholder="Type here">
+                        <input ref="usernameRef" type="text" placeholder="Type here">
                     </div>
                     <div class="input" id="password">
                         <label>Password</label>
-                        <input type="password" placeholder="Type here">
+                        <input ref="passwordRef" type="password" placeholder="Type here">
                     </div>
                     <div class="input" id="passwordAgain">
                         <label>Password again</label>
-                        <input type="password" placeholder="Type here">
+                        <input ref="passwordAgainRef" type="password" placeholder="Type here">
                     </div>
                 </div>
                 <div class="submit">
-                    <button class="btn ui-secondary"> Register</button>
+                    <button class="btn ui-secondary" @click="sendRegisterRequest()"> Register</button>
                 </div>
             </div>
             <div class="login">
@@ -54,6 +54,48 @@
 definePageMeta({
     layout: false
 })
+
+const firstnameRef = ref(null)
+const lastnameRef = ref(null)
+const birthDateRef = ref(null)
+const emailRef = ref(null)
+const usernameRef = ref(null)
+const passwordRef = ref(null)
+const passwordAgainRef = ref(null)
+
+const sendRegisterRequest = async () => {
+    
+    if (!firstnameRef.value.value ||
+        !lastnameRef.value.value ||
+        !birthDateRef.value.value || !emailRef.value.value ||
+        !usernameRef.value.value || !passwordRef.value.value ||
+        !passwordAgainRef.value.value) return;
+        
+    if (!(passwordRef.value.value === passwordAgainRef.value.value)) return;
+    
+    const response = await $fetch("/api/user/", {
+        ignoreResponseError : true,
+
+        method: 'PUT',
+        body: {
+            first_name: firstnameRef.value.value,
+            last_name: lastnameRef.value.value,
+            birthdate: birthDateRef.value.value,
+            email: emailRef.value.value,
+            username: usernameRef.value.value,
+            password: passwordRef.value.value
+        
+        }
+        
+    })
+
+    if (!response.error) {
+        navigateTo('/loginPage')    
+    }
+    return;
+    
+}
+
 </script>
 
 
