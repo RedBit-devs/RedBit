@@ -1,14 +1,20 @@
 <template>
     <div class="content">
         <ChatFieldNavbar />
-
-        <ChatInputFiled />
+        <div id="chat">
+            <h1>aa</h1>
+            <h1>aa</h1>
+            <h1>aa</h1>
+            <h1>aa</h1>
+        </div>
+        <ChatInputFiled id="input" />
     </div>
 </template>
 
 <script setup>
+
 definePageMeta({
-    layout: 'chat'
+    layout: false
 })
 
 
@@ -16,8 +22,16 @@ definePageMeta({
 
 <style scoped>
 .content {
-    display: grid;
-    grid-template-rows: 1fr min-content;
-    grid-template-areas: "servers" "chat" "header";
+    display: flex;
+    flex-direction: column;
+}
+
+#chat {
+    height: 100% !important;
+}
+
+#input {
+    position: absolute;
+    bottom: 0;
 }
 </style>
