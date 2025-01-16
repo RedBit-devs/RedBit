@@ -16,7 +16,7 @@
 
 <style scoped>
 .inputField {
-    margin: .5rem;
+    padding: .5rem;
     display: flex;
     gap: 1rem;
     width: 100%;
