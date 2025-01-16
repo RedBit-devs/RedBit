@@ -41,11 +41,13 @@ const appearMobileSearch = () => {
 
 
 
+
+
 }
 
 const disappearMobileSearch = () => {
     proba.value.zIndex = '-1',
-        setTimeout(proba.value.transform = `translateY(-20%)`, 10000)
+        proba.value.transform = `translateY(-20%)`
 
 
 }

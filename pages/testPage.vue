@@ -2,10 +2,8 @@
     <div class="content">
         <ChatFieldNavbar />
         <div id="chat">
-            <h1>aa</h1>
-            <h1>aa</h1>
-            <h1>aa</h1>
-            <h1>aa</h1>
+
+
         </div>
         <ChatInputFiled id="input" />
     </div>
@@ -22,16 +20,16 @@ definePageMeta({
 
 <style scoped>
 .content {
+    height: 100vh;
+
     display: flex;
     flex-direction: column;
 }
 
 #chat {
-    height: 100% !important;
-}
+    overflow-y: scroll;
+    height: 100%;
+    overflow: auto;
 
-#input {
-    position: absolute;
-    bottom: 0;
 }
 </style>
