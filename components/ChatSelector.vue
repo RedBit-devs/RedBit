@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="CHATContent">
+        <div class="chatContent">
             <div class="searchChat">
                 <input type="text" placeholder="Search between chats">
             </div>
@@ -30,6 +30,7 @@
 .searchChat {
     margin: .3rem;
     text-align: center;
+
 }
 
 input {
@@ -42,8 +43,25 @@ input {
     width: 18.75rem;
 }
 
-.chatList{
+.chatList {
     display: flex;
     flex-direction: column;
+}
+
+@media only screen and (max-width:1350px) {
+    .container {
+        width: 20rem;
+    }
+}
+
+
+@media only screen and (max-width:1120px) {
+    .container {
+        width: 18rem;
+    }
+
+    input {
+        width: 15.75rem;
+    }
 }
 </style>

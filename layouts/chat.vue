@@ -1,30 +1,48 @@
-<script setup lang="ts">
+<template>
+    <div id="screen">
+        <div id="sidebar">
+            <ServerSelector />
+            <ChatSelector />
+            <DiscoverServers />
+            <UserCard id="userCard" />
+        </div>
+        <div id="content">
+            <slot>
+
+            </slot>
+        </div>
+    </div>
+
+</template>
+<script setup>
+
+
 
 </script>
 
-<template>
-<div id="screen">
-    <div id="sidebar">
-        <ServerSelector />
-        <ChatSelector />
-        <UserCard id="userCard" />
-    </div>
-    <slot></slot>
-</div>
-</template>
-
 <style scoped>
 #screen {
-    display: grid;
-    grid-template-columns: min-content 1fr;
+    display: flex;
     min-height: 100vh;
 }
-#sidebar{
+
+#swiper {
+    position: fixed;
+
+}
+
+#sidebar {
+    transition: 1s;
     display: grid;
     grid-template-areas: "servers chats" "discover user";
     grid-template-rows: 1fr min-content;
+    min-height: 100vh;
+
 }
-#userCard{
+
+
+
+#userCard {
     grid-area: user;
 }
 </style>

@@ -7,10 +7,10 @@
         <hr>
         <div class="chatList">
             <!--Szintén Mivel még nincsenek szerverek így teszt gyanánt képet használok-->
-            <nuxt-link to=""><img src="../img/probalogo.png"></nuxt-link>
-            <nuxt-link to=""><img src="../img/probalogo.png"></nuxt-link>
-            <nuxt-link to=""><img src="../img/probalogo.png"></nuxt-link>
-            <nuxt-link to=""><img src="../img/probalogo.png"></nuxt-link>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
         </div>
     </div>
 </template>
@@ -23,6 +23,7 @@
 .container {
     padding: .5rem;
     display: flex;
+    align-items: center;
     flex-direction: column;
     background-color: var(--clr-ui-secondary);
     width: 5.75rem;
@@ -53,5 +54,43 @@ hr {
 .chatList img {
     width: 4rem;
     border-radius: 50%;
+}
+
+@media only screen and (max-width:1350px) {
+    .container {
+        width: 5rem;
+    }
+
+    .logo img {
+        width: 4.5rem;
+    }
+
+    hr {
+        width: 4.25 rem;
+    }
+
+    .chatList img {
+        width: 3.5rem;
+        border-radius: 50%;
+    }
+}
+
+@media only screen and (max-width:1120px) {
+    .container {
+        width: 4rem;
+    }
+
+    .logo img {
+        width: 3.5rem;
+    }
+
+    hr {
+        width: 3.25rem;
+    }
+
+    .chatList img {
+        width: 3rem;
+        border-radius: 50%;
+    }
 }
 </style>
