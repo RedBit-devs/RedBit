@@ -21,7 +21,6 @@ definePageMeta({
 <style scoped>
 .content {
     height: 100vh;
-
     display: flex;
     flex-direction: column;
 }
