@@ -62,7 +62,7 @@ export default defineEventHandler(async (event) => {
 
     apiResponse.data = {
         totalItems: 1,
-        fields: prisma.server.fields,
+        fields: prisma.invite.fields,
         items: [dbResponse]
     }
 
