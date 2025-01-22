@@ -3,7 +3,7 @@
         <div id="sidebar" ref="sidebarRef">
             <ServerSelector id="serverSelector" />
             <ChatSelector id="chatSelector" />
-            <DiscoverServers />
+            <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
         <div id="content" ref="contentRef">
@@ -88,6 +88,10 @@ onMounted(() => {
     #chatSelector {
         width: 20rem;
     }
+
+    #discoverServers {
+        width: 5rem;
+    }
 }
 
 
@@ -100,6 +104,9 @@ onMounted(() => {
         width: 18rem;
     }
 
+    #discoverServers {
+        width: 4rem;
+    }
 
 }
 </style>

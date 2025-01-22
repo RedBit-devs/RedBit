@@ -19,17 +19,4 @@
     justify-content: center;
     align-items: center;
 }
-
-@media only screen and (max-width: 1350px) {
-    .container {
-        width: 5rem;
-    }
-
-}
-
-@media only screen and (max-width:1120px) {
-    .container {
-        width: 4rem;
-    }
-}
 </style>
