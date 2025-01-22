@@ -16,28 +16,31 @@ export default defineEventHandler(async (event) => {
     username: newUser.username,
     email: newUser.email,
     birthdate: newUser.birthdate,
-    firstName: newUser.first_name,
-    lastName: newUser.last_name,
+    first_name: newUser.first_name,
+    last_name: newUser.last_name,
     password: newUser.password,
   };
   const customErrorMessages: CustomErrorMessage[] = [];
   event.context.customErrorMessages = customErrorMessages;
   event.context.apiResponse = apiResponse;
   if (!(await userValidation(apiResponse, customErrorMessages))) {
-    apiResponseHandler(event, customErrorMessages);
-    return apiResponse;
+    const {error, response} = apiResponseHandler(event, customErrorMessages);
+    throw createError(error);  
   }
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await hashPassword(newUser.password, customErrorMessages);
   if (customErrorMessages.length > 0) {
-    apiResponseHandler(event, customErrorMessages);
-    return apiResponse;
+    const {error, response} = apiResponseHandler(event, customErrorMessages);
+    throw createError(error);  
   }
   
   const data = await createRecord("user", newUser,customErrorMessages);
   
-  apiResponseHandler(event,customErrorMessages,data);
+  const {error, response} = apiResponseHandler(event,customErrorMessages,data);
+  if (error) {
+    throw createError(error);  
+  }
   return apiResponse
 
 });
