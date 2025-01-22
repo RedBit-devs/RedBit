@@ -30,12 +30,12 @@
 }
 
 .logo img {
-    width: 5rem;
+    width: 100%;
     border-radius: var(--border-rounded);
 }
 
 hr {
-    width: 5rem;
+    width: 90%;
     height: 0.3rem;
     border-radius: var(--border-rounded);
     background-color: var(--clr-ui-primary);
@@ -46,45 +46,13 @@ hr {
     margin-top: .5rem;
     display: flex;
     flex-direction: column;
-    width: 5rem;
     justify-content: center;
     align-items: center;
+    padding-inline: .3rem;
 }
 
 .chatList img {
-    width: 4rem;
+    width: 100%;
     border-radius: 50%;
-}
-
-@media only screen and (max-width:1350px) {
-
-    .logo img {
-        width: 4.5rem;
-    }
-
-    hr {
-        width: 4.25 rem;
-    }
-
-    .chatList img {
-        width: 3.5rem;
-        border-radius: 50%;
-    }
-}
-
-@media only screen and (max-width:1120px) {
-
-    .logo img {
-        width: 3.5rem;
-    }
-
-    hr {
-        width: 3.25rem;
-    }
-
-    .chatList img {
-        width: 3rem;
-        border-radius: 50%;
-    }
 }
 </style>

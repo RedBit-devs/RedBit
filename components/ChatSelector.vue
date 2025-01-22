@@ -40,19 +40,11 @@ input {
     height: 2.875rem;
     text-align: center;
     color: white;
-    width: 18.75rem;
+    width: 100%;
 }
 
 .chatList {
     display: flex;
     flex-direction: column;
-}
-
-
-
-@media only screen and (max-width:1120px) {
-    input {
-        width: 100%;
-    }
 }
 </style>
