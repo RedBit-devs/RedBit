@@ -80,7 +80,9 @@ onMounted(() => {
 }
 
 @media only screen and (max-width:1350px) {
-    #serverSelector {
+
+    #serverSelector,
+    #discoverServers {
         width: 5rem;
     }
 
@@ -88,25 +90,18 @@ onMounted(() => {
     #chatSelector {
         width: 20rem;
     }
-
-    #discoverServers {
-        width: 5rem;
-    }
 }
 
 
 @media only screen and (max-width:1120px) {
-    #serverSelector {
+
+    #serverSelector,
+    #discoverServers {
         width: 4rem;
     }
 
     #chatSelector {
         width: 18rem;
     }
-
-    #discoverServers {
-        width: 4rem;
-    }
-
 }
 </style>
