@@ -1,19 +1,17 @@
 <template>
-    <div class="content">
-        <ChatMenu />
+    <div>
+        <ChatInputFiled />
     </div>
+
 </template>
 
 <script setup>
- definePageMeta({
-    layout :'chat'
- })
+definePageMeta({
+    layout: 'chat'
+})
 
 
 </script>
 
-<style scoped>
-.content {
-    display: flex;
-}
-</style>
+
+<style scoped></style>

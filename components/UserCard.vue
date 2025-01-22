@@ -10,13 +10,13 @@
             </div>
             <div class="buttons">
                 <div class="mircophone">
-                    <Icon name="mingcute:mic-line" size="150%"/>
+                    <Icon name="mingcute:mic-line" size="150%" />
                 </div>
                 <div class="headset">
-                    <Icon name="mingcute:headphone-line" size="150%"/>
+                    <Icon name="mingcute:headphone-line" size="150%" />
                 </div>
                 <div class="settings">
-                    <Icon name="mingcute:settings-5-line" size="150%"/>
+                    <Icon name="mingcute:settings-5-line" size="150%" />
                 </div>
             </div>
         </div>
@@ -49,9 +49,10 @@
 
 .name {
     text-align: center;
+    width: fit-content;
 }
 
-.buttons{
+.buttons {
     display: flex;
     gap: 1rem;
 }
@@ -63,5 +64,15 @@ img {
 
 p {
     color: var(--clr-text-secondary);
+}
+
+@media only screen and (max-width:1120px) {
+    img {
+        height: 3rem;
+    }
+
+    .selfContainer {
+        gap: .5rem;
+    }
 }
 </style>

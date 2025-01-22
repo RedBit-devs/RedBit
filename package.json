@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxt/icon": "^1.10.3",
+    "@nuxtjs/device": "^3.2.4",
     "@prisma/nuxt": "^0.0.35",
     "bcrypt": "^5.1.1",
     "jsonwebtoken": "^9.0.2",
