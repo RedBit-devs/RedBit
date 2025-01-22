@@ -57,9 +57,6 @@ hr {
 }
 
 @media only screen and (max-width:1350px) {
-    .container {
-        width: 5rem;
-    }
 
     .logo img {
         width: 4.5rem;
@@ -76,9 +73,6 @@ hr {
 }
 
 @media only screen and (max-width:1120px) {
-    .container {
-        width: 4rem;
-    }
 
     .logo img {
         width: 3.5rem;
