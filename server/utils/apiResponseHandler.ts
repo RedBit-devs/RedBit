@@ -1,5 +1,6 @@
 import {
   type CustomErrorMessage,
+  type customThrowError,
   errorExpectedFroms,
   errorReasons,
 } from "~/types/customErrorMessage";
@@ -64,7 +65,7 @@ const apiResponseHandler = (
   event: any,
   customErrorMessages: CustomErrorMessage[],
   data?: ResponseData
-) => {
+): any => {
   const apiResponse = event.context.apiResponse;
   if (customErrorMessages.length == 0) {
     if (data) {
@@ -76,19 +77,28 @@ const apiResponseHandler = (
       };
     }
     
-    return ;
+    return {response: apiResponse.data};
 
   }
+  /*
   apiResponse.error = {
     code: "400",
     message: "Bad request",
     errors: [],
   };
+  */
+ let customErrorObject:customThrowError = {
+  statusCode: 400,
+  statusMessage: "Bad request",
+  data: [],
+ }
   if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Prisma) {
     const reason = customErrorMessages[0].reason;
     const httpCode = 453;
     if (reason in prismaErrorReasonAndMessages) {
-      apiResponse.error.errors.push({
+      customErrorObject.statusCode = httpCode;
+      customErrorObject.statusMessage = errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes];
+      customErrorObject.data.push({
         domain: errorExpectedFroms.Prisma,
         reason: reason,
         message: prismaErrorReasonAndMessages[
@@ -97,22 +107,18 @@ const apiResponseHandler = (
           .replace("{table}", customErrorMessages[0].table as string)
           .replace("{target}", customErrorMessages[0].target as string),
       });
-
-      setHttpCodeAndMessage(
-        event,
-        apiResponse,
-        httpCode,
-        errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes]
-      );
     } else {
       badCustomErrorReason(event, apiResponse);
     }
+    return {error: customErrorObject};
   } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.User) {
     const httpCode = 452;
+    customErrorObject.statusCode = httpCode;
+    customErrorObject.statusMessage = errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes];
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
       if (reason in userErrorReasonAndMessages) {
-        apiResponse.error.errors.push({
+        customErrorObject.data.push({
           domain: apiResponse.context,
           reason: reason,
           message:
@@ -123,23 +129,14 @@ const apiResponseHandler = (
       } else {
         badCustomErrorReason(event, apiResponse);
       }
-      if (!event.node.res.statusMessage) {
-        setHttpCodeAndMessage(
-          event,
-          apiResponse,
-          httpCode,
-          errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes]
-        );
-      }
     }
+    return {error: customErrorObject};
   } else {
     const httpCode = 455;
     const reason = errorReasons.BadCustomErrorExpectedFrom;
-    apiResponse.error = {
-      code: httpCode.toString(),
-      message:
-        errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes],
-      errors: [
+    customErrorObject.statusCode = httpCode;
+    customErrorObject.statusMessage = errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes];
+    customErrorObject.data = [
         {
           domain: apiResponse.context,
           reason: reason,
@@ -148,16 +145,9 @@ const apiResponseHandler = (
               reason as keyof typeof devErrorReasonAndMessages
             ],
         },
-      ],
-    };
-    setHttpCodeAndMessage(
-      event,
-      apiResponse,
-      httpCode,
-      errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes]
-    );
+      ]
+    return {error: customErrorObject};
   }
-  event.context.apiResponse = apiResponse;
 };
 
 /**
@@ -168,31 +158,11 @@ const apiResponseHandler = (
  * @param {number} httpCode - The http status code to set.
  * @param {string} message - The http status message to set.
  */
-const setHttpCodeAndMessage = (
-  event: any,
-  apiResponse: ApiResponse,
-  httpCode: number,
-  message: string
-) => {
-  if (!httpCode || !message) {
-    return;
-  }
-  if (apiResponse.error) {
-    apiResponse.error.code = httpCode.toString();
-    apiResponse.error.message = message;
-  }
-  if (event.node.res) {
-    event.node.res.statusCode = httpCode;
-    event.node.res.statusMessage = message;
-  }
-};
-const badCustomErrorReason = (event: any, apiResponse: ApiResponse) => {
+
+const badCustomErrorReason = (event: any, errors: customThrowError) => {
   const httpCode = 454;
   const reason = errorReasons.BadCustomErrorReason;
-  if (!apiResponse.error?.errors) {
-    return;
-  }
-  apiResponse.error.errors.push({
+  errors.data.push({
     domain: event.context.apiResponse.context,
     reason: reason,
     message:
@@ -200,12 +170,6 @@ const badCustomErrorReason = (event: any, apiResponse: ApiResponse) => {
         reason as keyof typeof devErrorReasonAndMessages
       ],
   });
-  setHttpCodeAndMessage(
-    event,
-    apiResponse,
-    httpCode,
-    errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes]
-  );
 };
 
 export { apiResponseHandler };
