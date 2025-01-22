@@ -3,8 +3,8 @@ import prisma from "~/lib/prisma";
 export default defineEventHandler(async (event) => {
     const inviteId = getRouterParam(event, "id")
     const apiResponse = {} as ApiResponseV2;
-    apiResponse.context = "Server/Invite/Create";
-    apiResponse.method = "PUT";
+    apiResponse.context = "Server/Invite/";
+    apiResponse.method = "GET";
     apiResponse.params = {
         inviteId: inviteId
     }
