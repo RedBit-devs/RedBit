@@ -1,67 +1,81 @@
 <template>
-        <div class="wrapper">
-            <NuxtLink to="/" id="goBack">
-                <Icon name="mdi:arrow-left-thick" style="color: white;" size="400%" />
-            </NuxtLink>
-            <div class="content">
-                <div class=" login-box">
-                    <h1 class="login-title">Login</h1>
-                    <div class="input-field">
-                        <div class="input">
-                            <label>Email</label>
-                            <input ref="emailRef" type="email" placeholder="Type here"
-                                id="email">
-                        </div>
-                        <div class="input">
-                            <label>Password</label>
-                            <input ref="passwordRef" type="password" placeholder="Type here"
-                                id="password">
-                        </div>
+    <div class="wrapper">
+        <NuxtLink to="/" id="goBack">
+            <Icon name="mdi:arrow-left-thick" style="color: white;" size="400%" />
+        </NuxtLink>
+        <div class="content">
+            <div class=" login-box">
+                <h1 class="login-title">Login</h1>
+                <div class="input-field">
+                    <div class="input">
+                        <label>Email</label>
+                        <input ref="emailRef" type="email" placeholder="Type here" id="email">
                     </div>
-                    <div class="submit">
-                        <button @click="sendLoginRequest()" class="btn ui-secondary"> Submit</button>
+                    <div class="input">
+                        <label>Password</label>
+                        <input ref="passwordRef" type="password" placeholder="Type here" id="password">
                     </div>
+                </div>
+                <div class="submit">
+                    <button :disabled="stat == 'pending'" @click="sendLoginRequest()" class="btn ui-secondary">
+                        Submit</button>
+                </div>
 
-                </div>
-                <div class="register">
-                    <label>Not registered yet?</label>
-                    <NuxtLink to="/registerPage" class="btn secondary">
-                        Register
-                    </NuxtLink>
-                </div>
+            </div>
+            <div class="register">
+                <label>Not registered yet?</label>
+                <NuxtLink to="/registerPage" class="btn secondary">
+                    Register
+                </NuxtLink>
             </div>
         </div>
+        <div v-if="err" class="toaster">
+            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason" :content="error.message" />
+        </div>
+
+    </div>
 
 </template>
 
-<script setup >
+<script lang="ts" setup>
 definePageMeta({
     layout: false
 })
 
 const emailRef = ref(null)
 const passwordRef = ref(null)
-const { token, setToken } = useToken()
+const { setToken } = useToken()
+
+const err = ref([]);
+const stat = ref(null)
 
 const sendLoginRequest = async () => {
 
     if (!emailRef.value.value || !passwordRef.value.value) return;
 
-    const response = await $fetch("/api/user/login", {
 
-        method: 'POST',
+    const { data, error, status } = await useFetch("/api/user/login", {
+        method: "POST",
         body: {
             email: emailRef.value.value,
             password: passwordRef.value.value
         }
     })
 
-    setToken(response.data.items[0].token.split(" ")[1]);
+    stat.value = status
 
+    if (status.value == "error") {
+        err.value = error.value.data.data
 
-    //TODO this should navigate to the chat
-    navigateTo('/test')
+        return setToken(null);
+    }
 
+    if (status.value === "success") {
+        setToken(data.value.data.items[0].token.split(" ")[1]);
+
+        ////TODO this should navigate to the chat
+        navigateTo('/test')
+    }
 }
 
 </script>
