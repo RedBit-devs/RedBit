@@ -5,6 +5,17 @@ type CustomErrorMessage = {
   target?: unknown;
 };
 
+
+type customThrowError = {
+  cause?: any;
+  data: CustomError[];
+  message?: string;
+  name?: string;
+  stack?: string;
+  statusCode: number;
+  statusMessage: string;
+  fatal?: boolean;
+}
 enum errorReasons {
   PasswordValidationFailed = "PasswordValidationFailed",
   EmailValidationFailed = "EmailValidationFailed",
@@ -33,6 +44,7 @@ enum tableNames {
 
 export {
   type CustomErrorMessage,
+  type customThrowError,
   errorReasons,
   errorExpectedFroms,
   tableNames,
