@@ -41,11 +41,15 @@
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink id="addServer">
+                <Icon name="mdi:plus" size="120%" />
+            </NuxtLink>
         </div>
     </div>
 </template>
 
 <script setup>
+
 
 </script>
 
@@ -83,5 +87,16 @@ hr {
 .chatList img {
     width: 100%;
     border-radius: 50%;
+}
+
+#addServer {
+    display: flex;
+    width: 100%;
+    height: 2.5rem;
+    background-color: var(--clr-ui-primary);
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--clr-text-primary);
 }
 </style>
