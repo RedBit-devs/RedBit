@@ -1,11 +1,11 @@
 <template>
     <div class="inputField">
         <button class="btn ui-primary">
-            <Icon name="ic:round-insert-drive-file" size="150%" />
+            <Icon name="mdi:file" size="150%" />
         </button>
         <input type="text" class="textInput">
         <button class="btn ui-primary">
-            <Icon name="material-symbols-light:subdirectory-arrow-left-rounded" size="150%" />
+            <Icon name="mdi:arrow-left-bottom" size="150%" />
         </button>
     </div>
 </template>

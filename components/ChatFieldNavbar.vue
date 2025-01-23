@@ -1,85 +1,61 @@
 <template>
-    <div id="menu"></div>
-    <div id="header">
-        <ChatCard />
+    <div id="header" ref="headerRef">
+        <ChatCard id="chatCard" />
+        <input id="searchChat" type="text" placeholder="Search in the chat" ref="searchRef">
         <div id="functions">
-            <input id="searchChat" type="text" placeholder="Search in the chat">
-            <Icon id="search" name="mdi:magnify" size="150%" @click="appearMobileSearch()" />
+            <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
             <Icon name="mdi:phone-in-talk" size="150%" />
             <Icon name="mdi:account-box-outline" size="150%" />
         </div>
     </div>
-    <div id="mobileSearch" :class="mobileInput" :style="proba">
-        <input id="mobileInput" type="text" placeholder="Search in the chat">
-        <Icon name="mdi:close" size="150%" @click="disappearMobileSearch()" />
-    </div>
-
 
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 
-const mobileInput = ref('')
-const screenWidth = ref(0)
-const proba = ref({
-    transform: 'translateY(-10%)',
-    zIndex: '-1'
-})
-
-onMounted(() => {
-    screenWidth.value = window.innerWidth
-})
-
-if (screenWidth.value <= 468) {
-    proba.value.transform = 'translateY(-20%)'
-}
-
-const appearMobileSearch = () => {
-    proba.value.zIndex = '1',
-        proba.value.transform = `translateY(80%)`
+const headerRef = ref(null)
+const searchRef = ref(null)
+let appearance = true
 
 
 
+const handleSearchbarMove = () => {
+    if (appearance == false) {
+        searchRef.value.style.display = 'none'
+
+        appearance = true
+    }
+    else if (appearance == true) {
+        searchRef.value.style.display = 'block'
+        appearance = false
+    }
 
 
 }
-
-const disappearMobileSearch = () => {
-    proba.value.zIndex = '-1',
-        proba.value.transform = `translateY(-20%)`
-
-
-}
-
-
-
 
 </script>
 
 <style scoped>
-#menu {
-    position: relative;
-    display: flex;
-}
-
 #header {
-
-    left: 0;
-    top: 0;
     width: 100%;
-    height: 3.25rem;
     background-color: var(--clr-ui-primary);
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-areas: "profile search buttons";
+    grid-template-columns: 1fr min-content min-content;
+    grid-template-rows: min-content min-content;
+    align-items: center;
+    transition: linear .3s;
 }
 
 #functions {
-    margin-right: 1rem;
+    margin-inline: 1rem;
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     gap: 1rem;
+    grid-area: buttons;
+    place-items: end;
 }
 
 input {
@@ -89,52 +65,41 @@ input {
     border-radius: var(--border-rounded);
     height: 2.875rem;
     text-align: center;
-    color: white;
+    color: var(--clr-text-primary);
+    display: block;
+
 }
 
-#mobileSearch {
-    background-color: rgba(51, 51, 51, .5);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: .5rem 1rem .5rem 1rem;
-    transition: .5s;
+#searchChat {
+    grid-area: search;
+
 }
 
-#mobileInput {
-    width: 100%;
-    background-color: var(--clr-ui-secondary);
-    border: none;
-    border-radius: var(--border-rounded);
-    height: 2.875rem;
-    text-align: center;
-    color: white;
+#chatCard {
+    grid-area: profile;
 }
+
+
+
 
 #search {
     display: none;
 }
 
-.disappeared {
-    display: none;
-}
-
-
-
-
-
 @media only screen and (max-width: 468px) {
-    #searchChat {
-        display: none;
+    #header {
+        grid-template-areas: "profile buttons" "search search ";
     }
 
     #search {
         display: block;
     }
+
+    #searchChat {
+        display: none;
+        margin: .3rem;
+        grid-column: span 2;
+    }
+
 }
 </style>

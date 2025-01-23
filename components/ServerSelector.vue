@@ -11,6 +11,36 @@
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
         </div>
     </div>
 </template>
@@ -26,7 +56,6 @@
     align-items: center;
     flex-direction: column;
     background-color: var(--clr-ui-secondary);
-    width: 5.75rem;
 }
 
 .logo img {

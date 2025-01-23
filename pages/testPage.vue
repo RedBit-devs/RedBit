@@ -3,7 +3,6 @@
         <ChatFieldNavbar />
         <div id="chat">
 
-
         </div>
         <ChatInputFiled id="input" />
     </div>
@@ -12,7 +11,7 @@
 <script setup>
 
 definePageMeta({
-    layout: false
+    layout: 'chat'
 })
 
 
@@ -26,9 +25,8 @@ definePageMeta({
 }
 
 #chat {
-    overflow-y: scroll;
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
 
 }
 </style>
