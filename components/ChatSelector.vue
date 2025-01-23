@@ -6,6 +6,50 @@
             </div>
             <div class="chatList">
                 <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
+                <ChatCard />
             </div>
         </div>
     </div>
@@ -18,7 +62,6 @@
 <style scoped>
 .container {
     background-color: var(--clr-ui-primary);
-    width: 21.438rem;
 }
 
 .chatContent {

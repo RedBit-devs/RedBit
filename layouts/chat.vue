@@ -50,22 +50,20 @@ onMounted(() => {
 
 <style scoped>
 #screen {
-    display: flex;
-    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 22rem 1fr;
+    height: 100vh;
 }
 
-#swiper {
-    position: fixed;
-
-}
 
 #sidebar {
     display: flex;
-    transition: 1s;
+    transition: 450ms;
     display: grid;
     grid-template-areas: "servers chats" "discover user";
     grid-template-rows: 1fr min-content;
-    min-height: 100vh;
+    grid-template-columns: 4rem 1fr;
+    height: 100vh;
     z-index: 1;
 
 }
@@ -74,34 +72,25 @@ onMounted(() => {
     grid-area: user;
 }
 
-#content {
-    position: absolute;
-    display: block;
+#serverSelector {
+    overflow-y: auto;
 }
 
-@media only screen and (max-width:1350px) {
-
-    #serverSelector,
-    #discoverServers {
-        width: 5rem;
-    }
-
-
-    #chatSelector {
-        width: 20rem;
-    }
+#chatSelector {
+    overflow-y: auto;
 }
 
 
-@media only screen and (max-width:1120px) {
 
-    #serverSelector,
-    #discoverServers {
-        width: 4rem;
+@media only screen and (max-width: 830px) {
+    #sidebar {
+        position: absolute;
+        width: 25rem
     }
 
-    #chatSelector {
-        width: 18rem;
+    #screen {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
     }
 }
 </style>

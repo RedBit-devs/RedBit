@@ -1,8 +1,6 @@
 <template>
     <div class="selfContainer">
-        <div class="profPic">
-            <img src="../img/probalogo.png" alt="">
-        </div>
+        <img src="../img/probalogo.png" alt="">
         <div class="items">
             <div class="name">
                 <h4>Kicsi kacs</h4>
@@ -10,13 +8,13 @@
             </div>
             <div class="buttons">
                 <div class="mircophone">
-                    <Icon name="mingcute:mic-line" size="150%" />
+                    <Icon name="mingcute:mic-line" size="120%" />
                 </div>
                 <div class="headset">
-                    <Icon name="mingcute:headphone-line" size="150%" />
+                    <Icon name="mingcute:headphone-line" size="120%" />
                 </div>
                 <div class="settings">
-                    <Icon name="mingcute:settings-5-line" size="150%" />
+                    <Icon name="mingcute:settings-5-line" size="120%" />
                 </div>
             </div>
         </div>
@@ -30,11 +28,13 @@
 <style scoped>
 .selfContainer {
     background-color: var(--clr-ui-primary);
-    display: flex;
+    display: grid;
+    grid-template-columns: 0.2fr 0.8fr;
     align-items: center;
     gap: 1.5rem;
     padding: 1rem 1rem .5rem 1rem;
     align-self: center;
+    width: 100%;
 }
 
 .items {
@@ -58,8 +58,8 @@
 }
 
 img {
-    height: 4rem;
     border-radius: 50%;
+    width: 100%;
 }
 
 p {
@@ -67,9 +67,7 @@ p {
 }
 
 @media only screen and (max-width:1120px) {
-    img {
-        height: 3rem;
-    }
+
 
     .selfContainer {
         gap: .5rem;

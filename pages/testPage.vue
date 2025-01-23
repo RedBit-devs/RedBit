@@ -1,11 +1,15 @@
 <template>
-    <div>
-        <ChatInputFiled />
-    </div>
+    <div class="content">
+        <ChatFieldNavbar />
+        <div id="chat">
 
+        </div>
+        <ChatInputFiled id="input" />
+    </div>
 </template>
 
 <script setup>
+
 definePageMeta({
     layout: 'chat'
 })
@@ -13,5 +17,16 @@ definePageMeta({
 
 </script>
 
+<style scoped>
+.content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-<style scoped></style>
+#chat {
+    height: 100%;
+    overflow-y: auto;
+
+}
+</style>
