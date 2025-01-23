@@ -2,7 +2,7 @@
     <div class="content">
         <ChatFieldNavbar />
         <div id="chat">
-
+            <CreateServer />
         </div>
         <ChatInputFiled id="input" />
     </div>
