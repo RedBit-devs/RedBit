@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         throw createError({statusCode: 401})
     }
 
-    if (paramsCheck(event)) {
+    if (paramsCheck(apiResponse.params)) {
         throw createError({statusCode: 400, statusMessage:"Not all required parameters where sspecified"})
     }
 
