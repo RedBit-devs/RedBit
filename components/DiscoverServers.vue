@@ -13,7 +13,6 @@
 
 <style scoped>
 .container {
-    width: 5.75rem;
     background-color: var(--clr-ui-secondary);
     display: flex;
     justify-content: center;

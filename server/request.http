@@ -42,3 +42,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY
 GET  {{baseUrl}}user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd@ddexample.com HTTP/1.1
 
 ###
+
+PUT  {{baseUrl}}/server/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzd3cTdwMDAwMDExeHlhenB3eW9rcyIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3MzcwNTM5NDYsImV4cCI6MTczODc4MTk0Nn0.9B7kGHVdiTQ_mr0Ky3cHxK6IXgaw0p7SjRA0Avhno4LXaCn90cRFQl0PoWROAcTXi7p6_7vXtlh0BHEmLKdv8g
+Content-Type: application/json
+
+{
+    "name": "JhonsServer",
+    "picture": "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d",
+    "visibility":"public"
+}
