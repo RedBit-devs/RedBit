@@ -41,11 +41,11 @@
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink id="addServer">
-                <Icon name="mdi:plus" size="120%" @click="() => {
-                    addServerFunc()
-                }" />
-            </NuxtLink>
+            <div @click="() => {
+                addServerFunc()
+            }" id="addServer">
+                <Icon name="mdi:plus" size="120%" />
+            </div>
         </div>
     </div>
 </template>
