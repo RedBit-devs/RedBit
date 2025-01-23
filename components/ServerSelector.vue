@@ -42,13 +42,22 @@
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink id="addServer">
-                <Icon name="mdi:plus" size="120%" />
+                <Icon name="mdi:plus" size="120%" @click="() => {
+                    addServerFunc()
+                }" />
             </NuxtLink>
         </div>
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+
+const { addServerFunc } = defineProps({
+    'addServerFunc': {
+        type: Function,
+        default: () => { }
+    }
+})
 
 
 </script>
