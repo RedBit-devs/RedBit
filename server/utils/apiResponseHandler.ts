@@ -67,6 +67,12 @@ const apiResponseHandler = (
   data?: ResponseData
 ): any => {
   const apiResponse = event.context.apiResponse;
+  let customErrorObject: customThrowError = {
+    statusCode: 400,
+    statusMessage: "Bad request",
+    data: [],
+  };
+
   if (customErrorMessages.length == 0) {
     if (data) {
       apiResponse.data = data;
@@ -76,29 +82,14 @@ const apiResponseHandler = (
         items: [],
       };
     }
-
-    return { response: apiResponse.data };
+    return { error: customErrorObject };
   }
-  let customErrorObject: customThrowError = {
-    statusCode: 400,
-    statusMessage: "Bad request",
-    data: [],
-  };
 
   if (!(customErrorMessages[0].expectedFrom in errorExpectedFroms)) {
     //const httpCode = 455;
     const reason = errorReasons.BadCustomErrorExpectedFrom;
     setStatusMessageAndCode(customErrorObject, 455);
-    customErrorObject.data = [
-      {
-        domain: apiResponse.context,
-        reason: reason,
-        message:
-          devErrorReasonAndMessages[
-            reason as keyof typeof devErrorReasonAndMessages
-          ],
-      },
-    ];
+    newError(customErrorObject, apiResponse.context, reason, devErrorReasonAndMessages[reason as keyof typeof devErrorReasonAndMessages]);
     return { error: customErrorObject };
   }
 
