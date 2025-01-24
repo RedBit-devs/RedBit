@@ -4,8 +4,8 @@ PUT {{baseUrl}}/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "ddddd",
-    "email": "josshndodsdsd@sdddexample.com",
+    "username": "sssss",
+    "email": "josshndodssdsd@sdddexample.com",
     "birthdate": "1990-02-12",
     "first_name": "sssss",
     "last_name": "sssss",

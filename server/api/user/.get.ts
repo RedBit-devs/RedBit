@@ -8,13 +8,17 @@ import {
 
 export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
+
   if (!event.context.auth) {
     const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
       reason: errorReasons.AuthValidationFailed,
     };
     customErrorMessages.push(error);
+    const {errors} = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);  
   }
+  
   const userId = event.context.auth.user.id;
   const apiResponse = {} as ApiResponse;
   apiResponse.context = "User/Get";
@@ -23,16 +27,23 @@ export default defineEventHandler(async (event) => {
     id: userId,
   };
   event.context.apiResponse = apiResponse;
+
   if (paramsCheck(apiResponse.params)) {
     const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
       reason: errorReasons.MissingParameters,
     };
     customErrorMessages.push(error);
-    apiResponseHandler(event, customErrorMessages);
-    return apiResponse;
+    const {errors} = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);  
   }
+
   const data = await readRecord("user", userId, customErrorMessages);
-  apiResponseHandler(event, customErrorMessages, data);
+  const {errors} = apiResponseHandler(event, customErrorMessages,data);
+
+  if (customErrorMessages.length > 0) {
+    throw createError(errors);
+  }
+
   return apiResponse;
 });
