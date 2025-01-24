@@ -80,13 +80,6 @@ const apiResponseHandler = (
     return {response: apiResponse.data};
 
   }
-  /*
-  apiResponse.error = {
-    code: "400",
-    message: "Bad request",
-    errors: [],
-  };
-  */
  let customErrorObject:customThrowError = {
   statusCode: 400,
   statusMessage: "Bad request",
@@ -151,19 +144,20 @@ const apiResponseHandler = (
 };
 
 /**
- * Sets the http code and message of the response.
+ * Appends a custom error message to the given errors object.
+ * indicating that the custom error reason was not in the expected custom error object.
  *
- * @param {any} event - The event object containing the context and ApiResponse reference and the node response.
- * @param {ApiResponse} apiResponse - The ApiResponse object to set the http code and message on.
- * @param {number} httpCode - The http status code to set.
- * @param {string} message - The http status message to set.
+ * @param {ApiResponse} apiResponse - The ApiResponse object containing the domain.
+ * @param {customThrowError} errors - The customThrowError object containing the errors.
  */
-
-const badCustomErrorReason = (event: any, errors: customThrowError) => {
+const badCustomErrorReason = (apiResponse: ApiResponse, errors: customThrowError) => {
+  if(!apiResponse.context){
+    return
+  }
   const httpCode = 454;
   const reason = errorReasons.BadCustomErrorReason;
   errors.data.push({
-    domain: event.context.apiResponse.context,
+    domain: apiResponse.context,
     reason: reason,
     message:
       devErrorReasonAndMessages[
