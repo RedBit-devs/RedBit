@@ -82,7 +82,7 @@ const apiResponseHandler = (
         items: [],
       };
     }
-    return { error: customErrorObject };
+    return { errors: customErrorObject };
   }
 
   if (!(customErrorMessages[0].expectedFrom in errorExpectedFroms)) {
@@ -90,7 +90,7 @@ const apiResponseHandler = (
     const reason = errorReasons.BadCustomErrorExpectedFrom;
     setStatusMessageAndCode(customErrorObject, 455);
     newError(customErrorObject, apiResponse.context, reason, devErrorReasonAndMessages[reason as keyof typeof devErrorReasonAndMessages]);
-    return { error: customErrorObject };
+    return { errors: customErrorObject };
   }
 
   if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Prisma) {
@@ -101,7 +101,7 @@ const apiResponseHandler = (
     } else {
       badCustomErrorReason(event, apiResponse);
     }
-    return { error: customErrorObject };
+    return { errors: customErrorObject };
   } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.User) {
     setStatusMessageAndCode(customErrorObject, 452);
     for (let i = 0; i < customErrorMessages.length; i++) {
@@ -112,7 +112,7 @@ const apiResponseHandler = (
         badCustomErrorReason(event, apiResponse);
       }
     }
-    return { error: customErrorObject };
+    return { errors: customErrorObject };
   }
 };
 
