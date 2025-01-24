@@ -76,70 +76,52 @@ const apiResponseHandler = (
         items: [],
       };
     }
-    
-    return {response: apiResponse.data};
 
+    return { response: apiResponse.data };
   }
- let customErrorObject:customThrowError = {
-  statusCode: 400,
-  statusMessage: "Bad request",
-  data: [],
- }
+  let customErrorObject: customThrowError = {
+    statusCode: 400,
+    statusMessage: "Bad request",
+    data: [],
+  };
+
+  if (!(customErrorMessages[0].expectedFrom in errorExpectedFroms)) {
+    //const httpCode = 455;
+    const reason = errorReasons.BadCustomErrorExpectedFrom;
+    setStatusMessageAndCode(customErrorObject, 455);
+    customErrorObject.data = [
+      {
+        domain: apiResponse.context,
+        reason: reason,
+        message:
+          devErrorReasonAndMessages[
+            reason as keyof typeof devErrorReasonAndMessages
+          ],
+      },
+    ];
+    return { error: customErrorObject };
+  }
+
   if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Prisma) {
     const reason = customErrorMessages[0].reason;
-    const httpCode = 453;
+    setStatusMessageAndCode(customErrorObject, 453);
     if (reason in prismaErrorReasonAndMessages) {
-      customErrorObject.statusCode = httpCode;
-      customErrorObject.statusMessage = errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes];
-      customErrorObject.data.push({
-        domain: errorExpectedFroms.Prisma,
-        reason: reason,
-        message: prismaErrorReasonAndMessages[
-          reason as keyof typeof prismaErrorReasonAndMessages
-        ]
-          .replace("{table}", customErrorMessages[0].table as string)
-          .replace("{target}", customErrorMessages[0].target as string),
-      });
+      newError(customErrorObject, apiResponse.context, reason, prismaErrorReasonAndMessages[reason as keyof typeof prismaErrorReasonAndMessages], customErrorMessages[0].table, customErrorMessages[0].target);
     } else {
       badCustomErrorReason(event, apiResponse);
     }
-    return {error: customErrorObject};
+    return { error: customErrorObject };
   } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.User) {
-    const httpCode = 452;
-    customErrorObject.statusCode = httpCode;
-    customErrorObject.statusMessage = errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes];
+    setStatusMessageAndCode(customErrorObject, 452);
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
       if (reason in userErrorReasonAndMessages) {
-        customErrorObject.data.push({
-          domain: apiResponse.context,
-          reason: reason,
-          message:
-            userErrorReasonAndMessages[
-              reason as keyof typeof userErrorReasonAndMessages
-            ],
-        });
+        newError(customErrorObject, apiResponse.context, reason, userErrorReasonAndMessages[reason as keyof typeof userErrorReasonAndMessages]);
       } else {
         badCustomErrorReason(event, apiResponse);
       }
     }
-    return {error: customErrorObject};
-  } else {
-    const httpCode = 455;
-    const reason = errorReasons.BadCustomErrorExpectedFrom;
-    customErrorObject.statusCode = httpCode;
-    customErrorObject.statusMessage = errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes];
-    customErrorObject.data = [
-        {
-          domain: apiResponse.context,
-          reason: reason,
-          message:
-            devErrorReasonAndMessages[
-              reason as keyof typeof devErrorReasonAndMessages
-            ],
-        },
-      ]
-    return {error: customErrorObject};
+    return { error: customErrorObject };
   }
 };
 
@@ -150,11 +132,13 @@ const apiResponseHandler = (
  * @param {ApiResponse} apiResponse - The ApiResponse object containing the domain.
  * @param {customThrowError} errors - The customThrowError object containing the errors.
  */
-const badCustomErrorReason = (apiResponse: ApiResponse, errors: customThrowError) => {
-  if(!apiResponse.context){
-    return
+const badCustomErrorReason = (
+  apiResponse: ApiResponse,
+  errors: customThrowError
+) => {
+  if (!apiResponse.context) {
+    return;
   }
-  const httpCode = 454;
   const reason = errorReasons.BadCustomErrorReason;
   errors.data.push({
     domain: apiResponse.context,
@@ -163,6 +147,41 @@ const badCustomErrorReason = (apiResponse: ApiResponse, errors: customThrowError
       devErrorReasonAndMessages[
         reason as keyof typeof devErrorReasonAndMessages
       ],
+  });
+};
+/**
+ * Sets the status code and status message of the given customThrowError object.
+ * based on the given httpCode.
+ *
+ * @param {customThrowError} customErrorObject - The customThrowError object to set.
+ * @param {number} httpCode - The http code used to set the status code and status message.
+ */
+const setStatusMessageAndCode = (
+  customErrorObject: customThrowError,
+  httpCode: number
+) => {
+  customErrorObject.statusCode = httpCode;
+  customErrorObject.statusMessage =
+    errorHttpStatusCodes[httpCode as keyof typeof errorHttpStatusCodes];
+};
+
+/**
+ * Adds a new error to the given customThrowError object.
+ *
+ * @param {customThrowError} customErrorObject - The customThrowError object to add the error to.
+ * @param {string} domain - The domain of the error.
+ * @param {string} reason - The reason of the error.
+ * @param {string} message - The message of the error. If the message contains {table} or {target}, it will be replaced with the given table or target.
+ * @param {string} [table] - The table to replace {table} with in the message.
+ * @param {string} [target] - The target to replace {target} with in the message.
+ */
+const newError = (customErrorObject: customThrowError,domain: string, reason: string, message: string, table?: string, target?: any) => {
+  customErrorObject.data.push({
+    domain: domain,
+    reason: reason,
+    message: message
+      .replace("{table}", table as string)
+      .replace("{target}", target as string),
   });
 };
 
