@@ -18,7 +18,7 @@ const userErrorReasonAndMessages = {
   MissingParameters: "Some required parameters were missing",
   PasswordHashingFailed: "Some error occurred while hashing the password",
   DataDontMatch: "Provided data does not match expected data",
-  AuthValidationFailed: "Authentication failed you are not logged in",
+  AuthValidationFailed: "User authentication failed",
 };
 
 const prismaErrorReasonAndMessages = {
@@ -29,6 +29,7 @@ const prismaErrorReasonAndMessages = {
     "Oparation failed on {table} table because the record with  id: {target} doesn't exist",
   ValidationError: "Something was not in the correct format",
   UnknownError: "An unknown error occurred",
+  NoDatabaseResponse: "Database did not provide a response"
 };
 
 const devErrorReasonAndMessages = {
