@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         // 401 == "unauthorized"
         throw createError({ statusCode: 401 })
     }
-    if (paramsCheck(event)) {
+    if (paramsCheck(apiResponse.params)) {
         throw createError({ statusCode: 400, statusMessage: "Not all required parameters where sspecified" })
     }
 
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 401, statusMessage: "User is not joined to the server specified" })
     }
 
-    const dbResponse = prisma.invite.create({
+    const dbResponse = await prisma.invite.create({
         data: {
             lifetime: reqBody.lifetime,
             Server: {
