@@ -8,7 +8,7 @@ PUT {{baseUrl}}/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "sssg",
+    "username": "ssssg",
     "email": "josshndodddd@dexample.com",
     "birthdate": "1990-02-12",
     "first_name": "Jsssn",
@@ -21,7 +21,7 @@ POST  {{baseUrl}}/user/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"josshndoddd@ddexample.com",
+    "email":"josshndodddd@dexample.com",
     "password":"sss2ssS#ss"
 }
 
@@ -52,3 +52,20 @@ Content-Type: application/json
     "picture": "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d",
     "visibility":"public"
 }
+
+
+###
+PUT  {{baseUrl}}/server/invite/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzd3cTdwMDAwMDExeHlhenB3eW9rcyIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3MzcwNTM5NDYsImV4cCI6MTczODc4MTk0Nn0.9B7kGHVdiTQ_mr0Ky3cHxK6IXgaw0p7SjRA0Avhno4LXaCn90cRFQl0PoWROAcTXi7p6_7vXtlh0BHEmLKdv8g
+Content-Type: application/json
+
+{
+    "lifetime": 3000,
+    "server_id":"cm6cesl4q000047jgdcjxlojc"
+}
+
+
+###
+GET  {{baseUrl}}/server/invite/cm6cfcj2v0000j733vgx4tyy1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzd3cTdwMDAwMDExeHlhenB3eW9rcyIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3MzcwNTM5NDYsImV4cCI6MTczODc4MTk0Nn0.9B7kGHVdiTQ_mr0Ky3cHxK6IXgaw0p7SjRA0Avhno4LXaCn90cRFQl0PoWROAcTXi7p6_7vXtlh0BHEmLKdv8g
+
