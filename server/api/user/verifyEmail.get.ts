@@ -30,11 +30,8 @@ export default defineEventHandler(async (event) => {
       reason: errorReasons.MissingParameters,
     });
 
-    
-    if (errorMessages.length > 0) {
       const {errors} = apiResponseHandler(event, errorMessages);
       throw createError(errors)
-    }
   }
 
   const findEmailResponse = await prisma.user.findFirst({
