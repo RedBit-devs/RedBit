@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     '~/assets/css/fonts.css'
   ],
   devtools: { enabled: true },
-  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device'],
+  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', 'nuxt-nodemailer'],
   prisma: {
     installStudio: false,
     autoSetupPrisma: true
@@ -18,5 +18,15 @@ export default defineNuxtConfig({
   typescript:{
     typeCheck: true,
     strict: false
-  }
+  },
+  nodemailer: {
+    from: `"RedBitTeam" <${process.env.NUXT_NODEMAILER_FROM}>`,
+    host: ' smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.NUXT_NODEMAILER_FROM,
+      pass: process.env.NUXT_NODEMAILER_AUTH_PASS,
+    },
+  },
 })
