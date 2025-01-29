@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
   if (findEmailResponse && findEmailResponse.email != email) {
     errorMessages.push({
       expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.DataDontMatch,
+      reason: errorReasons.EmailDoesntMatch,
     });
   }
 
