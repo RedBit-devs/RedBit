@@ -17,7 +17,7 @@ const userErrorReasonAndMessages = {
     "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
   MissingParameters: "Some required parameters were missing",
   PasswordHashingFailed: "Some error occurred while hashing the password",
-  DataDontMatch: "Provided data does not match expected data",
+  EmailDoesntMatch: "Provided email does not match expected email",
   AuthValidationFailed: "User authentication failed",
 };
 

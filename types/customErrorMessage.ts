@@ -31,7 +31,7 @@ enum errorReasons {
   UnknownError = "UnknownError",
   BadCustomErrorReason = "BadCustomErrorReason",
   BadCustomErrorExpectedFrom = "BadCustomErrorExpectedFrom",
-  DataDontMatch = "DataDontMatch",
+  EmailDoesntMatch = "EmailDoesntMatch",
   AuthValidationFailed = "AuthValidationFailed",
   NoDatabaseResponse = "NoDatabaseResponse"
 }
