@@ -20,7 +20,7 @@ enum errorReasons {
   UnknownError = "UnknownError",
   BadCustomErrorReason = "BadCustomErrorReason",
   BadCustomErrorExpectedFrom = "BadCustomErrorExpectedFrom",
-  EmailDoesntMatch = "EmailDoesntMatch",
+  DataDontMatch = "DataDontMatch",
   AuthValidationFailed = "AuthValidationFailed",
 }
 enum errorExpectedFroms {
