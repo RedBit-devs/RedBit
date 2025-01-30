@@ -18,29 +18,7 @@
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+
             <div @click="() => {
                 addServerFunc()
             }" id="addServer">
