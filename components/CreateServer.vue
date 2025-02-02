@@ -2,7 +2,7 @@
     <dialog @click.self="closeDialogFunc" :open="isShown">
         <div class="modal">
             <div class="close">
-                <Icon @click="closeDialogFunc" name="mdi:close" size="150%" class="btn primary" />
+                <Icon @click.self="closeDialogFunc" name="mdi:close" size="150%" class="btn primary" />
             </div>
             <div class="content">
                 <h1 id="title">Create server</h1>
@@ -16,14 +16,16 @@
                         <input type="text" placeholder="Description">
                     </div>
                 </div>
-                <div id="visibility">
+                <div id="visibilityInput">
                     <div id="check">
-                        <input id="visibilityPublic" type="radio" name="visibilty">
-                        <label for="visibilityPublic">Public</label>
+                        <label>
+                            <input type="radio" name="visibility">Public
+                        </label>
                     </div>
                     <div id="check">
-                        <input id="visibilityPrivate" type="radio" name="visibilty">
-                        <label for="visibilityPrivate">Private</label>
+                        <label>
+                            <input type="radio" name="visibility">Private
+                        </label>
                     </div>
                 </div>
                 <div class="submit">
@@ -77,9 +79,10 @@ dialog {
 }
 
 .close {
-    padding: .5rem;
+    margin: .5rem;
     display: flex;
     justify-content: end;
+    cursor: pointer;
 }
 
 #title {
@@ -103,7 +106,7 @@ dialog {
 
 }
 
-#visibility {
+#visibilityInput {
     display: flex;
     justify-content: center;
     gap: 1.5rem;
@@ -116,15 +119,36 @@ dialog {
     align-items: center;
 }
 
-input:checked~label {
-    color: var(--clr-primary);
-    outline: 3px solid var(--clr-primary);
-    outline-offset: .3rem;
-    border-radius: var(--border-rounded);
+label:has([type=radio]) {
+    display: flex;
+    gap: .3rem;
+    align-items: center;
+    border: 2px solid var(--clr-primary);
+    border-radius: 5rem;
+    padding: .5rem 1rem;
 }
 
-input[type="radio"] {
+label:has([type=radio]:not(:disabled)) {
+    cursor: pointer;
+}
+
+[type=radio] {
     appearance: none;
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+    border: inherit;
+    border-radius: inherit;
+}
+
+label:has([type=radio]:checked) {
+    background-color: var(--clr-primary);
+    color: #fff;
+}
+
+[type=radio]:checked {
+    border-color: transparent;
+    background: #fff url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" width="1rem" height="1rem"><circle cx="0.5" cy="0.5" r="0.5" fill="none" stroke="%23EF3333" stroke-width="0.05"/><polyline points="0.2,0.5 0.4,0.7 0.8,0.3" style="fill:none;stroke:%23EF3333;stroke-linecap:round;stroke-width:0.1;"/></svg>') no-repeat 50% / 1rem;
 }
 
 .submit {
