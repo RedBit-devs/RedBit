@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   },
   nodemailer: {
     from: `"RedBitTeam" <${process.env.NUXT_NODEMAILER_FROM}>`,
-    host: ' smtp.gmail.com',
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
