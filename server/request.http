@@ -48,3 +48,6 @@ Content-Type: application/json
     "picture": "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d",
     "visibility":"public"
 }
+
+###
+GET {{baseUrl}}/test

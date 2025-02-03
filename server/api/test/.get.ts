@@ -1,6 +1,7 @@
 export default defineEventHandler(async (event) => {
+  const { sendMail } = useNodeMailer()
   try {
-    sendEmail({ subject: 'test', text: 'test from app', to: 'developer413ksz@gmail.com' })
+    sendMail({ subject: 'test', text: 'test from app', to: 'developer413ksz@gmail.com' })
   } catch (error) {
     console.log(error)
   }
