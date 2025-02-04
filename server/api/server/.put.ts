@@ -22,19 +22,18 @@ export default defineEventHandler(async (event) => {
 
     if (!event.context.auth) {
 
-        // 401 == "unauthorized"
         errorMessages.push({
             expectedFrom: errorExpectedFroms.Server,
             reason: errorReasons.Unauthorized
         })
     }
 
-    // if (paramsCheck(apiResponse.params)) {
-    //         errorMessages.push({
-    //             expectedFrom: errorExpectedFroms.Server,
-    //             reason: errorReasons.MissingParameters
-    //         })
-    //     }
+     if (paramsCheck(apiResponse.params)) {
+             errorMessages.push({
+                 expectedFrom: errorExpectedFroms.Server,
+                 reason: errorReasons.MissingParameters
+             })
+         }
 
     if (errorMessages.length > 0) {
         const {errors} = apiResponseHandler(event, errorMessages);
