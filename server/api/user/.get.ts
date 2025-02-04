@@ -8,32 +8,37 @@ import {
 
 export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
+  const apiResponse = {} as ApiResponse;
+
+  apiResponse.context = "User/Get";
+  apiResponse.method = "GET";
+
+  event.context.apiResponse = apiResponse;
 
   if (!event.context.auth) {
-    const error: CustomErrorMessage = {
-      expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.Unauthorized,
-    };
-    customErrorMessages.push(error);
+    customErrorMessages.push(
+      {
+        expectedFrom: errorExpectedFroms.User,
+        reason: errorReasons.Unauthorized,
+      }
+    );
     const {errors} = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);  
   }
-  
+
   const userId = event.context.auth.user.id;
-  const apiResponse = {} as ApiResponse;
-  apiResponse.context = "User/Get";
-  apiResponse.method = "GET";
   apiResponse.params = {
     id: userId,
   };
   event.context.apiResponse = apiResponse;
 
   if (paramsCheck(apiResponse.params)) {
-    const error: CustomErrorMessage = {
-      expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.MissingParameters,
-    };
-    customErrorMessages.push(error);
+    customErrorMessages.push(
+      {
+        expectedFrom: errorExpectedFroms.User,
+        reason: errorReasons.MissingParameters,
+      }
+    );
     const {errors} = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);  
   }
