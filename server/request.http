@@ -4,12 +4,12 @@ PUT {{baseUrl}}/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "sssg",
-    "email": "josshndodddd@dexample.com",
+    "username": "sssss",
+    "email": "josshndodssdsd@sdddexample.com",
     "birthdate": "1990-02-12",
-    "first_name": "Jsssn",
-    "last_name": "gggg",
-    "password": "sss2ssS#ss"
+    "first_name": "sssss",
+    "last_name": "sssss",
+    "password": "ssss2sS#ss"
 }
 
 ###
@@ -24,7 +24,7 @@ Content-Type: application/json
 ###
 
 GET  {{baseUrl}}/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201NTh0ZmlkMDAwMHhyN3FvbjJmcXI4biIsImVtYWlsIjoiam9obmRvZGRkZXhhbXBsQGUuY29tIn0sImlhdCI6MTczNTIyNTM3NywiZXhwIjoxNzM2OTUzMzc3fQ.0q2o713De1dikH_9Xte3vase8iHTItLXm2_gY1_Gm86SCzXqnGvw6DV1YD1MxlUfOCOpaisSQV3Ww9BcB7VrXQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzd3cTdwMDAwMDExeHlhenB3eW9rcyIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3Mzc5MDcyMDAsImV4cCI6MTczOTYzNTIwMH0.4vrV8THTf4dJi0SyjtApwFDwBZMFsS9ixiGePyTyHnmOmJ_ObPhBbi7U4AIHsC7tOBVXXnnIFLyUCRR8cn6LrQ
 
 ###
 
@@ -35,7 +35,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY
 ###
 
 
-GET  {{baseUrl}}user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd@ddexample.com HTTP/1.1
+GET  {{baseUrl}}/user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd@ddexample.com HTTP/1.1
 
 ###
 

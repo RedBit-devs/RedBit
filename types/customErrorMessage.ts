@@ -5,6 +5,17 @@ type CustomErrorMessage = {
   target?: unknown;
 };
 
+
+type customThrowError = {
+  cause?: any;
+  data: CustomError[];
+  message?: string;
+  name?: string;
+  stack?: string;
+  statusCode: number;
+  statusMessage: string;
+  fatal?: boolean;
+}
 enum errorReasons {
   PasswordValidationFailed = "PasswordValidationFailed",
   EmailValidationFailed = "EmailValidationFailed",
@@ -20,8 +31,9 @@ enum errorReasons {
   UnknownError = "UnknownError",
   BadCustomErrorReason = "BadCustomErrorReason",
   BadCustomErrorExpectedFrom = "BadCustomErrorExpectedFrom",
-  DataDontMatch = "DataDontMatch",
   Unauthorized = "Unauthorized",
+  EmailDoesntMatch = "EmailDoesntMatch",
+  NoDatabaseResponse = "NoDatabaseResponse"
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",
@@ -34,6 +46,7 @@ enum tableNames {
 
 export {
   type CustomErrorMessage,
+  type customThrowError,
   errorReasons,
   errorExpectedFroms,
   tableNames,
