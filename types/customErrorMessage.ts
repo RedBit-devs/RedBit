@@ -31,13 +31,14 @@ enum errorReasons {
   UnknownError = "UnknownError",
   BadCustomErrorReason = "BadCustomErrorReason",
   BadCustomErrorExpectedFrom = "BadCustomErrorExpectedFrom",
+  Unauthorized = "Unauthorized",
   EmailDoesntMatch = "EmailDoesntMatch",
-  AuthValidationFailed = "AuthValidationFailed",
   NoDatabaseResponse = "NoDatabaseResponse"
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",
   User = "User",
+  Server = "Server",
 }
 enum tableNames {
   user = "user",
