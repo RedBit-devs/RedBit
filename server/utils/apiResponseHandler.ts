@@ -21,6 +21,10 @@ const userErrorReasonAndMessages = {
   EmailDoesntMatch: "Provided email does not match expected email",
 
 };
+const serverErrorReasonAndMessages = {
+  MissingParameters: "Some required parameters were missing",
+  Unauthorized: "Authentication required you are not logged in",
+};
 
 const prismaErrorReasonAndMessages = {
   TableNotFound: "Can't read from the {table} table because it doesn't exist",
@@ -44,6 +48,7 @@ const errorHttpStatusCodes = {
   453: "PrismaResponseFailed",
   454: "BadCustomErrorReason",
   455: "BadCustomErrorExpectedFrom",
+  456: "ErrorsOcuredOnServerRoute",
 };
 
 /**
@@ -84,7 +89,7 @@ const apiResponseHandler = (
         items: [],
       };
     }
-    return { errors: customErrorObject };
+    return {};
   }
 
   if (!(customErrorMessages[0].expectedFrom in errorExpectedFroms)) {
@@ -115,6 +120,17 @@ const apiResponseHandler = (
       }
     }
     return { errors: customErrorObject };
+  } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Server) {
+    setStatusMessageAndCode(customErrorObject, 456);
+    for (let i = 0; i < customErrorMessages.length; i++) {
+      const reason = customErrorMessages[i].reason;
+      if (reason in userErrorReasonAndMessages) {
+        newError(customErrorObject, apiResponse.context, reason, serverErrorReasonAndMessages[reason as keyof typeof serverErrorReasonAndMessages]);
+      } else {
+        badCustomErrorReason(event, apiResponse);
+      }
+    }
+    return { errors: customErrorObject };
   }
 };
 
@@ -138,7 +154,7 @@ const badCustomErrorReason = (
     reason: reason,
     message:
       devErrorReasonAndMessages[
-        reason as keyof typeof devErrorReasonAndMessages
+      reason as keyof typeof devErrorReasonAndMessages
       ],
   });
 };
@@ -168,7 +184,7 @@ const setStatusMessageAndCode = (
  * @param {string} [table] - The table to replace {table} with in the message.
  * @param {string} [target] - The target to replace {target} with in the message.
  */
-const newError = (customErrorObject: customThrowError,domain: string, reason: string, message: string, table?: string, target?: any) => {
+const newError = (customErrorObject: customThrowError, domain: string, reason: string, message: string, table?: string, target?: any) => {
   customErrorObject.data.push({
     domain: domain,
     reason: reason,
@@ -176,6 +192,7 @@ const newError = (customErrorObject: customThrowError,domain: string, reason: st
       .replace("{table}", table as string)
       .replace("{target}", target as string),
   });
+
 };
 
 export { apiResponseHandler };

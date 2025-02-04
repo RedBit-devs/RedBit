@@ -44,7 +44,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY
 Content-Type: application/json
 
 {
-    "name": "JhonsServer",
+    "name":"Jons",
     "picture": "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d",
     "visibility":"public"
 }
