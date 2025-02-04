@@ -17,7 +17,7 @@ const userErrorReasonAndMessages = {
   MissingParameters: "Some required parameters were missing",
   PasswordHashingFailed: "Some error occurred while hashing the password",
   DataDontMatch: "Provided data does not match expected data",
-  AuthValidationFailed: "Authentication failed you are not logged in",
+  Unauthorized: "Authentication required you are not logged in",
 };
 
 const prismaErrorReasonAndMessages = {

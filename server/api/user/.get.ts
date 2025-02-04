@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   if (!event.context.auth) {
     const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.AuthValidationFailed,
+      reason: errorReasons.Unauthorized,
     };
     customErrorMessages.push(error);
   }
