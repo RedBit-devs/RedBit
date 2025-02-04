@@ -5,6 +5,11 @@ import {
   errorReasons,
 } from "~/types/customErrorMessage";
 
+const generalErrorReasonAndMessages = {
+  MissingParameters: "Some required parameters were missing",
+  Unauthorized: "Authentication required you are not logged in",
+}
+
 const userErrorReasonAndMessages = {
   PasswordValidationFailed:
     "Password is not valid it must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
@@ -15,15 +20,12 @@ const userErrorReasonAndMessages = {
     "First name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
   LastNameValidationFailed:
     "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
-  MissingParameters: "Some required parameters were missing",
   PasswordHashingFailed: "Some error occurred while hashing the password",
-  Unauthorized: "Authentication required you are not logged in",
   EmailDoesntMatch: "Provided email does not match expected email",
-
+  ...generalErrorReasonAndMessages
 };
 const serverErrorReasonAndMessages = {
-  MissingParameters: "Some required parameters were missing",
-  Unauthorized: "Authentication required you are not logged in",
+  ...generalErrorReasonAndMessages
 };
 
 const prismaErrorReasonAndMessages = {
