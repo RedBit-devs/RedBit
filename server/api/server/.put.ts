@@ -6,7 +6,7 @@ import {  errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/ty
 export default defineEventHandler(async (event) => {
 
     const reqBody: Server = await readBody(event);
-    const apiResponse = {} as ApiResponseV2;
+    const apiResponse = {} as ApiResponse;
     apiResponse.context = "Server/Create";
     apiResponse.method = "PUT";
     apiResponse.params = {

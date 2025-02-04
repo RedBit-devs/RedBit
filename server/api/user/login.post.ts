@@ -12,7 +12,7 @@ export default eventHandler(async (event) => {
     const config = useRuntimeConfig()
 
     const { email, password } = await readBody(event);
-    const apiResponse = {} as ApiResponseV2;
+    const apiResponse = {} as ApiResponse;
     apiResponse.context = "UserLogin";
     apiResponse.method = "POST";
     apiResponse.params = {

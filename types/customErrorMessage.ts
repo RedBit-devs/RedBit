@@ -40,14 +40,10 @@ enum errorExpectedFroms {
   User = "User",
   Server = "Server",
 }
-enum tableNames {
-  user = "user",
-}
 
 export {
   type CustomErrorMessage,
   type customThrowError,
   errorReasons,
   errorExpectedFroms,
-  tableNames,
 };

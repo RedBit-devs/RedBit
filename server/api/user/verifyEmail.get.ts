@@ -12,7 +12,7 @@ import {
 export default defineEventHandler(async (event) => {
   let { id, email }: { id: string; email: string } = getQuery(event);
 
-  const apiResponse = {} as ApiResponseV2;
+  const apiResponse = {} as ApiResponse;
   apiResponse.context = "user/verifyEmail";
   apiResponse.method = "GET";
   apiResponse.params = {
