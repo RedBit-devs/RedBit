@@ -22,6 +22,7 @@ const userErrorReasonAndMessages = {
     "Last name is not in the correct format it must be between 3 and 35 characters long and can only contain letters",
   PasswordHashingFailed: "Some error occurred while hashing the password",
   EmailDoesntMatch: "Provided email does not match expected email",
+  FailedToLogin: "Failed to login password is not correct",
   ...generalErrorReasonAndMessages
 };
 const serverErrorReasonAndMessages = {

@@ -69,7 +69,7 @@ export default eventHandler(async (event) => {
     if (userCredentials && !(await compareHashes(password, userCredentials.password))) {
         customErrorMessages.push({
             expectedFrom: errorExpectedFroms.User,
-            reason: errorReasons.Unauthorized
+            reason: errorReasons.FailedToLogin
         })
     }
 

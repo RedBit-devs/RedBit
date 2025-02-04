@@ -33,7 +33,8 @@ enum errorReasons {
   BadCustomErrorExpectedFrom = "BadCustomErrorExpectedFrom",
   Unauthorized = "Unauthorized",
   EmailDoesntMatch = "EmailDoesntMatch",
-  NoDatabaseResponse = "NoDatabaseResponse"
+  NoDatabaseResponse = "NoDatabaseResponse",
+  FailedToLogin = "FailedToLogin",
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",
