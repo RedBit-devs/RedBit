@@ -1,5 +1,6 @@
 import { type Server } from "@prisma/client";
 import prisma from "~/lib/prisma";
+import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
 import {  errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
@@ -28,41 +29,45 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    if (paramsCheck(apiResponse.params)) {
-            errorMessages.push({
-                expectedFrom: errorExpectedFroms.Server,
-                reason: errorReasons.MissingParameters
-            })
-        }
+    // if (paramsCheck(apiResponse.params)) {
+    //         errorMessages.push({
+    //             expectedFrom: errorExpectedFroms.Server,
+    //             reason: errorReasons.MissingParameters
+    //         })
+    //     }
 
     if (errorMessages.length > 0) {
         const {errors} = apiResponseHandler(event, errorMessages);
         throw createError(errors)
     }
-
-    const dbResponse = await prisma.server.create({
-        data: {
-            name: reqBody.name,
-            picture: reqBody.picture,
-            visibility: reqBody.visibility,
-            Owner: {
-                connect: {
-                    id: event.context.auth.user.id
-                }
-            },
-            Chat_groups: {
-                create: {
-                    name: "default",
-                    Chat_rooms: {
-                        create: {
-                            name: "default",
-                            type: "text"
+    let dbResponse
+    try {
+        dbResponse = await prisma.server.create({
+            data: {
+                name: reqBody.name,
+                picture: reqBody.picture,
+                visibility: reqBody.visibility,
+                Owner: {
+                    connect: {
+                        id: event.context.auth.user.id
+                    }
+                },
+                Chat_groups: {
+                    create: {
+                        name: "default",
+                        Chat_rooms: {
+                            create: {
+                                name: "default",
+                                type: "text"
+                            }
                         }
                     }
                 }
             }
-        }
-    })
+        })
+    } catch (error) {
+        prismaErrorHandler(error,"server",errorMessages);
+    }
 
     if (!dbResponse) {
         errorMessages.push({
