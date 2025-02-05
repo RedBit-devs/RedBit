@@ -30,10 +30,8 @@ export default defineEventHandler(async (event) => {
       reason: errorReasons.MissingParameters,
     });
 
-    apiResponseHandler(event, errorMessages);
-    if (apiResponse.error) {
-      return apiResponse;
-    }
+      const {errors} = apiResponseHandler(event, errorMessages);
+      throw createError(errors)
   }
 
   const findEmailResponse = await prisma.user.findFirst({
@@ -55,13 +53,13 @@ export default defineEventHandler(async (event) => {
   if (findEmailResponse && findEmailResponse.email != email) {
     errorMessages.push({
       expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.DataDontMatch,
+      reason: errorReasons.EmailDoesntMatch,
     });
   }
 
-  apiResponseHandler(event, errorMessages);
-  if (apiResponse.error) {
-    return apiResponse;
+  if (errorMessages.length > 0) {
+    const {errors} = apiResponseHandler(event, errorMessages);
+    throw createError(errors)
   }
 
   const response = await prisma.user.update({
