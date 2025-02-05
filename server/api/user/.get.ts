@@ -8,31 +8,47 @@ import {
 
 export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
-  if (!event.context.auth) {
-    const error: CustomErrorMessage = {
-      expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.AuthValidationFailed,
-    };
-    customErrorMessages.push(error);
-  }
-  const userId = event.context.auth.user.id;
   const apiResponse = {} as ApiResponse;
+
   apiResponse.context = "User/Get";
   apiResponse.method = "GET";
+
+  event.context.apiResponse = apiResponse;
+
+  if (!event.context.auth) {
+    customErrorMessages.push(
+      {
+        expectedFrom: errorExpectedFroms.User,
+        reason: errorReasons.Unauthorized,
+      }
+    );
+    const {errors} = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);  
+  }
+
+  const userId = event.context.auth.user.id;
   apiResponse.params = {
     id: userId,
   };
   event.context.apiResponse = apiResponse;
+
   if (paramsCheck(apiResponse.params)) {
-    const error: CustomErrorMessage = {
-      expectedFrom: errorExpectedFroms.User,
-      reason: errorReasons.MissingParameters,
-    };
-    customErrorMessages.push(error);
-    apiResponseHandler(event, customErrorMessages);
-    return apiResponse;
+    customErrorMessages.push(
+      {
+        expectedFrom: errorExpectedFroms.User,
+        reason: errorReasons.MissingParameters,
+      }
+    );
+    const {errors} = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);  
   }
+
   const data = await readRecord("user", userId, customErrorMessages);
-  apiResponseHandler(event, customErrorMessages, data);
+  const {errors} = apiResponseHandler(event, customErrorMessages,data);
+
+  if (customErrorMessages.length > 0) {
+    throw createError(errors);
+  }
+
   return apiResponse;
 });
