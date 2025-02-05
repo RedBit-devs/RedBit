@@ -18,5 +18,14 @@ export default defineNuxtConfig({
   typescript:{
     typeCheck: true,
     strict: false
+  },
+  nitro: {
+    azure: {
+      config: {
+        platform: {
+          apiRuntime: 'node:22'
+        }
+      }
+    }
   }
 })
