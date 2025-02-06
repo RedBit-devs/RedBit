@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "username": "ssssg",
-    "email": "josshndodddda@dexample.com",
+    "email": "josshssndodddda@dexample.com",
     "birthdate": "1990-02-12",
     "first_name": "sssss",
     "last_name": "sssss",
@@ -21,7 +21,7 @@ POST  {{baseUrl}}/user/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"josshndodddda@dexample.com",
+    "email":"josshssndodddda@dexample.com",
     "password":"ssss2sS#ss"
 }
 
@@ -44,19 +44,19 @@ GET  {{baseUrl}}/user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd
 ###
 
 PUT  {{baseUrl}}/server/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dDY5cGhuMDAwMzNkbGo5M3d1MWppbiIsImVtYWlsIjoiam9zc2huZG9kZGRkYUBkZXhhbXBsZS5jb20ifSwiaWF0IjoxNzM4ODM2NDU4LCJleHAiOjE3NDA1NjQ0NTh9.jUpIpYDjhYSCa_e9X1cE74M3ydrLmiruSJysPuhIkcy4wx__0Y4WYL2TRKMmZZ9CitrpBl6ku3a1NqyLmvz8Gw
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dGplendnMDAwNzh3NGZnanQ5cDNpMyIsImVtYWlsIjoiam9zc2hzc25kb2RkZGRhQGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3Mzg4NTg0NDgsImV4cCI6MTc0MDU4NjQ0OH0.IcTCvbLAfFRskXeyhSNug6aLOqk8ZnC89olrzeoTQ6IpUxSdFTITHPDbLyI1FBoaOL2DAAvDwlm8EoTxJs_nPg
 Content-Type: application/json
 
 {
     "name":"Jons",
     "picture": "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d",
-    "visibility":"public"
+    "visibility":"private"
 }
 
 
 ###
 
-GET  {{baseUrl}}/server/cm6t6xrdl000d3dljlwkulsem HTTP/1.1
+GET  {{baseUrl}}/server/cm6tjgjsg00088w4fx1ytiwb0 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dDY5cGhuMDAwMzNkbGo5M3d1MWppbiIsImVtYWlsIjoiam9zc2huZG9kZGRkYUBkZXhhbXBsZS5jb20ifSwiaWF0IjoxNzM4ODM2NDU4LCJleHAiOjE3NDA1NjQ0NTh9.jUpIpYDjhYSCa_e9X1cE74M3ydrLmiruSJysPuhIkcy4wx__0Y4WYL2TRKMmZZ9CitrpBl6ku3a1NqyLmvz8Gw
 
 ###
@@ -66,11 +66,11 @@ Content-Type: application/json
 
 {
     "lifetime": 99999000,
-    "server_id":"cm6t6xrdl000d3dljlwkulsem"
+    "server_id":"cm6tjaxfk00038w4fk80yscaw"
 }
 
 
 ###
-GET  {{baseUrl}}/server/invite/cm6t6zw1u000g3dljqtxqo093 HTTP/1.1
+GET  {{baseUrl}}/server/invite/cm6tjbjij00068w4f3lr11bpu HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dDY5cGhuMDAwMzNkbGo5M3d1MWppbiIsImVtYWlsIjoiam9zc2huZG9kZGRkYUBkZXhhbXBsZS5jb20ifSwiaWF0IjoxNzM4ODM2NDU4LCJleHAiOjE3NDA1NjQ0NTh9.jUpIpYDjhYSCa_e9X1cE74M3ydrLmiruSJysPuhIkcy4wx__0Y4WYL2TRKMmZZ9CitrpBl6ku3a1NqyLmvz8Gw
 

@@ -133,7 +133,9 @@ const apiResponseHandler = (
     setStatusMessageAndCode(customErrorObject, 456);
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
-      if (reason in userErrorReasonAndMessages) {
+      console.log(reason);
+      
+      if (reason in serverErrorReasonAndMessages) {
         newError(customErrorObject, apiResponse.context, reason, serverErrorReasonAndMessages[reason as keyof typeof serverErrorReasonAndMessages]);
       } else {
         badCustomErrorReason(apiResponse, customErrorObject);
@@ -144,7 +146,7 @@ const apiResponseHandler = (
     setStatusMessageAndCode(customErrorObject, 456);
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
-      if (reason in userErrorReasonAndMessages) {
+      if (reason in inviteErrorReasonAndMessages) {
         newError(customErrorObject, apiResponse.context, reason, inviteErrorReasonAndMessages[reason as keyof typeof inviteErrorReasonAndMessages]);
       } else {        
         badCustomErrorReason(apiResponse, customErrorObject);

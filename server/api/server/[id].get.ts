@@ -68,6 +68,8 @@ export default defineEventHandler(async (event) => {
     if(owner) {
       return apiResponse;
     }
+    console.log(owner);
+    
 
     const member = await prisma.server_User_Connect.findFirst({
       where: {
@@ -79,10 +81,18 @@ export default defineEventHandler(async (event) => {
       return apiResponse;
     }
 
+    console.log(member);
+    
+    console.log(customErrorMessages.length);
+    
     customErrorMessages.push({
       expectedFrom: errorExpectedFroms.Server,
       reason: errorReasons.ServerAccessDenied,
     }) 
+    console.log(customErrorMessages.length);
+    
+    console.log("here");
+    
     const { errors } = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);
   }    
