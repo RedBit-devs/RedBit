@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) =>{
             reason: errorReasons.NoDatabaseResponse,
           }
         )
-        const {errors} = apiResponseHandler(event, customErrorMessages,data);
+        const {errors} = apiResponseHandler(event, customErrorMessages);
         throw createError(errors);
       }
 

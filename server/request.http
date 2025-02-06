@@ -56,7 +56,7 @@ Content-Type: application/json
 
 ###
 
-GET  {{baseUrl}}/server/asdasd HTTP/1.1
+GET  {{baseUrl}}/server/cm69l7lfk0004ugz36dtlmas2 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzd3cTdwMDAwMDExeHlhenB3eW9rcyIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3MzcwNTM5NDYsImV4cCI6MTczODc4MTk0Nn0.9B7kGHVdiTQ_mr0Ky3cHxK6IXgaw0p7SjRA0Avhno4LXaCn90cRFQl0PoWROAcTXi7p6_7vXtlh0BHEmLKdv8g
 
 
