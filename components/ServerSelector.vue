@@ -18,37 +18,24 @@
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
             <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink id="addServer">
+
+            <div @click="() => {
+                addServerFunc()
+            }" id="addServer">
                 <Icon name="mdi:plus" size="120%" />
-            </NuxtLink>
+            </div>
         </div>
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+
+const { addServerFunc } = defineProps({
+    'addServerFunc': {
+        type: Function,
+        default: () => { }
+    }
+})
 
 
 </script>
