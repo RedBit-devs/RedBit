@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     typeCheck: true,
     strict: false
   },
+
   nodemailer: {
     from: `"RedBitTeam" <${process.env.NUXT_NODEMAILER_FROM}>`,
     host: 'smtp.gmail.com',
@@ -33,4 +34,12 @@ export default defineNuxtConfig({
       viewPath: '~/server/emailTemplates/',
     },
   },
+  vite:{
+    resolve: {
+      alias: {
+        ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
+      }
+    }
+  }
 })
+

@@ -1,47 +1,52 @@
 import prisma from "~/lib/prisma";
 import { compareHashes, isEmailValid, isPasswordValid } from "~/server/utils/userValidation";
 import jwt from "jsonwebtoken"
+import {
+    errorExpectedFroms,
+    errorReasons,
+    type CustomErrorMessage,
+} from "~/types/customErrorMessage";
+
 
 export default eventHandler(async (event) => {
     const config = useRuntimeConfig()
 
     const { email, password } = await readBody(event);
-    const apiResponse = {} as ApiResponseV2;
+    const apiResponse = {} as ApiResponse;
     apiResponse.context = "UserLogin";
     apiResponse.method = "POST";
     apiResponse.params = {
         email: email,
         password: password,
     };
-const errors: CustomError[] = []
 
-    if (!password || !email) {
-        errors.push({
-            domain: "user/login",
-            message: "Not all required parmeters were provided",
-            reason: "MissingParmeters"
+    const customErrorMessages: CustomErrorMessage[] = [];
+    event.context.customErrorMessages = customErrorMessages;
+    event.context.apiResponse = apiResponse;
+
+    if (paramsCheck(apiResponse.params)) {
+        customErrorMessages.push({
+            expectedFrom: errorExpectedFroms.User,
+            reason: errorReasons.MissingParameters,
         })
     }
     if (email && !(await isEmailValid(email))) {
-        errors.push({
-            domain: "user/login",
-            message: "Provided email is not valid",
-            reason: "EmailValidationFailed"
+        customErrorMessages.push({
+            expectedFrom: errorExpectedFroms.User,
+            reason: errorReasons.EmailValidationFailed
         })
+
     }
     if (password && !(await isPasswordValid(password))) {
-        errors.push({
-            domain: "user/login",
-            message: "Provided password is not valid",
-            reason: "PasswordValidationFailed"
+        customErrorMessages.push({
+            expectedFrom: errorExpectedFroms.User,
+            reason: errorReasons.PasswordValidationFailed
         })
     }
 
-    if (errors?.length > 0) {
-        if (errors.length === 1) {
-            throw createError({statusCode: 400, statusMessage :errors[0].message, data:errors})
-        }
-        throw createError({statusCode: 400, statusMessage :errors[0].message, data:errors})
+    if (customErrorMessages.length > 0) {
+        const { errors } = apiResponseHandler(event, customErrorMessages);
+        throw createError(errors);
     }
 
     const userCredentials = await prisma.user.findFirst({
@@ -55,26 +60,22 @@ const errors: CustomError[] = []
 
 
     if (!userCredentials) {
-        errors.push({
-            domain: "user/login",
-            message: "Databasa did not provide a response",
-            reason: "NoDatabaseResponse"
+        customErrorMessages.push({
+            expectedFrom: errorExpectedFroms.Prisma,
+            reason: errorReasons.NoDatabaseResponse
         })
     }
 
     if (userCredentials && !(await compareHashes(password, userCredentials.password))) {
-        errors.push({
-            domain: "user/login",
-            message: "Password does not match",
-            reason: "ProvidedFalsePassword"
+        customErrorMessages.push({
+            expectedFrom: errorExpectedFroms.User,
+            reason: errorReasons.FailedToLogin
         })
     }
 
-    if (errors.length > 0) {
-        if (errors.length === 1) {
-            throw createError({statusCode: 400, statusMessage :errors[0].message, data:errors})
-        }
-        throw createError({statusCode: 400, statusMessage :errors[0].message, data:errors})
+    if (customErrorMessages.length > 0) {
+        const { errors } = apiResponseHandler(event, customErrorMessages);
+        throw createError(errors);
     }
 
 
@@ -96,15 +97,15 @@ const errors: CustomError[] = []
         }`
 
 
-apiResponse.data={
-    totalItems:1,
-    items:[
-        {
-            token
-        }
-    ]
-}
+    apiResponse.data = {
+        totalItems: 1,
+        items: [
+            {
+                token
+            }
+        ]
+    }
 
 
-return apiResponse
+    return apiResponse
 })
