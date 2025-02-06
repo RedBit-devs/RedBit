@@ -64,14 +64,14 @@ model User {
 }
 
 model Friend_Connect {
-  befriended_at DateTime?   // Should only be set when the friendship has been made
+  befriended_at DateTime? // Should only be set when the friendship has been made
   created_at    DateTime  @default(now())
 
   user1_id String
   user2_id String
 
-  User1 User @relation("friended_by", fields: [user1_id], references: [id])  // reference to the user who created the friendship
-  User2 User @relation("friend_of", fields: [user2_id], references: [id])   // reference to the user who is targeted by the friendship
+  User1 User @relation("friended_by", fields: [user1_id], references: [id]) // reference to the user who created the friendship
+  User2 User @relation("friend_of", fields: [user2_id], references: [id]) // reference to the user who is targeted by the friendship
 
   @@id([user1_id, user2_id])
   @@map("friends_connect")
@@ -86,11 +86,11 @@ model Server {
 
   owner_id String
 
-  Users_connected     Server_User_Connect[]  //list of users connected to the server
-  Bans        Ban[] // list of bans from this server
-  Invites     Invite[] // list of invites
-  Chat_groups Chat_Group[] // list of chat groups in the server
-  Roles       Role[] // list of roles on the server
+  Users_connected Server_User_Connect[] //list of users connected to the server
+  Bans            Ban[] // list of bans from this server
+  Invites         Invite[] // list of invites
+  Chat_groups     Chat_Group[] // list of chat groups in the server
+  Roles           Role[] // list of roles on the server
 
   Owner User @relation(fields: [owner_id], references: [id]) // reference to the owner of the server
 
@@ -100,7 +100,7 @@ model Server {
 model Invite {
   id         String   @id @default(cuid())
   created_at DateTime @default(now())
-  lifetime   Int
+  lifetime   Int //ms
 
   server_id String
 
@@ -128,7 +128,7 @@ model Chat_Group {
 
   server_id String
 
-  Chat_rooms Chat_Room[]  // list of chatrooms connected to this group
+  Chat_rooms Chat_Room[] // list of chatrooms connected to this group
 
   Server Server @relation(fields: [server_id], references: [id]) // reference to the server where the chat group belongs
 
@@ -144,7 +144,7 @@ model Chat_Room {
 
   chat_group_id String
 
-  Messages Message[]  // list of messages in the chat room
+  Messages Message[] // list of messages in the chat room
 
   Chat_Group Chat_Group @relation(fields: [chat_group_id], references: [id]) // reference to the chat group where the room belongs
 
@@ -179,7 +179,7 @@ model Ban {
   initiator_id String
   server_id    String
 
-  Server    Server @relation(fields: [server_id], references: [id])  // reference to the server of origin of the ban
+  Server    Server @relation(fields: [server_id], references: [id]) // reference to the server of origin of the ban
   Sufferer  User   @relation("sufferer", fields: [sufferer_id], references: [id]) // reference to the target of the ban
   Initiator User   @relation("initiator", fields: [initiator_id], references: [id]) // reference to the creator of the ban
 
