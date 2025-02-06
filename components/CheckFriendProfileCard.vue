@@ -25,7 +25,6 @@
                     </div>
                     <div id="dataField">
                         <div class="data">
-                            <p id="title">Username</p>
                             <h2 id="username">Kics kacsa</h2>
                         </div>
                         <div class="data">
@@ -141,6 +140,8 @@ onMounted(() => {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    max-height: 45rem;
+    overflow-y: scroll;
 }
 
 #close {
@@ -185,6 +186,8 @@ onMounted(() => {
 #content {
     display: flex;
     width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -208,13 +211,14 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    height: min-content;
 
 }
 
 #dataField h2 {
     text-align: center;
     background-color: var(--clr-ui-secondary);
-    padding: .2rem;
+    padding: .5rem;
     border-radius: var(--border-rounded);
     overflow-y: scroll;
 }
@@ -222,7 +226,8 @@ onMounted(() => {
 #description {
     height: fit-content;
     max-height: 9rem;
-    width: 100%;
+    width: 20rem;
+    padding: .5rem;
 }
 
 .data p {
@@ -245,7 +250,6 @@ onMounted(() => {
 }
 
 #contentFriend {
-    width: 100%;
     overflow: hidden;
 }
 
@@ -264,5 +268,78 @@ dialog {
     width: 100%;
     height: 100%;
     background-color: rgba(0 0 0 /.3);
+}
+
+
+@media only screen and (max-width:900px) {
+    #cardContainer {
+        width: 90%;
+    }
+
+    #page {
+        width: 100%;
+    }
+
+    #profPic {
+        height: 80%;
+    }
+
+    #profPic img {
+        height: 100%;
+    }
+
+
+
+
+
+    @media only screen and (max-width:740px) {
+        #profPic img {
+            height: 11rem;
+        }
+
+        #page {
+            min-height: 30rem;
+            height: fit-content;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #list {
+            min-height: 30rem;
+        }
+
+        #content {
+            height: min-content;
+        }
+
+        #dataField {
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #username {
+            width: max-content;
+        }
+
+        #description {
+            width: 20rem;
+        }
+
+    }
+}
+
+@media only screen and (max-width:600px) {
+    #content {
+        flex-direction: column;
+    }
+
+    #profPic img {
+        height: 8rem;
+    }
+
+    #description {
+        width: 20rem;
+    }
 }
 </style>
