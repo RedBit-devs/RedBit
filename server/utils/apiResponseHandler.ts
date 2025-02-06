@@ -8,8 +8,8 @@ import {
 const generalErrorReasonAndMessages = {
   MissingParameters: "Some required parameters were missing",
   Unauthorized: "Authentication required you are not logged in",
-  Expired:"Expired",
-}
+  Expired: "Expired",
+};
 
 const userErrorReasonAndMessages = {
   PasswordValidationFailed:
@@ -24,14 +24,16 @@ const userErrorReasonAndMessages = {
   PasswordHashingFailed: "Some error occurred while hashing the password",
   EmailDoesntMatch: "Provided email does not match expected email",
   FailedToLogin: "Failed to login password is not correct",
-  ...generalErrorReasonAndMessages
+  ...generalErrorReasonAndMessages,
 };
 const serverErrorReasonAndMessages = {
-  ...generalErrorReasonAndMessages
+  ServerAccessDenied:
+    "The server content is not available for the current user",
+  ...generalErrorReasonAndMessages,
 };
 const inviteErrorReasonAndMessages = {
   ...generalErrorReasonAndMessages,
-  Expired:"Invite link expired"
+  Expired: "Invite link expired",
 };
 
 const prismaErrorReasonAndMessages = {
@@ -42,7 +44,7 @@ const prismaErrorReasonAndMessages = {
     "Oparation failed on {table} table because the record with  id: {target} doesn't exist",
   ValidationError: "Something was not in the correct format",
   UnknownError: "An unknown error occurred",
-  NoDatabaseResponse: "Database did not provide a response"
+  NoDatabaseResponse: "Database did not provide a response",
 };
 
 const devErrorReasonAndMessages = {
@@ -101,10 +103,16 @@ const apiResponseHandler = (
   }
 
   if (!(customErrorMessages[0].expectedFrom in errorExpectedFroms)) {
-    //const httpCode = 455;
     const reason = errorReasons.BadCustomErrorExpectedFrom;
     setStatusMessageAndCode(customErrorObject, 455);
-    newError(customErrorObject, apiResponse.context, reason, devErrorReasonAndMessages[reason as keyof typeof devErrorReasonAndMessages]);
+    newError(
+      customErrorObject,
+      apiResponse.context,
+      reason,
+      devErrorReasonAndMessages[
+        reason as keyof typeof devErrorReasonAndMessages
+      ]
+    );
     return { errors: customErrorObject };
   }
 
@@ -112,9 +120,18 @@ const apiResponseHandler = (
     const reason = customErrorMessages[0].reason;
     setStatusMessageAndCode(customErrorObject, 453);
     if (reason in prismaErrorReasonAndMessages) {
-      newError(customErrorObject, apiResponse.context, reason, prismaErrorReasonAndMessages[reason as keyof typeof prismaErrorReasonAndMessages], customErrorMessages[0].table, customErrorMessages[0].target);
+      newError(
+        customErrorObject,
+        apiResponse.context,
+        reason,
+        prismaErrorReasonAndMessages[
+          reason as keyof typeof prismaErrorReasonAndMessages
+        ],
+        customErrorMessages[0].table,
+        customErrorMessages[0].target
+      );
     } else {
-      badCustomErrorReason(event, apiResponse);
+      badCustomErrorReason(apiResponse, customErrorObject);
     }
     return { errors: customErrorObject };
   } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.User) {
@@ -122,31 +139,57 @@ const apiResponseHandler = (
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
       if (reason in userErrorReasonAndMessages) {
-        newError(customErrorObject, apiResponse.context, reason, userErrorReasonAndMessages[reason as keyof typeof userErrorReasonAndMessages]);
+        newError(
+          customErrorObject,
+          apiResponse.context,
+          reason,
+          userErrorReasonAndMessages[
+            reason as keyof typeof userErrorReasonAndMessages
+          ]
+        );
       } else {
-        badCustomErrorReason(event, apiResponse);
+        badCustomErrorReason(apiResponse, customErrorObject);
       }
     }
     return { errors: customErrorObject };
-  } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Server) {
+  } else if (
+    customErrorMessages[0].expectedFrom === errorExpectedFroms.Server
+  ) {
     setStatusMessageAndCode(customErrorObject, 456);
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
-      if (reason in userErrorReasonAndMessages) {
-        newError(customErrorObject, apiResponse.context, reason, serverErrorReasonAndMessages[reason as keyof typeof serverErrorReasonAndMessages]);
+
+      if (reason in serverErrorReasonAndMessages) {
+        newError(
+          customErrorObject,
+          apiResponse.context,
+          reason,
+          serverErrorReasonAndMessages[
+            reason as keyof typeof serverErrorReasonAndMessages
+          ]
+        );
       } else {
-        badCustomErrorReason(event, apiResponse);
+        badCustomErrorReason(apiResponse, customErrorObject);
       }
     }
     return { errors: customErrorObject };
-  }else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Invite) {
+  } else if (
+    customErrorMessages[0].expectedFrom === errorExpectedFroms.Invite
+  ) {
     setStatusMessageAndCode(customErrorObject, 456);
     for (let i = 0; i < customErrorMessages.length; i++) {
       const reason = customErrorMessages[i].reason;
-      if (reason in userErrorReasonAndMessages) {
-        newError(customErrorObject, apiResponse.context, reason, inviteErrorReasonAndMessages[reason as keyof typeof inviteErrorReasonAndMessages]);
+      if (reason in inviteErrorReasonAndMessages) {
+        newError(
+          customErrorObject,
+          apiResponse.context,
+          reason,
+          inviteErrorReasonAndMessages[
+            reason as keyof typeof inviteErrorReasonAndMessages
+          ]
+        );
       } else {
-        badCustomErrorReason(event, apiResponse);
+        badCustomErrorReason(apiResponse, customErrorObject);
       }
     }
     return { errors: customErrorObject };
@@ -173,7 +216,7 @@ const badCustomErrorReason = (
     reason: reason,
     message:
       devErrorReasonAndMessages[
-      reason as keyof typeof devErrorReasonAndMessages
+        reason as keyof typeof devErrorReasonAndMessages
       ],
   });
 };
@@ -203,7 +246,14 @@ const setStatusMessageAndCode = (
  * @param {string} [table] - The table to replace {table} with in the message.
  * @param {string} [target] - The target to replace {target} with in the message.
  */
-const newError = (customErrorObject: customThrowError, domain: string, reason: string, message: string, table?: string, target?: any) => {
+const newError = (
+  customErrorObject: customThrowError,
+  domain: string,
+  reason: string,
+  message: string,
+  table?: string,
+  target?: any
+) => {
   customErrorObject.data.push({
     domain: domain,
     reason: reason,
@@ -211,7 +261,6 @@ const newError = (customErrorObject: customThrowError, domain: string, reason: s
       .replace("{table}", table as string)
       .replace("{target}", target as string),
   });
-
 };
 
 export { apiResponseHandler };
