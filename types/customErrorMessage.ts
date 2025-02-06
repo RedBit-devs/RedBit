@@ -36,7 +36,7 @@ enum errorReasons {
   NoDatabaseResponse = "NoDatabaseResponse",
   FailedToLogin = "FailedToLogin",
   Expired = "Expired",
-  PrivateServerContent = "PrivateServerContent",
+  ServerAccessDenied = "ServerAccessDenied",
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",

@@ -27,7 +27,7 @@ const userErrorReasonAndMessages = {
   ...generalErrorReasonAndMessages
 };
 const serverErrorReasonAndMessages = {
-  PrivateServerContent: "The server content is private",
+  ServerAccessDenied: "The server content is not available for the current user",
   ...generalErrorReasonAndMessages,
 };
 const inviteErrorReasonAndMessages = {

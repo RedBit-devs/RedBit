@@ -81,7 +81,7 @@ export default defineEventHandler(async (event) => {
 
     customErrorMessages.push({
       expectedFrom: errorExpectedFroms.Server,
-      reason: errorReasons.PrivateServerContent,
+      reason: errorReasons.ServerAccessDenied,
     }) 
     const { errors } = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);
