@@ -10,34 +10,36 @@ export default defineEventHandler(async (event) => {
   const apiResponse = {} as ApiResponse;
   apiResponse.context = "User/Create";
   apiResponse.method = "PUT";
-
-  
   apiResponse.params = {
     username: newUser.username,
     email: newUser.email,
     birthdate: newUser.birthdate,
-    firstName: newUser.first_name,
-    lastName: newUser.last_name,
+    first_name: newUser.first_name,
+    last_name: newUser.last_name,
     password: newUser.password,
   };
   const customErrorMessages: CustomErrorMessage[] = [];
-  event.context.customErrorMessages = customErrorMessages;
   event.context.apiResponse = apiResponse;
+
   if (!(await userValidation(apiResponse, customErrorMessages))) {
-    apiResponseHandler(event, customErrorMessages);
-    return apiResponse;
+    const {errors} = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);  
   }
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await hashPassword(newUser.password, customErrorMessages);
+  
   if (customErrorMessages.length > 0) {
-    apiResponseHandler(event, customErrorMessages);
-    return apiResponse;
+    const {errors} = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);  
   }
   
   const data = await createRecord("user", newUser,customErrorMessages);
+  const {errors} = apiResponseHandler(event,customErrorMessages,data);
   
-  apiResponseHandler(event,customErrorMessages,data);
+  if (customErrorMessages.length > 0) {
+    throw createError(errors);  
+  }
   return apiResponse
 
 });
