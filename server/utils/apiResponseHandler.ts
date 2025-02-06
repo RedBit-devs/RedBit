@@ -8,6 +8,7 @@ import {
 const generalErrorReasonAndMessages = {
   MissingParameters: "Some required parameters were missing",
   Unauthorized: "Authentication required you are not logged in",
+  Expired:"Expired",
 }
 
 const userErrorReasonAndMessages = {
@@ -27,6 +28,10 @@ const userErrorReasonAndMessages = {
 };
 const serverErrorReasonAndMessages = {
   ...generalErrorReasonAndMessages
+};
+const inviteErrorReasonAndMessages = {
+  ...generalErrorReasonAndMessages,
+  Expired:"Invite link expired"
 };
 
 const prismaErrorReasonAndMessages = {
@@ -129,6 +134,17 @@ const apiResponseHandler = (
       const reason = customErrorMessages[i].reason;
       if (reason in userErrorReasonAndMessages) {
         newError(customErrorObject, apiResponse.context, reason, serverErrorReasonAndMessages[reason as keyof typeof serverErrorReasonAndMessages]);
+      } else {
+        badCustomErrorReason(event, apiResponse);
+      }
+    }
+    return { errors: customErrorObject };
+  }else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Invite) {
+    setStatusMessageAndCode(customErrorObject, 456);
+    for (let i = 0; i < customErrorMessages.length; i++) {
+      const reason = customErrorMessages[i].reason;
+      if (reason in userErrorReasonAndMessages) {
+        newError(customErrorObject, apiResponse.context, reason, inviteErrorReasonAndMessages[reason as keyof typeof inviteErrorReasonAndMessages]);
       } else {
         badCustomErrorReason(event, apiResponse);
       }
