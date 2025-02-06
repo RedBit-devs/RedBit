@@ -28,5 +28,12 @@ export default defineNuxtConfig({
       user: process.env.NUXT_NODEMAILER_FROM,
       pass: process.env.NUXT_NODEMAILER_AUTH_PASS,
     },
+    template: {
+      engine: 'handlebars',
+      extName: '.hbs',
+      partialsDir: 'emails',
+      layoutsDir: 'emails',
+      defaultLayout: 'email-template'
+    }
   },
 })
