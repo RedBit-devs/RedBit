@@ -35,7 +35,8 @@ enum errorReasons {
   EmailDoesntMatch = "EmailDoesntMatch",
   NoDatabaseResponse = "NoDatabaseResponse",
   FailedToLogin = "FailedToLogin",
-  Expired = "Expired"
+  Expired = "Expired",
+  PrivateServerContent = "PrivateServerContent",
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",

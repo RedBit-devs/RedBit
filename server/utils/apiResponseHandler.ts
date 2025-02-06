@@ -27,7 +27,8 @@ const userErrorReasonAndMessages = {
   ...generalErrorReasonAndMessages
 };
 const serverErrorReasonAndMessages = {
-  ...generalErrorReasonAndMessages
+  PrivateServerContent: "The server content is private",
+  ...generalErrorReasonAndMessages,
 };
 const inviteErrorReasonAndMessages = {
   ...generalErrorReasonAndMessages,
