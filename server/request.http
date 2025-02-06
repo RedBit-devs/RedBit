@@ -53,6 +53,8 @@ Content-Type: application/json
     "visibility":"public"
 }
 
+###
+GET {{baseUrl}}/test
 
 ###
 PUT  {{baseUrl}}/server/invite/ HTTP/1.1
