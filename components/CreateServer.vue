@@ -19,7 +19,7 @@
                 <div id="visibilityInput">
                     <div id="check">
                         <label>
-                            <input type="radio" name="visibility">Public
+                            <input type="radio" name="visibility" checked>Public
                         </label>
                     </div>
                     <div id="check">
