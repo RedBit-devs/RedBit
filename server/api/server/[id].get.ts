@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
   }
   apiResponse.params = {
     serverId: serverId,
-    userId: userId
+    userId: userId,
   };
   event.context.apiResponse = apiResponse;
 
@@ -62,14 +62,12 @@ export default defineEventHandler(async (event) => {
     const owner = await prisma.server.findFirst({
       where: {
         id: serverId,
-        owner_id: userId
-      }
-    })
-    if(owner) {
+        owner_id: userId,
+      },
+    });
+    if (owner) {
       return apiResponse;
     }
-    console.log(owner);
-    
 
     const member = await prisma.server_User_Connect.findFirst({
       where: {
@@ -81,20 +79,13 @@ export default defineEventHandler(async (event) => {
       return apiResponse;
     }
 
-    console.log(member);
-    
-    console.log(customErrorMessages.length);
-    
     customErrorMessages.push({
       expectedFrom: errorExpectedFroms.Server,
       reason: errorReasons.ServerAccessDenied,
-    }) 
-    console.log(customErrorMessages.length);
-    
-    console.log("here");
-    
+    });
+
     const { errors } = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);
-  }    
+  }
   return apiResponse;
 });
