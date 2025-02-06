@@ -115,7 +115,7 @@ const apiResponseHandler = (
     if (reason in prismaErrorReasonAndMessages) {
       newError(customErrorObject, apiResponse.context, reason, prismaErrorReasonAndMessages[reason as keyof typeof prismaErrorReasonAndMessages], customErrorMessages[0].table, customErrorMessages[0].target);
     } else {
-      badCustomErrorReason(event, apiResponse);
+      badCustomErrorReason(apiResponse, customErrorObject);
     }
     return { errors: customErrorObject };
   } else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.User) {
@@ -125,7 +125,7 @@ const apiResponseHandler = (
       if (reason in userErrorReasonAndMessages) {
         newError(customErrorObject, apiResponse.context, reason, userErrorReasonAndMessages[reason as keyof typeof userErrorReasonAndMessages]);
       } else {
-        badCustomErrorReason(event, apiResponse);
+        badCustomErrorReason(apiResponse, customErrorObject);
       }
     }
     return { errors: customErrorObject };
@@ -136,7 +136,7 @@ const apiResponseHandler = (
       if (reason in userErrorReasonAndMessages) {
         newError(customErrorObject, apiResponse.context, reason, serverErrorReasonAndMessages[reason as keyof typeof serverErrorReasonAndMessages]);
       } else {
-        badCustomErrorReason(event, apiResponse);
+        badCustomErrorReason(apiResponse, customErrorObject);
       }
     }
     return { errors: customErrorObject };
@@ -146,8 +146,8 @@ const apiResponseHandler = (
       const reason = customErrorMessages[i].reason;
       if (reason in userErrorReasonAndMessages) {
         newError(customErrorObject, apiResponse.context, reason, inviteErrorReasonAndMessages[reason as keyof typeof inviteErrorReasonAndMessages]);
-      } else {
-        badCustomErrorReason(event, apiResponse);
+      } else {        
+        badCustomErrorReason(apiResponse, customErrorObject);
       }
     }
     return { errors: customErrorObject };
