@@ -55,7 +55,6 @@ Content-Type: application/json
 
 ###
 GET {{baseUrl}}/test
-=======
 
 ###
 PUT  {{baseUrl}}/server/invite/ HTTP/1.1

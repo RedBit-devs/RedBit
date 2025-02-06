@@ -29,10 +29,6 @@ export default defineNuxtConfig({
       user: process.env.NUXT_NODEMAILER_FROM,
       pass: process.env.NUXT_NODEMAILER_AUTH_PASS,
     },
-    hbs: {
-      viewEngine: 'express-handlebars',
-      viewPath: '~/server/emailTemplates/',
-    },
   },
   vite:{
     resolve: {
