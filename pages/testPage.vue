@@ -2,13 +2,16 @@
     <div class="content">
         <ChatFieldNavbar />
         <div id="chat">
-
+            <ChatMessage author-image="asd" author-name="Kaki" message="kakao" />
         </div>
         <ChatInputFiled id="input" />
     </div>
 </template>
 
 <script setup>
+import ChatMessage from '~/components/ChatMessage.vue';
+
+
 
 definePageMeta({
     layout: 'chat'
