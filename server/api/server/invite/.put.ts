@@ -1,9 +1,10 @@
 import type { Invite } from "@prisma/client";
 import prisma from "~/lib/prisma";
+import { type CustomErrorMessage, errorExpectedFroms, errorReasons } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
     const reqBody: Invite = await readBody(event);
-    const apiResponse = {} as ApiResponseV2;
+    const apiResponse = {} as ApiResponse;
     apiResponse.context = "Server/Invite/Create";
     apiResponse.method = "PUT";
     apiResponse.params = {
@@ -11,12 +12,27 @@ export default defineEventHandler(async (event) => {
         server_id: reqBody.server_id
     }
 
+    event.context.apiResponse = apiResponse;
+    const errorMessages: CustomErrorMessage[] = []
+
     if (!event.context.auth) {
         // 401 == "unauthorized"
-        throw createError({ statusCode: 401 })
+        errorMessages.push({
+            expectedFrom: errorExpectedFroms.Invite,
+            reason: errorReasons.Unauthorized
+        })
     }
+
     if (paramsCheck(apiResponse.params)) {
-        throw createError({ statusCode: 400, statusMessage: "Not all required parameters where sspecified" })
+        errorMessages.push({
+            expectedFrom: errorExpectedFroms.Invite,
+            reason: errorReasons.MissingParameters
+        })
+    }
+
+    if (errorMessages.length > 0) {
+        const { errors } = apiResponseHandler(event, errorMessages);
+        throw createError(errors)
     }
 
     const userResponse = await prisma.user.findFirst({
@@ -42,7 +58,13 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!userResponse) {
-        throw createError({ statusCode: 401, statusMessage: "User is not joined to the server specified" })
+        errorMessages.push({
+            expectedFrom: errorExpectedFroms.Prisma,
+            reason: errorReasons.NoDatabaseResponse
+        })
+
+        const { errors } = apiResponseHandler(event, errorMessages);
+        throw createError(errors)
     }
 
     const dbResponse = await prisma.invite.create({
@@ -57,14 +79,24 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!dbResponse) {
-        throw createError({ statusCode: 500, statusMessage: "The database has not provided a response" })
+        errorMessages.push({
+            expectedFrom: errorExpectedFroms.Prisma,
+            reason: errorReasons.NoDatabaseResponse
+        })
     }
 
-    apiResponse.data = {
+    const data = {
         totalItems: 1,
         fields: prisma.invite.fields,
         items: [dbResponse]
     }
 
-    return apiResponse
+    console.log("contition");
+
+
+    const { errors } = apiResponseHandler(event, errorMessages, data)
+
+    if (errors) throw createError(errors);
+
+    return event.context.apiResponse;
 })
