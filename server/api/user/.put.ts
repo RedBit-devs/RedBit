@@ -51,12 +51,7 @@ export default defineEventHandler(async (event) => {
     try {
       sendMail({ subject: `${newUser.first_name} ${newUser.last_name}`, html: htmlTeamplate, to: newUser.email})
     } catch (error) {
-      customErrorMessages.push({
-        expectedFrom: errorExpectedFroms.Mail,
-        reason: errorReasons.FailedToSendEmail,
-      })
-      const {errors} = apiResponseHandler(event,customErrorMessages);
-      throw createError(errors);  
+      
     }
   return apiResponse
 
