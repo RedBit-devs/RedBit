@@ -47,9 +47,9 @@ export default defineEventHandler(async (event) => {
     let htmlTeamplate = fs.readFileSync('./server/emailTemplates/layouts/verifyEmail.html', 'utf-8');
     htmlTeamplate = await Handlebars.compile(htmlTeamplate)({ name: `${newUser.first_name} ${newUser.last_name}`,verifyurl: `https://redbit.netlify.app/api/user/verifyEmail?id=${apiResponse.data.items[0].id}&email=${newUser.email}` });
     try {
-      sendMail({ subject: 'me', html: htmlTeamplate, to: newUser.email})
+      sendMail({ subject: `${newUser.first_name} ${newUser.last_name}`, html: htmlTeamplate, to: newUser.email})
     } catch (error) {
-  
+      
     }
   return apiResponse
 
