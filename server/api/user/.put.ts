@@ -3,6 +3,8 @@ import { apiResponseHandler } from "~/server/utils/apiResponseHandler";
 import { userValidation, hashPassword } from "~/server/utils/userValidation";
 import {
   type CustomErrorMessage,
+  errorExpectedFroms,
+  errorReasons,
 } from "~/types/customErrorMessage";
 import Handlebars from "handlebars";
 import fs from 'fs'
@@ -49,7 +51,12 @@ export default defineEventHandler(async (event) => {
     try {
       sendMail({ subject: `${newUser.first_name} ${newUser.last_name}`, html: htmlTeamplate, to: newUser.email})
     } catch (error) {
-      
+      customErrorMessages.push({
+        expectedFrom: errorExpectedFroms.Mail,
+        reason: errorReasons.FailedToSendEmail,
+      })
+      const {errors} = apiResponseHandler(event,customErrorMessages);
+      throw createError(errors);  
     }
   return apiResponse
 
