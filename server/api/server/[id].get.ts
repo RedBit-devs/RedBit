@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const data = await readRecord("server", serverId, customErrorMessages);
-  const { errors } = apiResponseHandler(event, customErrorMessages, data);
+  const { errors } = apiResponseHandler(event, customErrorMessages, {totalItems: 1, fields: prisma.server.fields, items: [data]});
   if (customErrorMessages.length > 0) {
     throw createError(errors);
   }
@@ -59,24 +59,19 @@ export default defineEventHandler(async (event) => {
   }
 
   if (data.visibility === "private") {
-    const owner = await prisma.server.findFirst({
+
+    const Authorized = await prisma.server.findFirst({
       where: {
         id: serverId,
-        owner_id: userId,
+        OR: [
+          { owner_id: userId },
+          { Users_connected: { some: { user_id: userId } } },
+        ],
       },
     });
-    if (owner) {
-      return apiResponse;
-    }
 
-    const member = await prisma.server_User_Connect.findFirst({
-      where: {
-        server_id: serverId,
-        user_id: userId,
-      },
-    });
-    if (member) {
-      return apiResponse;
+    if (Authorized) {
+      return apiResponse
     }
 
     customErrorMessages.push({
