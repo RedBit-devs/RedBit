@@ -87,6 +87,7 @@ dialog {
 
 #title {
     font-variant: small-caps;
+    text-align: center;
 }
 
 .inputWrapper {
