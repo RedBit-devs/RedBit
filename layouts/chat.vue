@@ -1,7 +1,9 @@
 <template>
     <div id="screen">
         <div id="sidebar" ref="sidebarRef">
-            <ServerSelector id="serverSelector" />
+            <ServerSelector :add-server-func="() => {
+                appearRef = true
+            }" id="serverSelector" />
             <ChatSelector id="chatSelector" />
             <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
@@ -13,11 +15,15 @@
         </div>
     </div>
 
+    <CreateServer id="dialog" :close-dialog-func="() => {
+        appearRef = false
+    }" :isShown="appearRef" />
 </template>
 <script setup>
 
 import { ref, onMounted } from 'vue'
 
+let appearRef = ref(false)
 const sidebarRef = ref(null)
 const contentRef = ref(null)
 let startX = 0;
@@ -49,6 +55,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
+#dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: var(--clr-text-primary);
+    z-index: 99;
+    border: none;
+}
+
 #screen {
     display: grid;
     grid-template-columns: 22rem 1fr;
