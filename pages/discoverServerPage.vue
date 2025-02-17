@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <DiscoverInputField />
     </div>
 </template>
 
