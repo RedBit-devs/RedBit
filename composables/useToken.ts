@@ -6,7 +6,7 @@ export const useToken = () => {
             token.value = newToken;
     }
     const clearToken = () => {
-        token.value = ""
+        token.value = null
     }
     
     
