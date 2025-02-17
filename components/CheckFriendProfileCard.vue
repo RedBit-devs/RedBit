@@ -29,8 +29,11 @@
                         </div>
                         <div class="data">
                             <p id="title">Description</p>
-                            <h2 id="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt,
-                                sunt.
+                            <h2 id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti harum neque facilis totam necessitatibus, officiis reiciendis iusto est beatae ad? Obcaecati voluptatum iste impedit reprehenderit cumque architecto molestias non dignissimos?
+                            Repellat odit ipsum aperiam error debitis delectus cum dolor, laboriosam temporibus quod quibusdam nisi provident unde necessitatibus eveniet dolore amet illo accusamus dolores maxime, tempore molestias nulla! Ad, velit veniam!
+                            Aut saepe labore debitis aliquam eaque magnam, excepturi temporibus eligendi earum similique possimus non tempora ratione id. Explicabo sint inventore expedita, officia optio labore corporis quibusdam ea blanditiis, officiis eius.
+                            Exercitatioventore optio ut est tempore. Eaque suscipit fugit sapiente corrupti quae, tempore aspernatur eligendi cum quis iure delectus, ut voluptate ipsa. Nemo, nobis reiciendis!
+                            Earum minima, id ne delectus cupiditate maiores, nobis eum repellat consequatur quae mollitia, et blanditiis error non animi odio quidem aliquam perspiciatis voluptatum accusamus perferendis! Explicabo porro earum sunt libero quos?
                             </h2>
                         </div>
                     </div>
@@ -141,7 +144,6 @@ onMounted(() => {
     top: 50%;
     transform: translate(-50%, -50%);
     max-height: 45rem;
-    overflow-y: scroll;
 }
 
 #close {
@@ -220,7 +222,7 @@ onMounted(() => {
     background-color: var(--clr-ui-secondary);
     padding: .5rem;
     border-radius: var(--border-rounded);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #description {
