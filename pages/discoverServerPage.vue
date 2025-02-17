@@ -1,6 +1,7 @@
 <template>
     <div>
         <DiscoverInputField />
+        <DiscoverServerCard />
     </div>
 </template>
 
