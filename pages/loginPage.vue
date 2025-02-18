@@ -71,7 +71,7 @@ const sendLoginRequest = async () => {
     }
 
     if (status.value === "success") {
-        setToken(data.value.data.items[0].token.split(" ")[1]);
+        setToken(data.value.data.items[0].token);
 
         ////TODO this should navigate to the chat
         navigateTo('/test')
