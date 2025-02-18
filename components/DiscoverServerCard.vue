@@ -37,4 +37,17 @@ p {
 #join {
     text-align: right;
 }
+
+@media only screen and (max-width:490px){
+    p{
+        font-size: 1rem;
+    }
+
+    #profPic img{
+        height: 2.5rem;
+    }
+    #cardContainer{
+        gap: .5rem;
+    }
+}
 </style>

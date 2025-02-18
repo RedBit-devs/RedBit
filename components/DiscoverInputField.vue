@@ -1,10 +1,12 @@
 <template>
     <div id="container">
         <div id="close">
-            <Icon name="mdi:close" size="150%" class="btn primary" />
+            <NuxtLink to="/chatPage">
+                <Icon name="mdi:close" size="550%" class="btn primary" />
+            </NuxtLink>
         </div>
         <div id="title">
-            <h1>dicover servers</h1>
+            <h1>discover servers</h1>
         </div>
         <div id="inputField">
             <input type="text" placeholder="Type here">
@@ -20,7 +22,7 @@
 <style scoped>
 #container {
     display: grid;
-    grid-template-rows: min-content;
+    grid-template-rows: 1fr;
 }
 
 #close {
