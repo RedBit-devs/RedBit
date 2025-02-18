@@ -37,6 +37,7 @@ enum errorReasons {
   FailedToLogin = "FailedToLogin",
   Expired = "Expired",
   FailedToSendEmail = "FailedToSendEmail",
+  ServerAccessDenied = "ServerAccessDenied",
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",
