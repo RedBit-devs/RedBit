@@ -39,10 +39,13 @@
     display: flex;
     padding: .5rem 1rem;
     gap: 1.5rem;
+    max-width: 70rem;
+    margin: auto;
 }
 
 #inputField input {
     width: 100%;
+    
     border-radius: var(--border-rounded);
     background-color: var(--clr-ui-primary);
     border: none;

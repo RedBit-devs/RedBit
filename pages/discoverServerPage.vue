@@ -2,6 +2,10 @@
     <div>
         <DiscoverInputField />
         <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
     </div>
 </template>
 

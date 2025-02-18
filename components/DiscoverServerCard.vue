@@ -23,6 +23,10 @@
     grid-template-columns: min-content max-content 1fr;
     align-items: center;
     gap: 1rem;
+    max-width: 50rem;
+    margin: 1rem auto;
+    background-color: var(--clr-ui-primary);
+    border-radius:var(--border-rounded) ;
 }
 
 #profPic img {
