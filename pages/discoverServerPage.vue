@@ -6,6 +6,12 @@
         <DiscoverServerCard />
         <DiscoverServerCard />
         <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
+        <DiscoverServerCard />
     </div>
 </template>
 

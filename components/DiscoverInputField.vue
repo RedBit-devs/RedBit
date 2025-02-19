@@ -23,6 +23,10 @@
 #container {
     display: grid;
     grid-template-rows: 1fr;
+    position: sticky;
+    width: 100%;
+    background-color: var(--clr-canvas);
+    top: 0;     
 }
 
 #close {
