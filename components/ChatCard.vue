@@ -19,6 +19,7 @@
     gap: 1rem;
     align-items: center;
     padding: .6rem 0 .6rem .6rem;
+    width: 100%;
 
 }
 
@@ -29,5 +30,10 @@
 
 p {
     color: var(--clr-text-secondary);
+}
+
+.friend:hover{
+    cursor: pointer;
+    background-color: var(--clr-ui-secondary)
 }
 </style>
