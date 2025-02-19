@@ -138,6 +138,7 @@ h6 {
     border: none;
     text-decoration: none;
 
+    cursor: pointer;
     font-size: 1rem;
     height: min-content;
     width: min-content;
@@ -202,6 +203,7 @@ h6 {
     filter: grayscale();
     pointer-events: none;
     box-shadow: none;
+    cursor: not-allowed;
 }
 
 
