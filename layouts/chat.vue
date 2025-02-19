@@ -5,7 +5,7 @@
                 appearRef = true
             }" id="serverSelector" />
             <ChatSelector id="chatSelector" />
-            <DiscoverServers id="discoverServers" />
+                <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
         <div id="content" ref="contentRef">
