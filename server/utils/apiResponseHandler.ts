@@ -36,6 +36,10 @@ const inviteErrorReasonAndMessages = {
   Expired: "Invite link expired",
 };
 
+const mailErrorReasonAndMessages = {
+  FailedToSendEmail: "Some error occurred while sending the email",
+};
+
 const prismaErrorReasonAndMessages = {
   TableNotFound: "Can't read from the {table} table because it doesn't exist",
   UniqueConstraintFailed:
@@ -59,6 +63,7 @@ const errorHttpStatusCodes = {
   454: "BadCustomErrorReason",
   455: "BadCustomErrorExpectedFrom",
   456: "ErrorsOcuredOnServerRoute",
+  457: "FailedToSendEmail",
 };
 
 /**
@@ -190,6 +195,18 @@ const apiResponseHandler = (
         );
       } else {
         badCustomErrorReason(apiResponse, customErrorObject);
+      }
+    }
+    return { errors: customErrorObject };
+  }
+  else if (customErrorMessages[0].expectedFrom === errorExpectedFroms.Mail) {
+    setStatusMessageAndCode(customErrorObject, 457);
+    for (let i = 0; i < customErrorMessages.length; i++) {
+      const reason = customErrorMessages[i].reason;
+      if (reason in mailErrorReasonAndMessages) {
+        newError(customErrorObject, apiResponse.context, reason, mailErrorReasonAndMessages[reason as keyof typeof mailErrorReasonAndMessages]);
+      } else {
+        badCustomErrorReason(event, apiResponse);
       }
     }
     return { errors: customErrorObject };
