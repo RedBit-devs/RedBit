@@ -1,7 +1,8 @@
 <template>
     <div>
-        <p>token of user {{token}}</p>
-        <button class="btn primary" @click="clearToken">Clear cooike</button>
+        <p>token of user {{getToken()}}</p>
+        <button class="btn primary" @click="clearToken">Clear token</button>
+        <button class="btn primary" @click="clearRefreshToken">Clear reftresh token</button>
     </div>
 </template>
 <script setup lang="ts">
@@ -9,5 +10,5 @@ definePageMeta({
     layout: false,
     middleware: ['protected']
 })
-const {token, clearToken} = useToken()
+const {getToken, clearToken, clearRefreshToken} = useToken()
 </script>

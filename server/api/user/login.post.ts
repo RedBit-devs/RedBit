@@ -91,7 +91,7 @@ export default eventHandler(async (event) => {
         config.JWT_SECRET,
         {
             algorithm: "HS512",
-            expiresIn: config.JWT_EXP_TIME,
+            expiresIn: config.JWT_REFR_EXP_TIME,
         }
     )
         }`

@@ -6,7 +6,8 @@
         <label id="isMenuShownLabel"for="isMenuShown"><Icon name="mdi:menu" size="50"/></label>
         <input type="checkbox" id="isMenuShown">
         <menu>
-            <NuxtLink class="btn primary" to="/loginPage">Chat</NuxtLink>
+                <!-- TODO This should redirect to chatPage -->
+            <NuxtLink class="btn primary" to="/test">Chat</NuxtLink>
             <NuxtLink class="btn " to="#title">Home</NuxtLink>
             <NuxtLink class="btn " to="#about">About</NuxtLink>
             <NuxtLink class="btn " to="#developers">Contacts</NuxtLink>
@@ -68,6 +69,6 @@ menu{
         width: 100%;
         text-align: center;
     }
-    
+
 }
 </style>
