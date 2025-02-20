@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     '~/assets/css/fonts.css'
   ],
   devtools: { enabled: true },
-  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device'],
+  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device'], //'@vueuse/nuxt'
   prisma: {
     installStudio: false,
     autoSetupPrisma: true
@@ -24,6 +24,11 @@ export default defineNuxtConfig({
       alias: {
         ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
       }
+    }
+  },
+  nitro: {
+    experimental: {
+      websocket: true
     }
   }
 })
