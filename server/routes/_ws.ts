@@ -1,5 +1,6 @@
 import { Peer, Message } from 'crossws';
 
+//Nem tudom hogy miért működik, de működik
 export default defineWebSocketHandler({
     open(peer: Peer) {
         // Send welcome to the new client
@@ -20,3 +21,5 @@ export default defineWebSocketHandler({
         console.log("close asdasd");
      }
 });
+
+//https://github.com/javaparser/javaparser/issues/4669
