@@ -3,22 +3,30 @@ export const useToken = () => {
     const token = useState("token", () => "");
     const refreshToken = useCookie("refreshToken", { secure: true, sameSite: "strict" });
 
-
+    //To get the value of the acces token
     const getToken = () => token.value;
 
+    //Give new value to access token
     const setToken = (newToken: string): void => {
         token.value = newToken;
     }
+
+    //Give new value to refresh token
     const setRefreshToken = (newToken: string): void => {
         refreshToken.value = newToken;
     }
+
+    //Clear refresh token
     const clearRefreshToken = () => {
         refreshToken.value = null;
     }
+
+    //Clear access token
     const clearToken = () => {
         token.value = null;
     }
 
+    //gets an access token
     const getNewToken = async () => {
         const { data, status, error } = await useFetch("/api/token/refresh", {
             headers: {
@@ -37,7 +45,7 @@ export const useToken = () => {
         }
     }
 
-
+    //Gets a refresh token
     const getNewRefreshToken = async (email: string, password: string) => {
         const { data, error, status } = await useFetch("/api/user/login", {
             method: "POST",
