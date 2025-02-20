@@ -27,6 +27,13 @@ export const useToken = () => {
     }
 
     //gets an access token
+    /**
+    * Tryes to get a new access token with the current refreshtoken
+    * If the refreshtoken is not valid then the function returns { false }
+    * othervise true
+    *
+    * @return {Boolean} - Success
+    */
     const getNewToken = async () => {
         const { data, status, error } = await useFetch("/api/token/refresh", {
             headers: {
