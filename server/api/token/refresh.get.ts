@@ -1,9 +1,7 @@
-import { type CustomErrorMessage } from "~/types/customErrorMessage";
 import jwt from "jsonwebtoken"
 
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig()
-    const customErrorMessages: CustomErrorMessage[] = [];
     const apiResponse = {} as ApiResponse;
   
     apiResponse.context = "Token/Refresh";
