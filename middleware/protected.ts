@@ -1,9 +1,15 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
 
-    const { token } = useToken()
+    const { getToken, getNewToken } = useToken()
 
-    if (!token.value) {
-        return navigateTo("/loginPage")
+    const token = getToken()
+
+    if (!token) {
+
+        const sucess = await getNewToken()
+        if (!sucess) {
+            return navigateTo("/loginPage")
+        }
     }
 
 })
