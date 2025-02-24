@@ -53,6 +53,8 @@ Content-Type: application/json
     "visibility":"private"
 }
 
+###
+GET {{baseUrl}}/test
 
 ###
 
