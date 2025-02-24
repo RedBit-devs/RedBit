@@ -44,37 +44,25 @@ definePageMeta({
 
 const emailRef = ref(null)
 const passwordRef = ref(null)
-const { setToken } = useToken()
+const { getNewRefreshToken } = useToken()
 
 const err = ref([]);
 const stat = ref(null)
 
 const sendLoginRequest = async () => {
-
     if (!emailRef.value.value || !passwordRef.value.value) return;
 
+    const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
-    const { data, error, status } = await useFetch("/api/user/login", {
-        method: "POST",
-        body: {
-            email: emailRef.value.value,
-            password: passwordRef.value.value
-        }
-    })
-
-    stat.value = status
-
-    if (status.value == "error") {
-        err.value = error.value.data.data
-
-        return setToken(null);
-    }
+    stat.value = status.value
 
     if (status.value === "success") {
-        setToken(data.value.data.items[0].token);
-
         ////TODO this should navigate to the chat
         navigateTo('/test')
+    }
+
+    if (status.value === "error") {
+        err.value = error.value.data
     }
 }
 
