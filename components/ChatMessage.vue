@@ -39,7 +39,13 @@ const { authorImage, authorName, message } = defineProps({
 
 
 onMounted(() => {
-    const md = new MarkdownIt();
+    const md = new MarkdownIt({
+        breaks: true,
+        linkify: true,
+
+    });
+    md.linkify.set({ fuzzyEmail: false });
+
     content.value = md.render(message);
 });
 </script>
