@@ -1,9 +1,8 @@
-import jwt from "jsonwebtoken"
-
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
     
-    const token = getHeader(event, "Authorization")?.split(' ')[1]
+    const token = getHeader(event, "Authorization")?.replace("Bearer ", '')
     if (token) {
-        event.context.auth = jwt.decode(token)
+        const data = await verifyJWT(token);
+        event.context.auth = data;
     }
   })
