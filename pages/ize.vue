@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div ref="chatRef" id="chat">
-
+    <div  id="chat">
+      <ChatMessage v-for="msg in chatRef" :author-image="msg.author.picture" :author-name="msg.author.name" :message="msg.message"/>
+    </div>
+    <div  class="toaster">
+      <Toast v-for="msg in toastRef" :content="msg" title="Info"/>
+      <Toast v-for="msg in welcomeRef" class="ok" :content="msg" title="hi"/>
     </div>
     <button class="btn primary" @click="subscribeToTestTopic">
         Sub to testTopic
@@ -9,28 +13,35 @@
     <button class="btn secondary" @click="unsubscribeToTestTopic">
         Un Sub to testTopic
     </button>
+    <button class="btn secondary" @click="sendTestMessage">
+        Send Test Message
+    </button>
   </div>
 </template>
 
-<script setup>
+<script  setup>
 //https://krutiepatel.com/blog/30-real-time-with-nuxt-3-a-guide-to-websocket-integration
 import { useWebSocket } from '@vueuse/core'
 
 
-const chatRef = ref(null);
+const chatRef = ref([]);
+const toastRef = ref([]);
+const welcomeRef = ref([]);
 
 const { status, data, send, open, close } = useWebSocket('ws://localhost:3000/_ws', {
+  autoReconnect: true,
     onMessage(ws, event){
       const {type, data} = JSON.parse(event.data)
         switch (type) {
           case "welcome":
-            alert(data)
+            welcomeRef.value.push(data)
             break;
           case "message":
-            chatRef.value.innerText += data;
+            
+            chatRef.value.push(data)
             break;
           case "system":
-            chatRef.value.innerText += data;
+          toastRef.value.push(data)
             break;
 
           default:
@@ -42,12 +53,34 @@ const { status, data, send, open, close } = useWebSocket('ws://localhost:3000/_w
 })
 
 const subscribeToTestTopic = () => {
-  console.log("asd");
+  const message = {
+    type: "subscribe",
+    data: "testTopic"
+  }
   
-  send(JSON.stringify({type:"subscribe", data:"testTopic"}))
+  send(JSON.stringify(message))
 }
 const unsubscribeToTestTopic = () => {
-  send(JSON.stringify({type:"unsubscribe", data:"testTopic"}))
+  const message = {
+    type: "unsubscribe",
+    data: "testTopic"
+  }
+  send(JSON.stringify(message))
+}
+const sendTestMessage = () => {
+  const message = {
+    type: "message",
+    data: {
+      message: " ***Lajos vagyok***",
+      author:{
+      name:"lajos",
+      picture: "https://picsum.photos/200",
+    },
+  },
+  to: "testTopic"
+    
+  }
+  send(JSON.stringify(message))
 }
 
 console.log(data);

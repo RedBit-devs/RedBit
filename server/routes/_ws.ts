@@ -16,7 +16,7 @@ export default defineWebSocketHandler({
     },
 
     message(peer: Peer, message: Message) {
-        const {type, data} = JSON.parse(message.toString())
+        const {type, data, to} = JSON.parse(message.toString())
         switch (type) {
             case "subscribe":
                 console.log(type);
@@ -27,6 +27,10 @@ export default defineWebSocketHandler({
             case "unsubscribe":
                 peer.publish(data, JSON.stringify({type: "system", data: `${peer.toString()} left ${data}\n`}))
                 peer.unsubscribe(data)
+                break;
+            case "message":
+                
+                peer.publish(to, JSON.stringify({type: "message", data}))
                 break;
         
             default:
