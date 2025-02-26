@@ -153,6 +153,7 @@ input {
 .forgottenPassword a{
     cursor: pointer;
     color: var(--clr-primary);
+    text-decoration: none;
 }
 
 @media only screen and (max-width:1100px) {
