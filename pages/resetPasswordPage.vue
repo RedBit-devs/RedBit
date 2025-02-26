@@ -6,9 +6,9 @@
         <div class="content">
     <div class="resetCard">
     <h1>reset password</h1>
-    <div class="input" placeholder="Type here">
+    <div class="input" >
       <label for="">Email</label>
-      <input type="text">
+      <input type="text" placeholder="Type here">
     </div>
     <div class="description">
       <p>We will send you an email to reset your password.</p>
