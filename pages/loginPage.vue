@@ -28,6 +28,11 @@
                     Register
                 </NuxtLink>
             </div>
+            <div class="forgottenPassword">
+                <NuxtLink>
+                    Forgott your password?
+                </NuxtLink>
+            </div>
         </div>
         <div v-if="err" class="toaster">
             <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason" :content="error.message" />
@@ -143,6 +148,11 @@ input {
     justify-content: space-between;
     align-items: center;
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
+}
+
+.forgottenPassword a{
+    cursor: pointer;
+    color: var(--clr-primary);
 }
 
 @media only screen and (max-width:1100px) {
