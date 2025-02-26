@@ -21,8 +21,6 @@
 
 <script  setup>
 //https://krutiepatel.com/blog/30-real-time-with-nuxt-3-a-guide-to-websocket-integration
-import { useWebSocket } from '@vueuse/core'
-
 
 const chatRef = ref([]);
 const toastRef = ref([]);
