@@ -69,6 +69,7 @@ hr {
     justify-content: center;
     align-items: center;
     padding-inline: .3rem;
+    overflow-y: auto;
 }
 
 .chatList img {
