@@ -1,36 +1,36 @@
 import { Peer, Message } from 'crossws';
+import { type socketMessage, type SocketMessage, SocketMessageMode, SocketMessageType } from '~/types/websocket';
 
 //Nem tudom hogy miért működik, de működik
 export default defineWebSocketHandler({
     open(peer: Peer) {
-        // Send welcome to the new client
-        peer.send(JSON.stringify({ type: 'welcome', data: 'Welcome to the server!\n' }));
-
-        // Join new client to the "matrix" channel
-        peer.subscribe("matrix");
-
-        // Notify every other connected client
-        peer.publish("matrix", JSON.stringify({type: "system", data: `[system] ${peer.toString()} has joined the Matrix!\n`}));
         console.log(`open: ${peer.toString()}`);
-        
     },
 
     message(peer: Peer, message: Message) {
-        const {type, data, to} = JSON.parse(message.toString())
+        const {type, data, mode} = message.json<SocketMessage<any>>()
         switch (type) {
-            case "subscribe":
-                console.log(type);
-                
-                peer.subscribe(data)
-                peer.publish(data, JSON.stringify({type: "system", data: `${peer.toString()} joined ${data}\n`}))
+            case SocketMessageType.topic:
+                if (mode === SocketMessageMode.subscribe) {
+                    peer.subscribe(data)
+                }
+                if (mode === SocketMessageMode.unsubscribe) {
+                    peer.unsubscribe(data)                    
+                }
                 break;
-            case "unsubscribe":
-                peer.publish(data, JSON.stringify({type: "system", data: `${peer.toString()} left ${data}\n`}))
-                peer.unsubscribe(data)
-                break;
-            case "message":
-                
-                peer.publish(to, JSON.stringify({type: "message", data}))
+            case SocketMessageType.message:
+                const Data:socketMessage = data;
+
+                const message:SocketMessage<socketMessage> = {
+                    type: SocketMessageType.message,
+                    data: {
+                        author: Data.author,
+                        text: Data.text,
+                        to: Data.to
+                    }
+                }
+
+                peer.publish(Data.to, JSON.stringify(message))
                 break;
         
             default:
@@ -42,5 +42,3 @@ export default defineWebSocketHandler({
         console.log(`close: ${peer.toString()}`);
      }
 });
-
-//https://github.com/javaparser/javaparser/issues/4669
