@@ -29,7 +29,7 @@
                 </NuxtLink>
             </div>
             <div class="forgottenPassword">
-                <NuxtLink>
+                <NuxtLink to="/resetPasswordPage">
                     Forgott your password?
                 </NuxtLink>
             </div>
