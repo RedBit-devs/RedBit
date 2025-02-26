@@ -87,4 +87,32 @@ input {
   text-align: center;
 }
 
+@media only screen and (max-width:1100px) {
+    .resetCard {
+        width: 50%;
+    }
+
+
+}
+
+@media only screen and (max-width:850px) {
+    .content {
+        padding: 1.5rem;
+    }
+
+    .resetCard{
+        width: 80%;
+    }
+
+    input {
+        height: 2.2rem;
+    }
+}
+
+@media only screen and (max-width:640px) {
+    .resetCard {
+        width: 100%;
+    }
+
+}
 </style>
