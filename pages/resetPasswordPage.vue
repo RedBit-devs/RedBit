@@ -15,6 +15,7 @@
     </div>
     <div class="submit">
       <button class="btn ui-secondary">Submit</button>
+      <button class="btn secondary resend">Resend email</button>
     </div>
   </div>
 </div>
@@ -81,10 +82,17 @@ input {
 
 .description{
   padding-block: 2rem;
+  text-align: center;
 }
 
 .submit{
-  text-align: center;
+  justify-content: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.resend{
+  width: max-content;
 }
 
 @media only screen and (max-width:1100px) {
@@ -112,6 +120,11 @@ input {
 @media only screen and (max-width:640px) {
     .resetCard {
         width: 100%;
+    }
+
+    .submit{
+      flex-direction: column;
+      align-items: center;
     }
 
 }
