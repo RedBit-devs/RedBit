@@ -12,10 +12,10 @@
     </div>
     <div class="description">
       <p>We will send you an email to reset your password.</p>
+      <p>If you didn't recived any email you can resend it by clicking <NuxtLink>here</NuxtLink></p>
     </div>
     <div class="submit">
       <button class="btn ui-secondary">Submit</button>
-      <button class="btn secondary resend">Resend email</button>
     </div>
   </div>
 </div>
@@ -85,6 +85,11 @@ input {
   text-align: center;
 }
 
+.description a{
+  color: var(--clr-tertiary);
+  cursor: pointer;
+}
+
 .submit{
   justify-content: center;
   display: flex;
@@ -122,10 +127,7 @@ input {
         width: 100%;
     }
 
-    .submit{
-      flex-direction: column;
-      align-items: center;
-    }
+
 
 }
 </style>
