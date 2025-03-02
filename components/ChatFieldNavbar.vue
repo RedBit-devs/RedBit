@@ -5,7 +5,9 @@
         <div id="functions">
             <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
             <Icon name="mdi:phone-in-talk" size="150%" />
-            <Icon name="mdi:cog" size="150%" />
+            <NuxtLink to="/chatSettingsPage">
+                <Icon name="mdi:cog" size="150%" />
+            </NuxtLink>
         </div>
     </div>
 
@@ -56,6 +58,10 @@ const handleSearchbarMove = () => {
     gap: 1rem;
     grid-area: buttons;
     place-items: end;
+}
+
+#functions a{
+    color: white;
 }
 
 input {

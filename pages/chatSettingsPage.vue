@@ -1,13 +1,16 @@
 <template>
   <div>
-    
+    <h1>Alma</h1>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+  definePageMeta({
+    layout: false
+  })
 
 </script>
 
-<style>
+<style scoped>
 
 </style>
