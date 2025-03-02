@@ -5,7 +5,7 @@
         <div id="functions">
             <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
             <Icon name="mdi:phone-in-talk" size="150%" />
-            <Icon name="mdi:account-box-outline" size="150%" />
+            <Icon name="mdi:cog" size="150%" />
         </div>
     </div>
 
