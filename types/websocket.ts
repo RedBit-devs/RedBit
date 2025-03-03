@@ -1,32 +1,39 @@
-enum SocketMessageType {
-    "message",
-    "topic"
+type textMessage = {
+    to: string,
+    text: string
+}
+type toastMessage = {
+    header: string,
+    text: string
 }
 
-enum SocketMessageMode {
+enum changeTopicMode {
     "subscribe",
     "unsubscribe"
 }
-
-type socketMessage = {
-    text: string,
-    to: string,
-    author: {
-        name: string,
-        picture: string,
-        id: string
-    }
+type changeTopicMessage = {
+    mode: changeTopicMode
+    topic: string
 }
 
-type SocketMessage<dataType> = {
-    type: SocketMessageType,
-    mode?: SocketMessageMode,
-    data: dataType
+type ServerSocketMessage<T> = {
+    author: {
+        name: string,
+        id: string,
+        picture: string
+    },
+    data: T
+}
+type ClientSocketMessage<T> = {
+    author: string,
+    data: T
 }
 
 export {
-    type SocketMessage,
-    type socketMessage,
-    SocketMessageType,
-    SocketMessageMode,
+    type ServerSocketMessage,
+    type ClientSocketMessage,
+    type textMessage,
+    type toastMessage,
+    type changeTopicMessage,
+    changeTopicMode
 }
