@@ -32,7 +32,7 @@
 
 <script setup>
 definePageMeta({
-  layout: false
+  layout: 'settings'
 })
 
 </script>
@@ -42,6 +42,8 @@ definePageMeta({
   display: grid;
   grid-template-rows: 1fr;
   gap: 3rem;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .close {
