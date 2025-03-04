@@ -8,12 +8,12 @@ PUT {{baseUrl}}/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "ssssg",
-    "email": "josshssnsadodddda@dexample.com",
+    "username": "julis",
+    "email": "julis@example.com",
     "birthdate": "1990-02-12",
-    "first_name": "sssss",
-    "last_name": "sssss",
-    "password": "ssss2sS#ss"
+    "first_name": "Fake",
+    "last_name": "Julis",
+    "password": "Pass123@"
 }
 
 ###
@@ -21,8 +21,8 @@ POST  {{baseUrl}}/user/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"josshssndodddda@dexample.com",
-    "password":"ssss2sS#ss"
+    "email":"lajos@example.com",
+    "password":"Pass123@"
 }
 
 ###
