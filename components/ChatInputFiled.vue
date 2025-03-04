@@ -38,6 +38,7 @@ const checkToken = async () => {
 
 
 const sendMessage = async () => {
+    if (inputRef.value.value === "") return;
   await checkToken()
   const message: ClientSocketMessage<textMessage> = {
     author: getToken(),
