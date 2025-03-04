@@ -33,7 +33,7 @@ const route = useRoute()
 const chatRef = ref<ServerSocketMessage<textMessage>[]>([]);
 const toastRef = ref<ServerSocketMessage<toastMessage>[]>([]);
 
-const { data, send } = useWebSocket('/_ws', {
+const { data, send } = useWebSocket('ws://deploy-preview-159--redbit.netlify.app/_ws', {
   autoReconnect: true,
   onMessage(ws, event) {
     const { author, data }: { author: { name: string, picture: string, id: string }, data: textMessage | toastMessage } = JSON.parse(event.data);
