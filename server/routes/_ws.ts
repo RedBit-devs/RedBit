@@ -1,5 +1,5 @@
 import { Peer, Message } from 'crossws';
-import { changeTopicMode, type toastMessage, type changeTopicMessage, type ClientSocketMessage, type textMessage, type ServerSocketMessage } from '~/types/websocket';
+import { changeTopicMode, type toastMessage, type changeTopicMessage, type ClientSocketMessage, type textMessage, type ServerSocketMessage, type author } from '~/types/websocket';
 
 //Nem tudom hogy miért működik, de működik
 export default defineWebSocketHandler({
@@ -7,32 +7,29 @@ export default defineWebSocketHandler({
         console.log(`open: ${peer.toString()}`);
     },
 
-    message(peer: Peer, message: Message) {
+    async message(peer: Peer, message: Message) {
         const { author, data } = message.json<ClientSocketMessage<textMessage | changeTopicMessage | toastMessage>>();
 
-        // TODO After user is able to login to chat
-        // if (!author) {
-        //     const message: ServerSocketMessage<toastMessage> = {
-        //         author: {
-        //             id: "",
-        //             name: "Server",
-        //             picture: ""
-        //         },
-        //         data: {
-        //             header: "Unauthorized",
-        //             text: "No valid access token provided"
-        //         }
-        //     }
+        const tokenData = await verifyJWT(author.replace("Bearer ", ''))
 
-        //     peer.send(JSON.stringify(message))
-        //     return
-        // }
+        let Author: author;
+        Author = tokenData?.user as author;
 
-        //TODO JWTValidate once its merged
-        const Author = {
-            name: "dunno",
-            id: "meow",
-            picture: "nop"
+        if (!Author) {
+            const message: ServerSocketMessage<toastMessage> = {
+                author: {
+                    id: "",
+                    username: "Server",
+                    picture: ""
+                },
+                data: {
+                    header: "Unauthorized",
+                    text: "No valid access token provided"
+                }
+            }
+
+            peer.send(JSON.stringify(message))
+            return
         }
 
         const keys = Object.keys(data)
@@ -61,7 +58,7 @@ export default defineWebSocketHandler({
             const message: ServerSocketMessage<toastMessage> = {
                 author: {
                     id: "",
-                    name: "Server",
+                    username: "Server",
                     picture: ""
                 },
                 data: {

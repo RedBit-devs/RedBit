@@ -15,13 +15,14 @@ type changeTopicMessage = {
     mode: changeTopicMode
     topic: string
 }
+type author = {
+    username: string,
+    id: string,
+    picture: string
+}
 
 type ServerSocketMessage<T> = {
-    author: {
-        name: string,
-        id: string,
-        picture: string
-    },
+    author: author,
     data: T
 }
 type ClientSocketMessage<T> = {
@@ -35,5 +36,6 @@ export {
     type textMessage,
     type toastMessage,
     type changeTopicMessage,
+    type author,
     changeTopicMode
 }
