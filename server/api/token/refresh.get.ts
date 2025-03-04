@@ -1,5 +1,3 @@
-import jwt from "jsonwebtoken"
-
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig()
     const apiResponse = {} as ApiResponse;
@@ -20,15 +18,7 @@ export default defineEventHandler(async (event) => {
         },
     }
 
-    const token = `Bearer ${jwt.sign(
-        tokenData,
-        config.JWT_SECRET,
-        {
-            algorithm: "HS512",
-            expiresIn: config.JWT_EXP_TIME,
-        }
-    )
-        }`
+    const token = `Bearer ${await generateJWT(tokenData, config.JWT_EXP_TIME)}`
 
 
     apiResponse.data = {
