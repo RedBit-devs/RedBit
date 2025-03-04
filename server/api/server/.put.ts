@@ -1,6 +1,7 @@
 import { type Server } from "@prisma/client";
 import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
+import { paramsCheck } from "~/shared/utils/userValidation";
 import {  errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {

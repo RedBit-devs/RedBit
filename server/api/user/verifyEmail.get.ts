@@ -2,7 +2,7 @@
 //http://localhost:3000/api/user/verifyEmail?id={userId}&email={email}
 
 import prisma from "~/lib/prisma";
-import { paramsCheck } from "~/server/utils/userValidation";
+import { paramsCheck } from "~/shared/utils/userValidation";
 import {
   type CustomErrorMessage,
   errorExpectedFroms,

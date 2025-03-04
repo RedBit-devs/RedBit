@@ -1,6 +1,6 @@
 import createRecord from "~/lib/prisma/databaseOperations/createRecord";
 import { apiResponseHandler } from "~/server/utils/apiResponseHandler";
-import { userValidation, hashPassword } from "~/server/utils/userValidation";
+import { userValidation, hashPassword } from "~/shared/utils/userValidation";
 import {
   type CustomErrorMessage,
 } from "~/types/customErrorMessage";
