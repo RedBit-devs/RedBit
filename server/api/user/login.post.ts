@@ -1,6 +1,7 @@
 import prisma from "~/lib/prisma";
+
 import { compareHashes, isEmailValid, isPasswordValid, paramsCheck } from "~/shared/utils/userValidation";
-import jwt from "jsonwebtoken"
+
 import {
     errorExpectedFroms,
     errorReasons,
@@ -86,15 +87,9 @@ export default eventHandler(async (event) => {
         },
     }
 
-    const token = `Bearer ${jwt.sign(
-        tokenData,
-        config.JWT_SECRET,
-        {
-            algorithm: "HS512",
-            expiresIn: config.JWT_REFR_EXP_TIME,
-        }
-    )
-        }`
+
+
+    const token = `Bearer ${await generateJWT(tokenData, "20d")}`
 
 
     apiResponse.data = {
