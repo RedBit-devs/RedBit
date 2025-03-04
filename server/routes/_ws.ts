@@ -47,7 +47,7 @@ export default defineWebSocketHandler({
             }
         } else if (keys.includes("to")) {
             const Data: textMessage = data as textMessage;
-            if (Data.to === "" || Data.text === "") return;
+            if (Data.to === "" || Data.text.replace(/\s/,'') === "") return;
 
             const message: ServerSocketMessage<textMessage> = {
                 author: Author,
