@@ -35,7 +35,9 @@ export default defineWebSocketHandler({
         const keys = Object.keys(data)
 
         if (keys.includes("topic")) {
+
             const Data: changeTopicMessage = data as changeTopicMessage;
+            if (Data.topic === "") return;
 
             if (Data.mode === changeTopicMode.subscribe) {
                 peer.subscribe(Data.topic)
@@ -45,6 +47,7 @@ export default defineWebSocketHandler({
             }
         } else if (keys.includes("to")) {
             const Data: textMessage = data as textMessage;
+            if (Data.to === "" || Data.text === "") return;
 
             const message: ServerSocketMessage<textMessage> = {
                 author: Author,
