@@ -24,6 +24,9 @@
 </template>
 
 <script lang="ts" setup>
+// lajos@example.com
+// server: cm7xlp3xn0000ia0jk7pyi8a9
+
 import { changeTopicMode, type changeTopicMessage, type ClientSocketMessage, type ServerSocketMessage, type textMessage, type toastMessage, type author } from '~/types/websocket';
 
 definePageMeta({

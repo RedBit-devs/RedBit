@@ -44,13 +44,13 @@ GET  {{baseUrl}}/user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd
 ###
 
 PUT  {{baseUrl}}/server/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dGplendnMDAwNzh3NGZnanQ5cDNpMyIsImVtYWlsIjoiam9zc2hzc25kb2RkZGRhQGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3Mzg4NTg0NDgsImV4cCI6MTc0MDU4NjQ0OH0.IcTCvbLAfFRskXeyhSNug6aLOqk8ZnC89olrzeoTQ6IpUxSdFTITHPDbLyI1FBoaOL2DAAvDwlm8EoTxJs_nPg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTI4MDg0NiwiZXhwIjoxNzQzMDA4ODQ2fQ.dCd4dGhYwl3SfWTqJ1S8-_x7Wj1Gm9mGuj-0RlK0Wde3BqgBp3c6lAkjdzaC3-SxcO45mi4Rzia1F6sKmKnM8Q
 Content-Type: application/json
 
 {
-    "name":"Jons",
+    "name":"Lajoska szerverkéje",
     "picture": "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d",
-    "visibility":"private"
+    "visibility":"public"
 }
 
 
@@ -61,18 +61,18 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY
 
 ###
 PUT  {{baseUrl}}/server/invite/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dDY5cGhuMDAwMzNkbGo5M3d1MWppbiIsImVtYWlsIjoiam9zc2huZG9kZGRkYUBkZXhhbXBsZS5jb20ifSwiaWF0IjoxNzM4ODM2NDU4LCJleHAiOjE3NDA1NjQ0NTh9.jUpIpYDjhYSCa_e9X1cE74M3ydrLmiruSJysPuhIkcy4wx__0Y4WYL2TRKMmZZ9CitrpBl6ku3a1NqyLmvz8Gw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTI4MDg0NiwiZXhwIjoxNzQzMDA4ODQ2fQ.dCd4dGhYwl3SfWTqJ1S8-_x7Wj1Gm9mGuj-0RlK0Wde3BqgBp3c6lAkjdzaC3-SxcO45mi4Rzia1F6sKmKnM8Q
 Content-Type: application/json
 
 {
     "lifetime": 99999000,
-    "server_id":"cm6tjaxfk00038w4fk80yscaw"
+    "server_id":"cm7xlp3xn0000ia0jk7pyi8a9"
 }
 
 
 ###
-GET  {{baseUrl}}/server/invite/cm6tjbjij00068w4f3lr11bpu HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dDY5cGhuMDAwMzNkbGo5M3d1MWppbiIsImVtYWlsIjoiam9zc2huZG9kZGRkYUBkZXhhbXBsZS5jb20ifSwiaWF0IjoxNzM4ODM2NDU4LCJleHAiOjE3NDA1NjQ0NTh9.jUpIpYDjhYSCa_e9X1cE74M3ydrLmiruSJysPuhIkcy4wx__0Y4WYL2TRKMmZZ9CitrpBl6ku3a1NqyLmvz8Gw
+GET  {{baseUrl}}/server/invite/cm7xlqct00003ia0jn5k6u73p HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTI4MDg0NiwiZXhwIjoxNzQzMDA4ODQ2fQ.dCd4dGhYwl3SfWTqJ1S8-_x7Wj1Gm9mGuj-0RlK0Wde3BqgBp3c6lAkjdzaC3-SxcO45mi4Rzia1F6sKmKnM8Q
 
 ###
 
