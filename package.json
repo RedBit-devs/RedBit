@@ -13,6 +13,8 @@
     "@nuxt/icon": "^1.10.3",
     "@nuxtjs/device": "^3.2.4",
     "@prisma/nuxt": "^0.0.35",
+    "@vueuse/core": "^12.7.0",
+    "@vueuse/nuxt": "^12.7.0",
     "bcrypt": "^5.1.1",
     "crypto": "^1.0.1",
     "jose": "^6.0.6",

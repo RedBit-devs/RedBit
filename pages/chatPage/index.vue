@@ -2,21 +2,18 @@
     <div class="content">
         <ChatFieldNavbar />
         <div id="chat">
+          <h1>Itt valami másnak kéne lennie majd</h1>
             <ChatMessage author-image="asd" author-name="Kaki" message="kakao" />
         </div>
         <ChatInputFiled id="input" />
+        
     </div>
 </template>
 
-<script setup>
-import ChatMessage from '~/components/ChatMessage.vue';
-
-
-
+<script lang="ts" setup>
 definePageMeta({
     layout: 'chat'
 })
-
 
 </script>
 

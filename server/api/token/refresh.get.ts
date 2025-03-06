@@ -14,7 +14,9 @@ export default defineEventHandler(async (event) => {
     const tokenData = {
         user: {
             id: event.context.auth.user.id,
-            email: event.context.auth.user.email
+            email: event.context.auth.user.email,
+            picture: event.context.auth.user.picture,
+            username: event.context.auth.user.username,
         },
     }
 
