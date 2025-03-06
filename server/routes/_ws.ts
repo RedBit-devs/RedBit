@@ -4,9 +4,6 @@ import { changeTopicMode, type toastMessage, type changeTopicMessage, type Clien
 
 //Nem tudom hogy miért működik, de működik
 export default defineWebSocketHandler({
-    open(peer: Peer) {
-        console.log(`open: ${peer.toString()}`);
-    },
 
     async message(peer: Peer, message: Message) {
         const { author, data } = message.json<ClientSocketMessage<textMessage | changeTopicMessage | toastMessage>>();
@@ -96,9 +93,5 @@ export default defineWebSocketHandler({
 
             peer.send(JSON.stringify(message))
         }
-    },
-
-    close(peer: Peer) {
-        console.log(`close: ${peer.toString()}`);
     }
 });
