@@ -76,8 +76,8 @@ const unsubscribeFromTopic = (id: string) => {
   }
   send(JSON.stringify(message))
 }
-const subscribeToTopic = () => {
-  checkToken()
+const subscribeToTopic = async () => {
+  await checkToken()
   const message: ClientSocketMessage<changeTopicMessage> = {
     author: getToken(),
     data: {
