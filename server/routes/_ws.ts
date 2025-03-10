@@ -8,7 +8,7 @@ export default defineWebSocketHandler({
     async message(peer: Peer, message: Message) {
         const { author, data } = message.json<ClientSocketMessage<textMessage | changeTopicMessage | toastMessage>>();
 
-        const tokenData = await verifyJWT(author.replace("Bearer ", ''))
+        const tokenData = await verifyJWT(author?.replace("Bearer ", ''))
 
         let Author: author;
         Author = tokenData?.user as author;
