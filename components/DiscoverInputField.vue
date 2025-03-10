@@ -2,7 +2,7 @@
     <div id="container">
         <div id="close">
             <NuxtLink to="/chatPage">
-                <Icon name="mdi:close" size="550%" class="btn primary" />
+                <Icon name="mdi:close" size="550%" class="btn primary  " />
             </NuxtLink>
         </div>
         <div id="title">
@@ -26,7 +26,7 @@
     position: sticky;
     width: 100%;
     background-color: var(--clr-canvas);
-    top: 0;     
+    top: 0;
 }
 
 #close {
@@ -49,7 +49,7 @@
 
 #inputField input {
     width: 100%;
-    
+
     border-radius: var(--border-rounded);
     background-color: var(--clr-ui-primary);
     border: none;
