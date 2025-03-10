@@ -68,17 +68,6 @@ const { data, send } = useWebSocket('/_ws', {
   }
 })
 
-const unsubscribeFromTopic = (id: string) => {
-  checkToken()
-  const message: ClientSocketMessage<changeTopicMessage> = {
-    author: getToken(),
-    data: {
-      mode: changeTopicMode.unsubscribe,
-      topic: id
-    }
-  }
-  send(JSON.stringify(message))
-}
 const subscribeToTopic = async () => {
   await checkToken()
   const message: ClientSocketMessage<changeTopicMessage> = {
