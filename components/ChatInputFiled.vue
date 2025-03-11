@@ -1,26 +1,26 @@
 <template>
-    <div class="inputField">
-        <button class="btn ui-primary">
-            <Icon name="mdi:file" size="150%" />
-        </button>
-        <input ref="inputRef" type="text" class="textInput">
-        <button class="btn ui-primary" @click="sendMessage">
-            <Icon name="mdi:arrow-left-bottom" size="150%" />
-        </button>
-    </div>
+  <div class="inputField">
+    <button class="btn ui-primary">
+      <Icon name="mdi:file" size="150%" />
+    </button>
+    <input @keypress="handleKeypress" ref="inputRef" type="text" class="textInput">
+    <button class="btn ui-primary" @click="sendMessage">
+      <Icon name="mdi:arrow-left-bottom" size="150%" />
+    </button>
+  </div>
 </template>
 
 <script lang="ts" setup>
-const {send, route} = defineProps({
+const { send, route } = defineProps({
 
-    "send":{
-        type: Function,
-        default: () =>{}
-    },
-    "route":{
-        type: String,
-        default: ""
-    }
+  "send": {
+    type: Function,
+    default: () => { }
+  },
+  "route": {
+    type: String,
+    default: ""
+  }
 })
 
 import { type ClientSocketMessage, type textMessage } from '~/types/websocket';
@@ -38,7 +38,7 @@ const checkToken = async () => {
 
 
 const sendMessage = async () => {
-    if (inputRef.value.value.replace(/\s/,'') === '') return;
+  if (inputRef.value.value.replace(/\s/, '') === '') return;
   await checkToken()
   const message: ClientSocketMessage<textMessage> = {
     author: getToken(),
@@ -50,25 +50,32 @@ const sendMessage = async () => {
   send(JSON.stringify(message))
 }
 
+const handleKeypress = ({ keyCode }) => {
+  //on enter press
+  if (keyCode === 13) {
+    sendMessage()
+  }
+
+}
 
 </script>
 
 <style scoped>
 .inputField {
-    padding: .5rem;
-    display: flex;
-    gap: 1rem;
-    width: 100%;
+  padding: .5rem;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
 
 }
 
 .textInput {
-    border-radius: var(--border-rounded);
-    width: max-content;
-    background-color: var(--clr-ui-primary);
-    border: none;
-    padding: .5rem;
-    color: var(--clr-text-primary);
-    width: 100%;
+  border-radius: var(--border-rounded);
+  width: max-content;
+  background-color: var(--clr-ui-primary);
+  border: none;
+  padding: .5rem;
+  color: var(--clr-text-primary);
+  width: 100%;
 }
 </style>
