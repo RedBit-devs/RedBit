@@ -29,7 +29,7 @@
           <div class="mainInfo">
             <img src="../img/probalogo.png" alt="">
             <div class="data">
-              <h2>Server name: Kacsa sziget</h2>
+              <h2>Name: Kacsa sziget</h2>
               <h2>Owner: Kicsi Kacsa</h2>
               <h2>Created at: 1.01.01-01:01</h2>
             </div>
@@ -44,22 +44,21 @@
       <div v-if="currentPage == 'chats'" class="chats">
         <h2 class="text-big">Chats of the server</h2>
         <div class="cardContainer">
-          <ChatCard />
-          <ChatCard />
-          <ChatCard />
-          <ChatCard />
-          <ChatCard />
+          <ChatSettingsChatCard />
+          <ChatSettingsChatCard />
+          <ChatSettingsChatCard />
+          <ChatSettingsChatCard />
+          <ChatSettingsChatCard />
         </div>
       </div>
 
       <div v-if="currentPage == 'members'" class="members">
         <h2 class="text-big ">Members of the server</h2>
         <div class="cardContainer">
-          <ChatCard />
-          <ChatCard />
-          <ChatCard />
-          <ChatCard />
-          <ChatCard />
+          <ChaSettingsUserCard />
+          <ChaSettingsUserCard />
+          <ChaSettingsUserCard />
+          <ChaSettingsUserCard />
         </div>
       </div>
     </div>
@@ -233,6 +232,21 @@ ul {
     grid-template-columns: 1fr;
   }
 
+
+}
+
+@media only screen and (max-width: 800px) {
+  .mainInfo {
+    flex-direction: column;
+  }
+
+  .dataBtns {
+    justify-content: center;
+  }
+
+  .mainInfo img {
+    height: 15rem;
+  }
 
 }
 </style>
