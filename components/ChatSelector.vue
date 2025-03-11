@@ -5,51 +5,16 @@
                 <input type="text" placeholder="Search between chats">
             </div>
             <div class="chatList">
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <ServerChatCard />
+                <FriendChatCard />
             </div>
         </div>
     </div>

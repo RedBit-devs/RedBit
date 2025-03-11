@@ -1,6 +1,6 @@
 <template>
     <div id="header" ref="headerRef">
-        <ChatCard id="chatCard" />
+        <FrinedChatCard id="chatCard" />
         <input id="searchChat" type="text" placeholder="Search in the chat" ref="searchRef">
         <div id="functions">
             <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
@@ -60,7 +60,7 @@ const handleSearchbarMove = () => {
     place-items: end;
 }
 
-#functions a{
+#functions a {
     color: white;
 }
 

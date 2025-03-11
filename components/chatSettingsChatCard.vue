@@ -1,7 +1,9 @@
 <template>
     <div class="cardContent">
         <div class="data">
-            <img src="../img/probalogo.png" alt="">
+            <div class="icon">
+                <Icon name="mdi:pound" size="150%" />
+            </div>
             <div class="name">
                 <h3>Kicsi kacsa</h3>
                 <p>Éppen úszik</p>
@@ -18,16 +20,18 @@
 </script>
 
 <style scoped>
+.icon {
+    display: flex;
+    align-items: center;
+}
+
 .cardContent {
     padding: 1rem;
     display: flex;
     justify-content: space-between;
 }
 
-img {
-    height: 2.875rem;
-    border-radius: 50%;
-}
+
 
 .data {
     display: flex;
