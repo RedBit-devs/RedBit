@@ -37,8 +37,16 @@ export default defineWebSocketHandler({
             if (Data.topic === "") return;
 
             if (Data.mode === changeTopicMode.subscribe) {
+                /*
+                TODO
+
+                This code is only to prove that it will work
+                It has to be changed when the user will be able to create rooms
+
+                This should validate if the user is part of the room or the server witch the room is on
                 // To ensure that the user who is trying to connect to a chat is part of the server
                 const dbresponse = await prisma.user.findFirst({ where: { id: Author.id, Servers_joined: { some: { server_id: Data.topic } } }, select:{id: true} })
+                
                 if (!dbresponse?.id) {
                     const message: ServerSocketMessage<toastMessage> = {
                         author: {
@@ -55,6 +63,9 @@ export default defineWebSocketHandler({
                     peer.send(JSON.stringify(message))
                     return
                 }
+                 */
+
+
                 peer.topics.forEach(t => peer.unsubscribe(t))
                 peer.subscribe(Data.topic)
             }
@@ -63,6 +74,8 @@ export default defineWebSocketHandler({
             }
 
         } else if (keys.includes("to")) {
+            //TODO  messages also should be published to the db
+
             const Data: textMessage = data as textMessage;
             if (Data.to === "" || Data.text.replace(/\s/, '') === "") return;
 
