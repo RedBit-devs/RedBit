@@ -1,5 +1,7 @@
 import prisma from "~/lib/prisma";
-import { compareHashes, isEmailValid, isPasswordValid } from "~/server/utils/userValidation";
+
+import { compareHashes, isEmailValid, isPasswordValid, paramsCheck } from "~/shared/utils/userValidation";
+
 import {
     errorExpectedFroms,
     errorReasons,
