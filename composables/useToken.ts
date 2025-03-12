@@ -13,16 +13,11 @@ export const useToken = () => {
         refreshToken.value = null;
     }
 
-    //Clear access token
-    const clearToken = () => {
-        token.value = null;
-    }
-
     //gets an access token
     /**
     * Tryes to get a new access token with the current refreshtoken
     */
-    const { data: token, status: tokenStatus, error: tokenError, refresh: tokenRefresh } = useFetch("/api/token/refresh", {
+    const { data: token, status: tokenStatus, error: tokenError, refresh: tokenRefresh, clear: clearToken } = useFetch("/api/token/refresh", {
         headers: {
             "Authorization": refreshToken.value
         },
@@ -39,7 +34,6 @@ export const useToken = () => {
                 password
             }
         })
-
 
         if (status.value == "error") {
             setRefreshToken(null);
@@ -65,7 +59,6 @@ export const useToken = () => {
         tokenRefresh,
         clearToken,
         clearRefreshToken,
-        //getNewToken,
         getNewRefreshToken
     }
 }
