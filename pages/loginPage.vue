@@ -35,7 +35,7 @@
             </div>
         </div>
         <div v-if="err" class="toaster">
-            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason" :content="error.message" />
+            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason.toString()" :content="error.message" />
         </div>
 
     </div>
@@ -51,7 +51,7 @@ const emailRef = ref(null)
 const passwordRef = ref(null)
 const { getNewRefreshToken } = useToken()
 
-const err = ref([]);
+const err = ref<CustomError[]>([]);
 const stat = ref(null)
 
 const sendLoginRequest = async () => {
@@ -59,6 +59,7 @@ const sendLoginRequest = async () => {
 
     const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
+    err.value = []
     stat.value = status.value
 
     if (status.value === "success") {
@@ -67,7 +68,7 @@ const sendLoginRequest = async () => {
     }
 
     if (status.value === "error") {
-        err.value = error.value.data
+        err.value = error.value.data.data;
     }
 }
 
