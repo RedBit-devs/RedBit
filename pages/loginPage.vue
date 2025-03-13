@@ -35,7 +35,8 @@
             </div>
         </div>
         <div v-if="err?.length > 0" class="toaster">
-            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason.toString()" :content="error.message" />
+            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason.toString()"
+                :content="error.message" />
         </div>
 
     </div>
@@ -57,7 +58,7 @@ const stat = ref(null)
 const sendLoginRequest = async () => {
     if (!emailRef.value.value || !passwordRef.value.value) return;
 
-    const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
+    const { error, status } = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
     err.value = error.value?.data.data
     stat.value = status.value
@@ -147,7 +148,7 @@ input {
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
 }
 
-.forgottenPassword a{
+.forgottenPassword a {
     cursor: pointer;
     color: var(--clr-primary);
     text-decoration: none;
