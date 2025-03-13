@@ -68,7 +68,6 @@ const sendLoginRequest = async () => {
         navigateTo('/test')
     }
 }
-//test
 </script>
 
 <style scoped>
