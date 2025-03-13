@@ -24,13 +24,13 @@ const { send, route } = defineProps({
 })
 
 import { type ClientSocketMessage, type textMessage } from '~/types/websocket';
-const { getToken, getNewToken } = useToken()
+const { getToken, tokenRefresh, tokenStatus } = useToken()
 const inputRef = ref(null)
 
 const checkToken = async () => {
   if (!getToken()) {
-    let success = await getNewToken();
-    if (!success) {
+    await tokenRefresh();
+    if (tokenStatus.value !== "success") {
       navigateTo('/loginpage')
     }
   }
