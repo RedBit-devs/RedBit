@@ -53,15 +53,13 @@
                         <p class="text-big title">Common Friends</p>
                     </div>
                     <div id="list">
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
                     </div>
                 </div>
                 <div v-if="currentPage == 'comServer'" id="contentList">
@@ -69,26 +67,13 @@
                         <p class="text-big title">Common Servers</p>
                     </div>
                     <div id="list">
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
+                        <FriendChatCard />
                     </div>
                 </div>
                 <div v-if="currentPage == 'manage'" id="contentManage">

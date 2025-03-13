@@ -2,7 +2,7 @@
     <div class="content">
         <ChatFieldNavbar />
         <div id="chat">
-            <ChatMessage author-image="asd" author-name="Kaki" message="kakao" />
+            <ChatMessage author-image="asd" author-name="Kacsa" message="kakao" />
         </div>
         <ChatInputFiled id="input" />
     </div>
