@@ -34,7 +34,7 @@
                 </NuxtLink>
             </div>
         </div>
-        <div v-if="err" class="toaster">
+        <div v-if="err?.length > 0" class="toaster">
             <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason.toString()" :content="error.message" />
         </div>
 
@@ -51,7 +51,7 @@ const emailRef = ref(null)
 const passwordRef = ref(null)
 const { getNewRefreshToken } = useToken()
 
-const err = ref<CustomError[]>([]);
+const err = ref<CustomError[] | null>(null);
 const stat = ref(null)
 
 const sendLoginRequest = async () => {
@@ -59,16 +59,12 @@ const sendLoginRequest = async () => {
 
     const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
-    err.value = []
+    err.value = error.value?.data.data
     stat.value = status.value
 
     if (status.value === "success") {
         ////TODO this should navigate to the chat
         navigateTo('/test')
-    }
-
-    if (status.value === "error") {
-        err.value = error.value.data.data;
     }
 }
 
