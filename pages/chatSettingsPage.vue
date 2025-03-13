@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div ref="sidebarRef" class="sidebar">
-      <h1 class="text-title">Chat settings</h1>
+      <h1 class="text-title title">Chat settings</h1>
       <ul class="text-medium">
         <NuxtLink class="button">
           <li>Main infromation</li>
@@ -29,15 +29,17 @@
           <div class="mainInfo">
             <img src="../img/probalogo.png" alt="">
             <div class="data">
-              <h2>Name: Kacsa sziget</h2>
+              <div id="name">
+                <h2>Name: Kacsa sziget</h2>
+              </div>
               <h2>Owner: Kicsi Kacsa</h2>
               <h2>Created at: 1.01.01-01:01</h2>
             </div>
           </div>
           <div class="dataBtns">
-            <button class="btn ok" disabled>Save</button>
-            <button class="btn tertiary" disabled>Upload image</button>
-            <button class="btn secondary">Modify</button>
+            <button class="btn ok" id="save" disabled>Save</button>
+            <button class="btn tertiary" id="upload" disabled>Upload image</button>
+            <button class="btn secondary" id="modify">Modify</button>
           </div>
         </div>
       </div>
@@ -73,12 +75,11 @@ definePageMeta({
   layout: false
 })
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 
 const sidebarRef = ref(null)
 const contentRef = ref(null)
 let startX = 0;
-
 
 
 const handleTouchStart = (e) => {
@@ -86,7 +87,6 @@ const handleTouchStart = (e) => {
 };
 const handleTouchMove = (e) => {
   const sidebar = sidebarRef.value
-  const content = contentRef.value
   const touchX = e.touches[0].clientX;
   if (startX > touchX + 50) {
     sidebar.style.transform = 'translateX(-100%)'
@@ -97,14 +97,43 @@ const handleTouchMove = (e) => {
   }
 }
 
+
+
 const currentPage = ref("main")
 onMounted(() => {
   document.addEventListener('touchstart', handleTouchStart)
   document.addEventListener('touchmove', handleTouchMove)
 
+
   const button = document.getElementsByClassName('button')
   const pages = ['main', 'chats', 'members']
   const btnArray = [...button]
+  const saveBtn = document.getElementById('save')
+  const uploadBtn = document.getElementById('upload')
+  const modifyBtn = document.getElementById('modify')
+  const nameContainer = document.getElementById('name')
+  uploadBtn.disabled = true
+  saveBtn.disabled = true
+
+  const modiflyClick = () => {
+
+    saveBtn.disabled = false
+    uploadBtn.disabled = false
+    modifyBtn.disabled = true
+    nameContainer.innerHTML = `<input type="text" placeholder="Type here" class="nameChange">`
+  }
+
+  const saveClick = () => {
+
+    saveBtn.disabled = true
+    uploadBtn.disabled = true
+    modifyBtn.disabled = false
+    nameContainer.innerHTML = `<h2>Name: Kacsa falva</h2>`
+  }
+
+  modifyBtn.addEventListener("click", modiflyClick)
+  saveBtn.addEventListener('click', saveClick)
+
 
   for (let i = 0; i < btnArray.length; i++) {
     button[i].onclick = function () {
@@ -194,6 +223,11 @@ ul {
   padding: 1rem;
 }
 
+input {
+  background-color: var(--clr-ui-primary);
+  border-radius: var(--border-rounded);
+}
+
 .dataBtns {
   margin: 1rem;
   display: flex;
@@ -247,6 +281,11 @@ ul {
   .mainInfo img {
     height: 15rem;
   }
+}
 
+@media only screen and (max-width: 500px) {
+  .sidebar {
+    width: fit-content;
+  }
 }
 </style>

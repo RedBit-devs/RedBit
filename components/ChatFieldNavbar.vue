@@ -1,6 +1,6 @@
 <template>
     <div id="header" ref="headerRef">
-        <FrinedChatCard id="chatCard" />
+        <FriendChatCard id="chatCard" />
         <input id="searchChat" type="text" placeholder="Search in the chat" ref="searchRef">
         <div id="functions">
             <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+
 
 const headerRef = ref(null)
 const searchRef = ref(null)
