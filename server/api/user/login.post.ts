@@ -55,7 +55,9 @@ export default eventHandler(async (event) => {
         select: {
             id: true,
             email: true,
-            password: true
+            password: true,
+            username: true,
+            profile_picture: true
         }
     })
 
@@ -83,7 +85,9 @@ export default eventHandler(async (event) => {
     const tokenData = {
         user: {
             id: userCredentials?.id,
-            email: userCredentials?.email
+            email: userCredentials?.email,
+            picture: userCredentials?.profile_picture,
+            username: userCredentials?.username
         },
     }
 
