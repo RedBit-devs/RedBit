@@ -1,6 +1,8 @@
 <template>
     <div class="friend">
-        <div class="profPic"><img src="../img/probalogo.png" alt=""></div>
+        <div class="profPic">
+            <img src="../img/probalogo.png" alt="">
+        </div>
         <div class="name">
             <h3>Kicsi kacsa</h3>
             <p>Éppen úszik</p>
@@ -20,6 +22,7 @@
     align-items: center;
     padding: .6rem 0 .6rem .6rem;
     width: 100%;
+    padding: 1rem;
 
 }
 
@@ -32,7 +35,7 @@ p {
     color: var(--clr-text-secondary);
 }
 
-.friend:hover{
+.friend:hover {
     cursor: pointer;
     background-color: var(--clr-ui-secondary)
 }

@@ -1,18 +1,20 @@
 <template>
     <div id="header" ref="headerRef">
-        <ChatCard id="chatCard" />
+        <FriendChatCard id="chatCard" />
         <input id="searchChat" type="text" placeholder="Search in the chat" ref="searchRef">
         <div id="functions">
             <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
             <Icon name="mdi:phone-in-talk" size="150%" />
-            <Icon name="mdi:account-box-outline" size="150%" />
+            <NuxtLink to="/chatSettingsPage">
+                <Icon name="mdi:cog" size="150%" />
+            </NuxtLink>
         </div>
     </div>
 
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+
 
 const headerRef = ref(null)
 const searchRef = ref(null)
@@ -56,6 +58,10 @@ const handleSearchbarMove = () => {
     gap: 1rem;
     grid-area: buttons;
     place-items: end;
+}
+
+#functions a {
+    color: white;
 }
 
 input {

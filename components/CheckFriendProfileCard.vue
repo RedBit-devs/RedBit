@@ -29,11 +29,21 @@
                         </div>
                         <div class="data">
                             <p id="title">Description</p>
-                            <h2 id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti harum neque facilis totam necessitatibus, officiis reiciendis iusto est beatae ad? Obcaecati voluptatum iste impedit reprehenderit cumque architecto molestias non dignissimos?
-                            Repellat odit ipsum aperiam error debitis delectus cum dolor, laboriosam temporibus quod quibusdam nisi provident unde necessitatibus eveniet dolore amet illo accusamus dolores maxime, tempore molestias nulla! Ad, velit veniam!
-                            Aut saepe labore debitis aliquam eaque magnam, excepturi temporibus eligendi earum similique possimus non tempora ratione id. Explicabo sint inventore expedita, officia optio labore corporis quibusdam ea blanditiis, officiis eius.
-                            Exercitatioventore optio ut est tempore. Eaque suscipit fugit sapiente corrupti quae, tempore aspernatur eligendi cum quis iure delectus, ut voluptate ipsa. Nemo, nobis reiciendis!
-                            Earum minima, id ne delectus cupiditate maiores, nobis eum repellat consequatur quae mollitia, et blanditiis error non animi odio quidem aliquam perspiciatis voluptatum accusamus perferendis! Explicabo porro earum sunt libero quos?
+                            <h2 id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti harum
+                                neque facilis totam necessitatibus, officiis reiciendis iusto est beatae ad? Obcaecati
+                                voluptatum iste impedit reprehenderit cumque architecto molestias non dignissimos?
+                                Repellat odit ipsum aperiam error debitis delectus cum dolor, laboriosam temporibus quod
+                                quibusdam nisi provident unde necessitatibus eveniet dolore amet illo accusamus dolores
+                                maxime, tempore molestias nulla! Ad, velit veniam!
+                                Aut saepe labore debitis aliquam eaque magnam, excepturi temporibus eligendi earum
+                                similique possimus non tempora ratione id. Explicabo sint inventore expedita, officia
+                                optio labore corporis quibusdam ea blanditiis, officiis eius.
+                                Exercitatioventore optio ut est tempore. Eaque suscipit fugit sapiente corrupti quae,
+                                tempore aspernatur eligendi cum quis iure delectus, ut voluptate ipsa. Nemo, nobis
+                                reiciendis!
+                                Earum minima, id ne delectus cupiditate maiores, nobis eum repellat consequatur quae
+                                mollitia, et blanditiis error non animi odio quidem aliquam perspiciatis voluptatum
+                                accusamus perferendis! Explicabo porro earum sunt libero quos?
                             </h2>
                         </div>
                     </div>
@@ -54,7 +64,7 @@
                         <ChatCard />
                     </div>
                 </div>
-                <div v-if="currentPage == 'comServer'" id="contentFriend">
+                <div v-if="currentPage == 'comServer'" id="contentList">
                     <div class="data">
                         <p class="text-big title">Common Servers</p>
                     </div>
