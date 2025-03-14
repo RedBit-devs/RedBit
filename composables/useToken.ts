@@ -21,6 +21,8 @@ export const useToken = () => {
         headers: {
             "Authorization": refreshToken.value
         },
+        key: "accesTokenFetch",
+        immediate: false,
         transform: (e) => e.data.items[0].token
     })
 
