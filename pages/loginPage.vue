@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="submit">
-                    <button :disabled="stat == 'pending'" @click="sendLoginRequest()" class="btn ui-secondary">
+                    <button  @click="sendLoginRequest()" class="btn ui-secondary">
                         Submit</button>
                 </div>
 
@@ -52,23 +52,26 @@ const passwordRef = ref(null)
 const { getNewRefreshToken } = useToken()
 
 const err = ref([]);
-const stat = ref(null)
+const stat = ref(null);
+const isRequestPending = ref(false);
 
 const sendLoginRequest = async () => {
-    if (!emailRef.value.value || !passwordRef.value.value) return;
+    isRequestPending.value = true;
+    if (!emailRef.value.value || !passwordRef.value.value) return isRequestPending.value = false;
 
     const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
-    stat.value = status.value
+    stat.value = status
 
-    if (status.value === "success") {
+    if (stat.value === "success") {
         ////TODO this should navigate to the chat
         navigateTo('/test')
     }
 
-    if (status.value === "error") {
-        err.value = error.value.data
+    if (stat.value === "error") {
+        err.value = error.data
     }
+    isRequestPending.value = false;
 }
 
 </script>

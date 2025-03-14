@@ -29,22 +29,37 @@ export const useToken = () => {
 
     //Gets a refresh token
     const getNewRefreshToken = async (email: string, password: string) => {
-        const { data, error, status } = await useFetch("/api/user/login", {
+        let status = "pending"
+        let error;
+        const data = await $fetch("/api/user/login", {
             method: "POST",
             body: {
                 email,
                 password
+            },
+            onResponseError({ response }) {
+                status = "error"
+                error = response._data
+            },
+            onRequestError({ error: error2 }) {
+                status = "error"
+                error = error2
             }
+        }).catch(() =>{
+            status = "error"
         })
 
-        if (status.value == "error") {
+        if (status == "error") {
             setRefreshToken(null);
+        }else{
+            status = "success"
         }
-
-        if (status.value === "success") {
-            setRefreshToken(data.value.data.items[0].token);
-
-            await tokenRefresh()
+        
+        if (status === "success") {
+            if (data) {
+                setRefreshToken(data.data.items[0].token);
+                await tokenRefresh()
+            }
         }
 
         return { error, status }
