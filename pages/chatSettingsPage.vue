@@ -45,7 +45,7 @@
       </div>
       <div v-if="currentPage == 'chats'" class="chats">
         <h2 class="text-big">Chats of the server</h2>
-        <div class="cardContainer">
+        <div class="pageContent">
           <ChatSettingsChatCard />
           <ChatSettingsChatCard />
           <ChatSettingsChatCard />
@@ -56,7 +56,7 @@
 
       <div v-if="currentPage == 'members'" class="members">
         <h2 class="text-big ">Members of the server</h2>
-        <div class="cardContainer">
+        <div class="pageContent">
           <ChaSettingsUserCard />
           <ChaSettingsUserCard />
           <ChaSettingsUserCard />
@@ -195,7 +195,7 @@ ul {
 .pageContent {
   background-color: var(--clr-ui-primary);
   margin: 1rem;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: var(--border-rounded)
 }
 
@@ -254,6 +254,7 @@ input {
   text-align: center;
   text-transform: capitalize;
 }
+
 
 @media only screen and (max-width: 830px) {
   .sidebar {
