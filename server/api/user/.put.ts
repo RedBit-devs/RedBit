@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await hashPassword(newUser.password, customErrorMessages);
-  params.password = newUser.password;
+  params.password = "SuperSecretPassword";
   apiResponse.params = params;
   if (customErrorMessages.length > 0) {
     const {errors} = apiResponseHandler(event, customErrorMessages);
@@ -37,6 +37,7 @@ export default defineEventHandler(async (event) => {
   }
   
   const data = await createRecord("user", newUser,customErrorMessages);
+  delete data.password
   const {errors} = apiResponseHandler(event,customErrorMessages,data);
   
   if (customErrorMessages.length > 0) {
