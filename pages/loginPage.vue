@@ -63,7 +63,8 @@ const sendLoginRequest = async () => {
 
     const { error, status } = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
-    stat.value = status
+    stat.value = status;
+    err.value = null;
 
     if (stat.value === "success") {
         ////TODO this should navigate to the chat
