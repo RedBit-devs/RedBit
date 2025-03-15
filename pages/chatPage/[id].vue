@@ -34,7 +34,7 @@ definePageMeta({
 })
 
 
-const { getToken, getNewToken, clearToken, clearRefreshToken } = useToken()
+const { getToken, tokenRefresh, tokenStatus, clearToken, clearRefreshToken } = useToken()
 const route = useRoute()
 const chatRef = ref<ServerSocketMessage<textMessage>[]>([]);
 const toastRef = ref<ServerSocketMessage<toastMessage>[]>([]);
@@ -42,8 +42,9 @@ const toastRef = ref<ServerSocketMessage<toastMessage>[]>([]);
 
 const checkToken = async () => {
   if (!getToken()) {
-    let success = await getNewToken();
-    if (!success) {
+    await tokenRefresh();
+    
+    if (tokenStatus.value !== "success") {
       navigateTo('/loginpage')
     }
   }
