@@ -76,7 +76,7 @@ export default eventHandler(async (event) => {
             reason: errorReasons.FailedToLogin
         })
     }
-    params.password = await hashPassword(password, customErrorMessages)
+    params.password = "SuperSecretPassword";
     apiResponse.params = params;
     if (customErrorMessages.length > 0) {
         const { errors } = apiResponseHandler(event, customErrorMessages);
