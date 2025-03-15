@@ -1,6 +1,6 @@
 import prisma from "~/lib/prisma";
 
-import { compareHashes, isEmailValid, isPasswordValid, paramsCheck } from "~/shared/utils/userValidation";
+import { compareHashes, hashPassword, isEmailValid, isPasswordValid, paramsCheck } from "~/shared/utils/userValidation";
 
 import {
     errorExpectedFroms,
@@ -16,10 +16,11 @@ export default eventHandler(async (event) => {
     const apiResponse = {} as ApiResponse;
     apiResponse.context = "UserLogin";
     apiResponse.method = "POST";
-    apiResponse.params = {
+    const params = {
         email: email,
         password: password,
-    };
+    }
+    apiResponse.params = params;
 
     const customErrorMessages: CustomErrorMessage[] = [];
     event.context.customErrorMessages = customErrorMessages;
@@ -75,7 +76,8 @@ export default eventHandler(async (event) => {
             reason: errorReasons.FailedToLogin
         })
     }
-
+    params.password = await hashPassword(password, customErrorMessages)
+    apiResponse.params = params;
     if (customErrorMessages.length > 0) {
         const { errors } = apiResponseHandler(event, customErrorMessages);
         throw createError(errors);
