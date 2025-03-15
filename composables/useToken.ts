@@ -1,15 +1,7 @@
 export const useToken = () => {
 
-    const token = useState("token", () => "");
+    //const token = useState("token", () => "");
     const refreshToken = useCookie("refreshToken", { secure: true, sameSite: "strict" });
-
-    //To get the value of the acces token
-    const getToken = () => token.value;
-
-    //Give new value to access token
-    const setToken = (newToken: string): void => {
-        token.value = newToken;
-    }
 
     //Give new value to refresh token
     const setRefreshToken = (newToken: string): void => {
@@ -21,68 +13,69 @@ export const useToken = () => {
         refreshToken.value = null;
     }
 
-    //Clear access token
-    const clearToken = () => {
-        token.value = null;
-    }
-
     //gets an access token
     /**
     * Tryes to get a new access token with the current refreshtoken
-    * If the refreshtoken is not valid then the function returns { false }
-    * othervise true
-    *
-    * @return {Boolean} - Success
     */
-    const getNewToken = async () => {
-        const { data, status, error } = await useFetch("/api/token/refresh", {
-            headers: {
-                "Authorization": refreshToken.value
-            }
-        })
+    const { data: token, status: tokenStatus, error: tokenError, refresh: tokenRefresh, clear: clearToken } = useFetch("/api/token/refresh", {
+        headers: {
+            "Authorization": refreshToken.value
+        },
+        key: "accesTokenFetch",
+        immediate: false,
+        transform: (e) => e.data.items[0].token
+    })
 
-        if (status.value == "error") {
-            setToken(null);
-            return false
-        }
-
-        if (status.value === "success") {
-            setToken(data.value.data.items[0].token);
-            return true
-        }
-    }
 
     //Gets a refresh token
     const getNewRefreshToken = async (email: string, password: string) => {
-        const { data, error, status } = await useFetch("/api/user/login", {
+        let status = "pending"
+        let error;
+        const data = await $fetch("/api/user/login", {
             method: "POST",
             body: {
                 email,
                 password
+            },
+            onResponseError({ response }) {
+                status = "error"
+                error = response._data
+            },
+            onRequestError({ error: error2 }) {
+                status = "error"
+                error = error2
             }
+        }).catch(() =>{
+            status = "error"
         })
 
-
-        if (status.value == "error") {
+        if (status == "error") {
             setRefreshToken(null);
+        }else{
+            status = "success"
         }
-
-        if (status.value === "success") {
-            setRefreshToken(data.value.data.items[0].token);
-
-            await getNewToken()
+        
+        if (status === "success") {
+            if (data) {
+                setRefreshToken(data.data.items[0].token);
+                await tokenRefresh()
+            }
         }
 
         return { error, status }
     }
 
 
+    //To get the value of the acces token
+    const getToken = () => token?.value;
+
 
     return {
         getToken,
+        tokenStatus,
+        tokenRefresh,
         clearToken,
         clearRefreshToken,
-        getNewToken,
         getNewRefreshToken
     }
 }
