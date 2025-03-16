@@ -5,58 +5,20 @@
                 <input type="text" placeholder="Search between chats">
             </div>
             <div class="chatList">
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
-                <ChatCard />
+                <NuxtLink v-for="chat in chatrooms" :key="chat?.id" :to="chat?.id">
+                <ChatCard  :name="chat?.name" />
+                </NuxtLink>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-
+const { chatrooms } = defineProps({
+    'chatrooms': {
+        default: []
+    }
+})
 </script>
 
 <style scoped>

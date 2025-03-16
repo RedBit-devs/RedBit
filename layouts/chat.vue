@@ -1,14 +1,15 @@
 <template>
     <div id="screen">
         <div id="sidebar" ref="sidebarRef">
-            <ServerSelector :servers="servers" :add-server-func="() => {
+            <ServerSelector :servers="servers" :chatroomsRefresh="chatroomsRefresh" :add-server-func="() => {
                 appearRef = true
             }" id="serverSelector" />
-            <ChatSelector id="chatSelector" />
+            <ChatSelector :chatrooms="chatrooms" id="chatSelector" />
             <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
         <div id="content" ref="contentRef">
+            <ChatFieldNavbar />
             <slot>
 
             </slot>
@@ -61,6 +62,21 @@ const { data: servers, refresh: serversRefresh } = useFetch("/api/user/servers",
         "Authorization": getToken()
     },
     transform: (e) => e.data.items
+})
+
+const route = useRoute()
+
+const { data: chatrooms, refresh: chatroomsRefresh } = useFetch(`/api/server/${route.params.serverId}/rooms/`, {
+    method: "GET",
+    immediate: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: (e) => e.data.items,
+    onResponse({ request, response, options }) {
+        console.log("hi");
+        
+    }
 })
 
 
