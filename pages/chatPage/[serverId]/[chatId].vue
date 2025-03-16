@@ -1,6 +1,5 @@
 <template>
   <div class="content">
-    <ChatFieldNavbar />
     <div id="chat">
       <ChatMessage v-for="msg in chatRef" :author-image="(msg.author.picture)?msg.author.picture:''" :author-name="msg.author.username"
         :message="msg.data.text" />
