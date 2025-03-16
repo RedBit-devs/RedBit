@@ -72,11 +72,7 @@ const { data: chatgroups, refresh: chatgroupsRefresh } = useFetch(`/api/server/$
     headers: {
         "Authorization": getToken()
     },
-    transform: (e) => e.data.items,
-    onResponse({ request, response, options }) {
-        console.log("hi");
-        
-    }
+    transform: (e) => e.data.items
 })
 
 
