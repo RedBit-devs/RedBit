@@ -24,7 +24,8 @@ const closeDialogFunc = () => {
 const { authorImage, authorName, message } = defineProps({
     authorImage: {
         type: String,
-        required: true
+        required: true,
+        default: ""
     },
     authorName: {
         type: String,
