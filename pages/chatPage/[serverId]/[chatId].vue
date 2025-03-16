@@ -55,10 +55,6 @@ const { data, send } = useWebSocket('/_ws', {
   onMessage(ws, event) {
     
     const { author, data }: { author: author, data: textMessage | toastMessage } = JSON.parse(event.data);
-
-    console.log(data);
-    
-
     const keys = Object.keys(data)
 
     if (keys.includes("to")) {
