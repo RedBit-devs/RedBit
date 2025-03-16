@@ -5,7 +5,7 @@
                 <input type="text" placeholder="Search between chats">
             </div>
             <div class="chatList">
-                <NuxtLink v-for="chat in chatrooms" :key="chat?.id" :to="chat?.id">
+                <NuxtLink v-for="chat in chatgroups.Chat_rooms" :key="chat?.id" :to="chat?.id">
                 <ChatCard  :name="chat?.name" />
                 </NuxtLink>
             </div>
@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-const { chatrooms } = defineProps({
-    'chatrooms': {
+const { chatgroups } = defineProps({
+    'chatgroups': {
         default: []
     }
 })

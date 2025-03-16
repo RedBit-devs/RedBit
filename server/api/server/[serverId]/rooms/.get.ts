@@ -50,16 +50,23 @@ export default defineEventHandler(async (event) => {
         where: {
             id: serverId,
             Users_connected: {
-                some:{
+                some: {
                     user_id: userId
                 }
             }
         },
         select: {
-            Chat_groups:{
-                select:{
+            Chat_groups: {
+                select: {
                     id: true,
-                    name: true
+                    name: true,
+                    Chat_rooms: {
+                        select: {
+                            name: true,
+                            description: true,
+                            type: true,
+                        }
+                    }
                 }
             }
         }
@@ -76,7 +83,7 @@ export default defineEventHandler(async (event) => {
     }
 
 
-     const data = {
+    const data = {
         fields: {
             id:
             {
@@ -88,15 +95,24 @@ export default defineEventHandler(async (event) => {
                 typename: "string",
                 name: "name"
             },
-            picture:
-            {
-                typename: "string",
-                name: "picture"
+            Chat_rooms: {
+                name: {
+                    typename: "string",
+                    name: "name"
+                },
+                description: {
+                    typename: "string | null",
+                    name: "description"
+                },
+                type: {
+                    name: "type",
+                    typename: "$Enums.Chat_Room_Type"
+                }
             }
         },
         totalItems: dbresponse.Chat_groups.length,
         items: dbresponse.Chat_groups
-        
+
     }
 
     const { errors } = apiResponseHandler(event, customErrorMessages, data);
