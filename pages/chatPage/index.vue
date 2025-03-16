@@ -1,13 +1,7 @@
 <template>
-    <div class="content">
-        <ChatFieldNavbar />
         <div id="chat">
-          <h1>Itt valami másnak kéne lennie majd</h1>
-            <ChatMessage author-image="asd" author-name="Kaki" message="kakao" />
+          <h1>Chose a server</h1>
         </div>
-        <ChatInputFiled id="input" />
-        
-    </div>
 </template>
 
 <script lang="ts" setup>

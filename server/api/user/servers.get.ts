@@ -82,12 +82,10 @@ export default defineEventHandler(async (event) => {
             }
         },
         totalItems: dbresponse.length,
-        items: [
-            dbresponse.map(m => m.Server)
-        ]
+        items: dbresponse.map(m => m.Server)
     }
 
-    const { errors } = apiResponseHandler(event, customErrorMessages,data);
+    const { errors } = apiResponseHandler(event, customErrorMessages, data);
     if (customErrorMessages.length > 0) {
         throw createError(errors);
     }
