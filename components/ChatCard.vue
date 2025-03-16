@@ -1,15 +1,28 @@
 <template>
     <div class="friend">
-        <div class="profPic"><img src="../img/probalogo.png" alt=""></div>
+        <div v-if="picture != ''" class="profPic"><img :src="picture" alt=""></div>
         <div class="name">
-            <h3>Kicsi kacsa</h3>
-            <p>Éppen úszik</p>
+            <h3>{{name}}</h3>
+            <p v-if="picture != ''">{{activity}}</p>
         </div>
     </div>
 </template>
 
 <script setup>
-
+    const { name, picture, activity } = defineProps({
+    'name': {
+        type: String,
+        default: "mmm"
+    },
+    'picture': {
+        type: String,
+        default: ""
+    },
+    'activity': {
+        type: String,
+        default: ""
+    }
+})
 </script>
 
 <style scoped>
