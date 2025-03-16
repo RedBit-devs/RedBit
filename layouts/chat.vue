@@ -1,11 +1,11 @@
 <template>
     <div id="screen">
         <div id="sidebar" ref="sidebarRef">
-            <ServerSelector :add-server-func="() => {
+            <ServerSelector :servers="servers" :add-server-func="() => {
                 appearRef = true
             }" id="serverSelector" />
             <ChatSelector id="chatSelector" />
-                <DiscoverServers id="discoverServers" />
+            <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
         <div id="content" ref="contentRef">
@@ -50,6 +50,18 @@ onMounted(() => {
     document.addEventListener('touchmove', handleTouchMove)
 })
 
+
+const { getToken, tokenRefresh } = useToken();
+
+if (!getToken()) await tokenRefresh()
+
+const { data: servers, refresh: serversRefresh } = useFetch("/api/user/servers", {
+    method: "GET",
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: (e) => e.data.items
+})
 
 
 </script>

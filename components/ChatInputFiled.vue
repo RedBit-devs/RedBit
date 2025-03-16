@@ -41,7 +41,7 @@ const sendMessage = async () => {
   if (inputRef.value.value.replace(/\s/, '') === '') return;
   await checkToken()
   const message: ClientSocketMessage<textMessage> = {
-    author: getToken(),
+    author: `${getToken()}`,
     data: {
       text: inputRef.value.value,
       to: route

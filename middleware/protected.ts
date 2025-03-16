@@ -4,10 +4,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     if (!getToken()) {
         await tokenRefresh()
-        
+
         if (tokenStatus.value !== "success") {
             return navigateTo("/loginPage")
         }
     }
-
 })
