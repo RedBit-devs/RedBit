@@ -3,7 +3,7 @@
           <h1>Chose a chat</h1>
         </div>
 </template>
-<script lang="ts">
+<script>
 definePageMeta({
     layout: "chat"
 })
