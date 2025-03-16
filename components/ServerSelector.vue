@@ -7,7 +7,7 @@
         <hr>
         <div class="chatList">
             <!--Szintén Mivel még nincsenek szerverek így teszt gyanánt képet használok-->
-            <NuxtLink v-for="server in servers" :key="server?.id" :to="`/chatpage/${server?.id}/`"><img :title="server?.name" :src="server?.picture" :alt="server?.name?.slice(0,2)"></NuxtLink>
+            <NuxtLink v-for="server in servers" @click="chatroomsRefresh()" :key="server?.id" :to="`/chatpage/${server?.id}/`"><img :title="server?.name" :src="server?.picture" :alt="server?.name?.slice(0,2)"></NuxtLink>
 
             <div @click="() => {
                 addServerFunc()
@@ -20,8 +20,12 @@
 
 <script lang="ts" setup>
 
-const { addServerFunc, servers } = defineProps({
+const { addServerFunc, servers, chatroomsRefresh } = defineProps({
     'addServerFunc': {
+        type: Function,
+        default: () => { }
+    },
+    'chatroomsRefresh': {
         type: Function,
         default: () => { }
     },
