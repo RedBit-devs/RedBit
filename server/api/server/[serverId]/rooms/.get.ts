@@ -62,6 +62,7 @@ export default defineEventHandler(async (event) => {
                     name: true,
                     Chat_rooms: {
                         select: {
+                            id: true,
                             name: true,
                             description: true,
                             type: true,
@@ -96,6 +97,11 @@ export default defineEventHandler(async (event) => {
                 name: "name"
             },
             Chat_rooms: {
+                id:
+                {
+                    typename: "string",
+                    name: "id"
+                },
                 name: {
                     typename: "string",
                     name: "name"
