@@ -4,7 +4,9 @@
             <ServerSelector :servers="servers" :chatgroupsRefresh="chatgroupsRefresh" :add-server-func="() => {
                 appearRef = true
             }" id="serverSelector" />
-            <ChatSelector :chatgroups="chatgroups" id="chatSelector" />
+            <ChatSelector v-if="chatgroupsStatus === 'success'" :chatgroups="chatgroups" id="chatSelector" />
+            <div v-else-if="chatgroupsStatus === 'pending'" id="chatSelector">Loading... please be patient</div>
+            <div v-else id="chatSelector">Click the chosen servers icon. <br/> If something went wrong or the chats wont show up reload the page</div>
             <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
@@ -53,6 +55,7 @@ onMounted(() => {
 
 
 const { getToken, tokenRefresh } = useToken();
+const route = useRoute()
 
 if (!getToken()) await tokenRefresh()
 
@@ -64,9 +67,7 @@ const { data: servers, refresh: serversRefresh } = useFetch("/api/user/servers",
     transform: (e) => e.data.items
 })
 
-const route = useRoute()
-
-const { data: chatgroups, refresh: chatgroupsRefresh } = useFetch(`/api/server/${route.params.serverId}/rooms/`, {
+const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus } = useFetch(`/api/server/${route.params.serverId}/rooms/`, {
     method: "GET",
     immediate: false,
     headers: {
