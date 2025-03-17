@@ -20,6 +20,10 @@
             <label>Description</label>
             <input type="text" placeholder="Description" ref="description" />
           </div>
+          <div class="inputWrapper">
+            <label>Description</label>
+            <input type="text" placeholder="Picture" ref="picture" />
+          </div>
         </div>
         <div id="visibilityInput">
           <div id="check">
@@ -57,6 +61,7 @@ const { getToken, tokenRefresh } = useToken();
 const name = ref(null);
 const description = ref(null);
 const visibility = ref("public");
+const picture = ref(null);
 
 const createServer = async () => {
   if (name.value.value === "" || description.value.value === "") {
@@ -74,6 +79,7 @@ const createServer = async () => {
       name: name.value.value,
       description: description.value.value,
       visibility: visibility.value,
+      picture: picture.value.value
     },
     immediate: true,
   });
