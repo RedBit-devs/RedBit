@@ -58,7 +58,8 @@ export default eventHandler(async (event) => {
             email: true,
             password: true,
             username: true,
-            profile_picture: true
+            profile_picture: true,
+            verification_code: true
         }
     })
 
@@ -89,7 +90,8 @@ export default eventHandler(async (event) => {
             id: userCredentials?.id,
             email: userCredentials?.email,
             picture: userCredentials?.profile_picture,
-            username: userCredentials?.username
+            username: userCredentials?.username,
+            verification_code: userCredentials?.verification_code
         },
     }
 
