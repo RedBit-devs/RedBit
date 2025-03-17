@@ -89,3 +89,13 @@ GET  {{baseUrl}}/server/cm7xlp3xn0000ia0jk7pyi8a9/rooms HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
 
 ###
+#/server/:serverID/rooms/
+PUT {{baseUrl}}/server/cm7xlp3xn0000ia0jk7pyi8a9/chatgroups/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
+Content-Type: application/json
+
+{
+    "name":"Hi"
+}
+
+###
