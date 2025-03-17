@@ -21,7 +21,7 @@
             <input type="text" placeholder="Description" ref="description" />
           </div>
           <div class="inputWrapper">
-            <label>Description</label>
+            <label>Picture</label>
             <input type="text" placeholder="Picture" ref="picture" />
           </div>
         </div>
