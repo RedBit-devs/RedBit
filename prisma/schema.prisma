@@ -50,6 +50,7 @@ model User {
   created_at      DateTime @default(now())
   password        String
   email_verified  Boolean  @default(false)
+  verification_code String   @default(cuid())
 
   Servers_joined Server_User_Connect[] //List of servers joined by the user
   Servers_owned  Server[] //List of servers owned by the user
