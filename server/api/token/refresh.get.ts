@@ -14,15 +14,19 @@ export default defineEventHandler(async (event) => {
     if (!event.context.auth) {
         throw createError({ statusCode: 401, statusMessage: "Unauthorized" });
     }
+    if (!event.context.auth.user.verification_code ) {
+        throw createError({ statusCode: 400, statusMessage:"Bad Request", message: "Expected refresh token, got access token" });
+    }
 
     const tokenvalidation = await prisma.user.findFirst({
         where: {
-            id: event.context.auth.id
+            id: event.context.auth.user.id
         },
         select: {
             verification_code: true
         }
     })
+
     if (event.context.auth.user.verification_code !== tokenvalidation?.verification_code) {
         throw createError({ statusCode: 401, statusMessage: "Unauthorized" });
     }
