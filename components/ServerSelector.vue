@@ -7,17 +7,7 @@
         <hr>
         <div class="chatList">
             <!--Szintén Mivel még nincsenek szerverek így teszt gyanánt képet használok-->
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
+            <NuxtLink v-for="server in servers" @click="chatgroupsRefresh()" :key="server?.id" :to="`/chatpage/${server?.id}/`"><img :title="server?.name" :src="server?.picture" :alt="server?.name?.slice(0,2)"></NuxtLink>
 
             <div @click="() => {
                 addServerFunc()
@@ -30,10 +20,17 @@
 
 <script lang="ts" setup>
 
-const { addServerFunc } = defineProps({
+const { addServerFunc, servers, chatgroupsRefresh } = defineProps({
     'addServerFunc': {
         type: Function,
         default: () => { }
+    },
+    'chatgroupsRefresh': {
+        type: Function,
+        default: () => { }
+    },
+    'servers': {
+        default: []
     }
 })
 

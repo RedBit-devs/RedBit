@@ -1,14 +1,17 @@
 <template>
     <div id="screen">
         <div id="sidebar" ref="sidebarRef">
-            <ServerSelector :add-server-func="() => {
+            <ServerSelector :servers="servers" :chatgroupsRefresh="chatgroupsRefresh" :add-server-func="() => {
                 appearRef = true
             }" id="serverSelector" />
-            <ChatSelector id="chatSelector" />
-                <DiscoverServers id="discoverServers" />
+            <ChatSelector v-if="chatgroupsStatus === 'success'" :chatgroups="chatgroups" id="chatSelector" />
+            <div v-else-if="chatgroupsStatus === 'pending'" id="chatSelector">Loading... please be patient</div>
+            <div v-else id="chatSelector">Click the chosen servers icon. <br/> If something went wrong or the chats wont show up reload the page</div>
+            <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
         <div id="content" ref="contentRef">
+            <ChatFieldNavbar />
             <slot>
 
             </slot>
@@ -50,6 +53,28 @@ onMounted(() => {
     document.addEventListener('touchmove', handleTouchMove)
 })
 
+
+const { getToken, tokenRefresh } = useToken();
+const route = useRoute()
+
+if (!getToken()) await tokenRefresh()
+
+const { data: servers, refresh: serversRefresh } = useFetch("/api/user/servers", {
+    method: "GET",
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: (e) => e.data.items
+})
+
+const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus } = useFetch(`/api/server/${route.params.serverId}/rooms/`, {
+    method: "GET",
+    immediate: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: (e) => e.data.items
+})
 
 
 </script>

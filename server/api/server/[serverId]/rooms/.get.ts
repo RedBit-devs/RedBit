@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     const customErrorMessages: CustomErrorMessage[] = [];
     const apiResponse = {} as ApiResponse;
 
-    apiResponse.context = "User/Servers";
+    apiResponse.context = "Server/Rooms";
     apiResponse.method = "GET";
 
     event.context.apiResponse = apiResponse;
@@ -28,8 +28,10 @@ export default defineEventHandler(async (event) => {
     }
 
     const userId = event.context.auth.user.id;
+    const serverId = getRouterParam(event, "serverId");
     apiResponse.params = {
-        id: userId,
+        userId: userId,
+        serverId: serverId
     };
     event.context.apiResponse = apiResponse;
 
@@ -44,22 +46,41 @@ export default defineEventHandler(async (event) => {
         throw createError(errors);
     }
 
-    const dbresponse = await prisma.server_User_Connect.findMany({
+    const dbresponse = await prisma.server.findFirst({
         where: {
-            user_id: userId
+            id: serverId,
+            Users_connected: {
+                some: {
+                    user_id: userId
+                }
+            }
         },
         select: {
-            Server: {
+            Chat_groups: {
                 select: {
                     id: true,
                     name: true,
-                    picture: true
+                    Chat_rooms: {
+                        select: {
+                            id: true,
+                            name: true,
+                            description: true,
+                            type: true,
+                        }
+                    }
                 }
             }
         }
     });
-    if (!dbresponse) {
-        return []
+    if (dbresponse === null) {
+        customErrorMessages.push({
+            expectedFrom: errorExpectedFroms.Prisma,
+            reason: errorReasons.IdentifierNotFound,
+            table: "server",
+            target: serverId
+        })
+        const { errors } = apiResponseHandler(event, customErrorMessages);
+        throw createError(errors);
     }
 
 
@@ -75,14 +96,29 @@ export default defineEventHandler(async (event) => {
                 typename: "string",
                 name: "name"
             },
-            picture:
-            {
-                typename: "string",
-                name: "picture"
+            Chat_rooms: {
+                id:
+                {
+                    typename: "string",
+                    name: "id"
+                },
+                name: {
+                    typename: "string",
+                    name: "name"
+                },
+                description: {
+                    typename: "string | null",
+                    name: "description"
+                },
+                type: {
+                    name: "type",
+                    typename: "$Enums.Chat_Room_Type"
+                }
             }
         },
-        totalItems: dbresponse.length,
-        items: dbresponse.map(m => m.Server)
+        totalItems: dbresponse.Chat_groups.length,
+        items: dbresponse.Chat_groups
+
     }
 
     const { errors } = apiResponseHandler(event, customErrorMessages, data);

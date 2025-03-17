@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     throw createError(errors);
   }
 
-  let serverId = getRouterParam(event, "id");
+  let serverId = getRouterParam(event, "serverId");
   const userId = event.context.auth.user.id;
   if (!serverId) {
     serverId = "";

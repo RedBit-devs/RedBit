@@ -1,11 +1,10 @@
 <template>
   <div class="content">
-    <ChatFieldNavbar />
     <div id="chat">
-      <ChatMessage v-for="msg in chatRef" :author-image="msg.author.picture" :author-name="msg.author.username"
+      <ChatMessage v-for="msg in chatRef" :author-image="(msg.author.picture)?msg.author.picture:''" :author-name="msg.author.username"
         :message="msg.data.text" />
     </div>
-    <ChatInputFiled :send="send" :route="`${route.params.id}`" id="input" />
+    <ChatInputFiled :send="send" :route="`${route.params.chatId}`" id="input" />
     <div>
       <button class="btn secondary" @click="clearToken">
         Clear Token
@@ -50,13 +49,11 @@ const checkToken = async () => {
   }
 }
 
-
-
 const { data, send } = useWebSocket('/_ws', {
   autoReconnect: true,
   onMessage(ws, event) {
+    
     const { author, data }: { author: author, data: textMessage | toastMessage } = JSON.parse(event.data);
-
     const keys = Object.keys(data)
 
     if (keys.includes("to")) {
@@ -72,10 +69,10 @@ const { data, send } = useWebSocket('/_ws', {
 const subscribeToTopic = async () => {
   await checkToken()
   const message: ClientSocketMessage<changeTopicMessage> = {
-    author: getToken(),
+    author: `${getToken()}`,
     data: {
       mode: changeTopicMode.subscribe,
-      topic: `${route.params.id}`
+      topic: `${route.params.chatId}`
     }
   }
   send(JSON.stringify(message))
