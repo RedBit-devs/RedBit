@@ -1,5 +1,4 @@
 import { type Server } from "@prisma/client";
-import { log } from "console";
 import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
 import { paramsCheck } from "~/shared/utils/userValidation";
