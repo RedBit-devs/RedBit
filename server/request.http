@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:3000/api
-
+@lajostoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY204ZW5scmF5MDAwMW14aTUycGFwZ3hxMiIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Ikxham9za2EiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHJheTAwMDJteGk1OGR0amxwdXUifSwiaWF0IjoxNzQyMzEzODQ0LCJleHAiOjE3NDQwNDE4NDR9.B5_jEW9xgpVR2ViFoJpEd3ueB_UQOBJOdhGO4G77DnIewZFFoOSICl2cPo8C8HM9tc0jukxgds60MIFUMmmy8w
+@deletedusertoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiZGVsZXRlZHVzZXIiLCJlbWFpbCI6Im5vcEBub3Aubm9wIiwicGljdHVyZSI6bnVsbCwidXNlcm5hbWUiOiJkZWxldGVkX3VzZXIiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHIzaDAwMDBteGk1b2Z4eWQxanMifSwiaWF0IjoxNzQyMzE2MTM2LCJleHAiOjE3NDQwNDQxMzZ9.iHPdX2pdP3tADMomSJtUHQn6alv0D6cR-FdbsyR2nCcAMiAD8ga7DnkQgzHEO1JgWefPbt_jEuy9G1L9E0f5NA
 
 GET {{baseUrl}} HTTP/1.1
 
@@ -44,7 +45,7 @@ GET  {{baseUrl}}/user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd
 ###
 
 PUT  {{baseUrl}}/server/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTI4MDg0NiwiZXhwIjoxNzQzMDA4ODQ2fQ.dCd4dGhYwl3SfWTqJ1S8-_x7Wj1Gm9mGuj-0RlK0Wde3BqgBp3c6lAkjdzaC3-SxcO45mi4Rzia1F6sKmKnM8Q
+Authorization: {{lajostoken}}
 Content-Type: application/json
 
 {
@@ -110,7 +111,8 @@ Content-Type: application/json
     "first_name":"testfromearth",
     "description":"me myself and i"
 }
-#/server/chatgroups/get/:chatgroupId/
+
+###
 PUT {{baseUrl}}/server/chatgroups/get/cm8d6kwoj0000rmaizf3wjrjs/rooms HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
 Content-Type: application/json
@@ -118,5 +120,12 @@ Content-Type: application/json
 {
     "name":"Hi chat"
 }
+
+###
+
+
+
+DELETE {{baseUrl}}/user/ HTTP/1.1
+Authorization: {{lajostoken}}
 
 ###
