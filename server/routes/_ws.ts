@@ -88,8 +88,6 @@ export default defineWebSocketHandler({
                 const message:CatchupMessage<textMessage> = {
                     data: catchUp
                 }
-                console.log(catchUp);
-                
 
                 peer.send(JSON.stringify(message));
 
