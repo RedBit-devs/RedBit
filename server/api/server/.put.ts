@@ -26,7 +26,6 @@ export default defineEventHandler(async (event) => {
         visibility: reqBody.visibility,
         description: reqBody.description
     }
-    
     event.context.apiResponse = apiResponse;
     let errorMessages: CustomErrorMessage[] = []
 
