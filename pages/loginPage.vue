@@ -64,8 +64,7 @@ const sendLoginRequest = async () => {
     stat.value = status
 
     if (stat.value === "success") {
-        ////TODO this should navigate to the chat
-        navigateTo('/test')
+        navigateTo('/chatpage/')
     }
 
     if (stat.value === "error") {

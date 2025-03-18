@@ -67,7 +67,7 @@ const { data: servers, refresh: serversRefresh } = useFetch("/api/user/servers",
     transform: (e) => e.data.items
 })
 
-const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus } = useFetch(`/api/server/${route.params.serverId}/rooms/`, {
+const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus } = useFetch(() => `/api/server/get/${route.params.serverId}/rooms/`, {
     method: "GET",
     immediate: false,
     headers: {

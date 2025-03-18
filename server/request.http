@@ -56,7 +56,7 @@ Content-Type: application/json
 
 ###
 
-GET  {{baseUrl}}/server/cm7xlp3xn0000ia0jk7pyi8a9 HTTP/1.1
+GET  {{baseUrl}}/server/get/cm7xlp3xn0000ia0jk7pyi8a9 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
 
 ###
@@ -77,20 +77,20 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwM
 ###
 
 GET  {{baseUrl}}/token/refresh HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY203ZDFseXF5MDAwMGt4aGJkNnlnMGQwMSIsImVtYWlsIjoiam9zc2hzc25kb2RkZGRhQGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3NDAwMzc4NTksImV4cCI6MTc0MTc2NTg1OX0.tLO_3CyH5-k63vW7p-wVPD3DhWuOjJy9QdT5Nl4CWJ8ZcARIdWfIM_BNM3LKfSoK_c647EVMkMiAWteTdljyUg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIiwidmVyaWZpY2F0aW9uX2NvZGUiOiJhc2QyIn0sImlhdCI6MTc0MjI0NDU5MCwiZXhwIjoxNzQzOTcyNTkwfQ._87NUnsZbPpuWzFLp8YC-HhJ4R_sDnnLb4lNgabyDq__Y14SKr-mUSQSA_YrAZZB3o2Hmb-dEHGMbiMyQ1Cv7Q
 ###
 GET  {{baseUrl}}/user/servers HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
 
 ###
 
-#/server/:serverID/rooms/
-GET  {{baseUrl}}/server/cm7xlp3xn0000ia0jk7pyi8a9/rooms HTTP/1.1
+#/server/get/:serverID/rooms/
+GET  {{baseUrl}}/server/get/cm7xlp3xn0000ia0jk7pyi8a9/rooms HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
 
 ###
-#/server/:serverID/rooms/
-PUT {{baseUrl}}/server/cm7xlp3xn0000ia0jk7pyi8a9/chatgroups/ HTTP/1.1
+#/server/get/:serverID/chatgroups/
+PUT {{baseUrl}}/server/get/cm7xlp3xn0000ia0jk7pyi8a9/chatgroups/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
 Content-Type: application/json
 
@@ -110,3 +110,13 @@ Content-Type: application/json
     "first_name":"testfromearth",
     "description":"me myself and i"
 }
+#/server/chatgroups/get/:chatgroupId/
+PUT {{baseUrl}}/server/chatgroups/get/cm8d6kwoj0000rmaizf3wjrjs/rooms HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
+Content-Type: application/json
+
+{
+    "name":"Hi chat"
+}
+
+###

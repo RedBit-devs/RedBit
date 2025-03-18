@@ -9,7 +9,6 @@ import {
 } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
-    const newUser: User = await readBody(event);
     const apiResponse = {} as ApiResponse;
     apiResponse.context = "Server/Chatgroup/Create";
     apiResponse.method = "PUT";

@@ -29,7 +29,8 @@
 import { changeTopicMode, type changeTopicMessage, type ClientSocketMessage, type ServerSocketMessage, type textMessage, type toastMessage, type author } from '~/types/websocket';
 
 definePageMeta({
-  layout: 'chat'
+  layout: 'chat',
+    middleware: ['protected']
 })
 
 

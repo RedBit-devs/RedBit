@@ -10,15 +10,26 @@ export default defineEventHandler(async (event) => {
     const apiResponse = {} as ApiResponse;
     apiResponse.context = "Server/Create";
     apiResponse.method = "PUT";
+
+    if(!reqBody.picture)
+    {
+        reqBody.picture = "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d"
+    }
+    if(!reqBody.description)
+    {
+        reqBody.description = " "
+    }
+
     apiResponse.params = {
         name: reqBody.name,
         picture: reqBody.picture,
-        visibility: reqBody.visibility
+        visibility: reqBody.visibility,
+        description: reqBody.description
     }
-
+    console.log(apiResponse.params);
+    
     event.context.apiResponse = apiResponse;
     let errorMessages: CustomErrorMessage[] = []
-
 
 
     if (!event.context.auth) {
@@ -47,6 +58,7 @@ export default defineEventHandler(async (event) => {
                 name: reqBody.name,
                 picture: reqBody.picture,
                 visibility: reqBody.visibility,
+                description: reqBody.description,
                 Owner: {
                     connect: {
                         id: event.context.auth.user.id

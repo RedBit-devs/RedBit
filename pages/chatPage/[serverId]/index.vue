@@ -5,6 +5,7 @@
 </template>
 <script>
 definePageMeta({
-    layout: "chat"
+    layout: "chat",
+    middleware: ['protected']
 })
 </script>
