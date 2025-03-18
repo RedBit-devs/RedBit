@@ -76,6 +76,7 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
     transform: (e) => e.data.items
 })
 
+if (route.params.chatId)chatgroupsRefresh();
 
 </script>
 
