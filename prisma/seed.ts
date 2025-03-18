@@ -16,7 +16,7 @@ const main = async () => {
         where: { email: "nop@nop.nop", id: "deleteduser" },
         update: {},
         create: {
-            birthdate: `${date.toISOString().replace("T", " ").substring(0, 19)}`,
+            birthdate: `${date.toISOString()}`,
             email: "nop@nop.nop",
             first_name: "Deleted",
             last_name: "User",
@@ -34,7 +34,7 @@ const main = async () => {
         where: { email: "lajos@example.com" },
         update: {},
         create: {
-            birthdate: `${date.toISOString().replace("T", " ").substring(0, 19)}`,
+            birthdate: `${date.toISOString()}`,
             email: "lajos@example.com",
             first_name: "Lajos",
             last_name: "Tesztelő",
