@@ -230,6 +230,7 @@ ul {
   gap: 3rem;
   justify-content: center;
   align-items: center;
+  min-height: 30rem;
 }
 
 .imgContainer img {
@@ -241,7 +242,7 @@ ul {
 .imgContainer {
   position: relative;
   display: inline-block;
-  width: 50%;
+
   align-items: center;
 }
 
@@ -311,7 +312,7 @@ ul {
 #description {
   display: flex;
   flex-direction: column;
-  height: 13rem;
+
 }
 
 #description h3 {
@@ -336,6 +337,7 @@ ul {
 
 .chats h2 {
   text-align: center;
+  text-transform: capitalize;
 }
 
 .members h2 {
@@ -343,6 +345,11 @@ ul {
   text-transform: capitalize;
 }
 
+@media only screen and (max-width:1044px) {
+  .mainInfo {
+    flex-direction: column;
+  }
+}
 
 @media only screen and (max-width: 830px) {
   .sidebar {
