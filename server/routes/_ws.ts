@@ -1,6 +1,7 @@
 import { Peer, Message } from 'crossws';
 import prisma from '~/lib/prisma';
-import { changeTopicMode, type toastMessage, type changeTopicMessage, type ClientSocketMessage, type textMessage, type ServerSocketMessage, type author } from '~/types/websocket';
+import { changeTopicMode, type toastMessage, type changeTopicMessage, type ClientSocketMessage, type textMessage, type ServerSocketMessage, type author, type CatchupMessage } from '~/types/websocket';
+import { getLastMessages } from '../utils/getLastMessages';
 
 //Nem tudom hogy miért működik, de működik
 export default defineWebSocketHandler({
@@ -71,7 +72,7 @@ export default defineWebSocketHandler({
                         },
                         data: {
                             header: "Forbidden",
-                            text: "user is not part of requested chat"
+                            text: "User is not part of requested chat"
                         }
                     }
 
@@ -79,18 +80,25 @@ export default defineWebSocketHandler({
                     return
                 }
 
-
-
                 peer.topics.forEach(t => peer.unsubscribe(t))
-                peer.subscribe(Data.topic)
+                peer.subscribe(Data.topic);
+
+                const catchUp:ServerSocketMessage<textMessage>[] = await getLastMessages(Data.topic)
+
+                const message:CatchupMessage<textMessage> = {
+                    data: catchUp
+                }
+                console.log(catchUp);
+                
+
+                peer.send(JSON.stringify(message));
+
             }
             if (Data.mode === changeTopicMode.unsubscribe) {
                 peer.unsubscribe(Data.topic)
             }
 
         } else if (keys.includes("to")) {
-            //TODO  messages also should be published to the db
-
             const Data: textMessage = data as textMessage;
             if (Data.to === "" || Data.text.replace(/\s/, '') === "") return;
 
@@ -98,6 +106,32 @@ export default defineWebSocketHandler({
                 author: Author,
                 data: Data
             }
+
+            // Save message in the database
+            const response =  await prisma.message.create({
+                data:{
+                    text: message.data.text,
+                    type: "text",
+                    chat_room_id: message.data.to,
+                    user_id: message.author.id
+                }
+            })
+            if (!response) {
+                const message: ServerSocketMessage<toastMessage> = {
+                    author: {
+                        id: "",
+                        username: "Server",
+                        picture: ""
+                    },
+                    data: {
+                        header: "Error",
+                        text: "Could not send the message"
+                    }
+                }
+                peer.send(JSON.stringify(message))
+                return
+            }
+
 
             if (!peer.topics.has(Data.to)) {
                 return

@@ -5,15 +5,7 @@
         :message="msg.data.text" />
     </div>
     <ChatInputFiled :send="send" :route="`${route.params.chatId}`" id="input" />
-    <div>
-      <button class="btn secondary" @click="clearToken">
-        Clear Token
-      </button>
-      <button class="btn secondary" @click="clearRefreshToken">
-        Clear Refresh Token
-      </button>
-
-    </div>
+   
 
     <div class="toaster">
       <Toast v-for="msg in toastRef" class="warn" :content="msg.data.text" :title="msg.data.header" />
@@ -54,7 +46,7 @@ const { data, send } = useWebSocket('/_ws', {
   autoReconnect: true,
   onMessage(ws, event) {
     
-    const { author, data }: { author: author, data: textMessage | toastMessage } = JSON.parse(event.data);
+    const { author, data }: { author: author, data: any } = JSON.parse(event.data);
     const keys = Object.keys(data)
 
     if (keys.includes("to")) {
@@ -62,6 +54,9 @@ const { data, send } = useWebSocket('/_ws', {
     }
     if (keys.includes("header")) {
       toastRef.value.push({ author, data: data as toastMessage })
+    }
+    if (!author) {
+      chatRef.value.push(...(data as ServerSocketMessage<textMessage>[]).reverse())
     }
 
   }
