@@ -109,6 +109,12 @@ export default defineEventHandler(async (event) => {
       items: [],
     };
   }
+  if(customErrorMessages.length > 0) {
+    const { errors } = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);
+  }
+
+
   const { errors } = apiResponseHandler(event, customErrorMessages, updatedData);
 
   if (customErrorMessages.length > 0) {
