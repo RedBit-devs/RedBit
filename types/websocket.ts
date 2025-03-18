@@ -29,6 +29,9 @@ type ClientSocketMessage<T> = {
     author: string,
     data: T
 }
+type CatchupMessage<T> = {
+    data: ServerSocketMessage<T>[]
+}
 
 export {
     type ServerSocketMessage,
@@ -37,5 +40,6 @@ export {
     type toastMessage,
     type changeTopicMessage,
     type author,
+    type CatchupMessage,
     changeTopicMode
 }
