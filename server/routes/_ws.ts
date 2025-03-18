@@ -37,16 +37,31 @@ export default defineWebSocketHandler({
             if (Data.topic === "") return;
 
             if (Data.mode === changeTopicMode.subscribe) {
-                /*
-                TODO
-
-                This code is only to prove that it will work
-                It has to be changed when the user will be able to create rooms
-
-                This should validate if the user is part of the room or the server witch the room is on
                 // To ensure that the user who is trying to connect to a chat is part of the server
-                const dbresponse = await prisma.user.findFirst({ where: { id: Author.id, Servers_joined: { some: { server_id: Data.topic } } }, select:{id: true} })
-                
+                const dbresponse = await prisma.user.findFirst({
+                    where: {
+                        id: Author.id,
+                        Servers_joined: {
+                            some: {
+                                Server:{
+                                    Chat_groups:{
+                                        some:{
+                                            Chat_rooms:{
+                                                some:{
+                                                    id: Data.topic
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    select: {
+                        id: true
+                    }
+                })
+
                 if (!dbresponse?.id) {
                     const message: ServerSocketMessage<toastMessage> = {
                         author: {
@@ -59,11 +74,11 @@ export default defineWebSocketHandler({
                             text: "user is not part of requested chat"
                         }
                     }
-        
+
                     peer.send(JSON.stringify(message))
                     return
                 }
-                 */
+
 
 
                 peer.topics.forEach(t => peer.unsubscribe(t))
@@ -83,7 +98,7 @@ export default defineWebSocketHandler({
                 author: Author,
                 data: Data
             }
-            
+
             if (!peer.topics.has(Data.to)) {
                 return
             }
