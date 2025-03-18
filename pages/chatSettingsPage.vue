@@ -41,13 +41,9 @@
               </div>
               <div id="description">
                 <h2>Description</h2>
-                <h3 v-if="inputRef == 'title'">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti harum
-                  neque facilis totam necessitatibus, officiis reiciendis iusto est beatae ad? Obcaecati
-                  voluptatum iste impedit reprehenderit cumque architecto molestias non dignissimos?
-                  Repellat odit ipsum aperiam error debitis delectus cum dolor, laboriosam temporibus quod
-                  quibusdam nisi provident unde necessitatibus eveniet dolore amet illo accusamus dolores
-                  maxime, tempore molestias nulla! Ad, velit veniam!
-                </h3>
+                <p v-if="inputRef == 'title'">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti harum
+                  neque facilis totam
+                </p>
                 <input type="text" v-if="inputRef == 'input'" class="descChange" placeholder="Description">
               </div>
               <h2>Owner: Kicsi Kacsa</h2>
@@ -315,7 +311,7 @@ ul {
 
 }
 
-#description h3 {
+#description p {
   justify-content: center;
   max-height: 9rem;
   padding: 1rem;
@@ -348,6 +344,10 @@ ul {
 @media only screen and (max-width:1044px) {
   .mainInfo {
     flex-direction: column;
+  }
+
+  .data {
+    width: fit-content;
   }
 }
 
