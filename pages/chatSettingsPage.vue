@@ -129,7 +129,6 @@ onMounted(() => {
   const saveBtn = document.getElementById('save')
   const modifyBtn = document.getElementById('modify')
   const fileLabel = document.getElementById('fileLabel')
-  const nameContainer = document.getElementById('name')
   saveBtn.disabled = true
   fileLabel.style.display = 'none'
 
@@ -299,9 +298,7 @@ ul {
 }
 
 .descChange {
-  height: 9rem;
   padding: 1rem;
-  overflow-y: auto;
   border-radius: var(--border-rounded);
   width: 100%;
   border-radius: var(--border-rounded);
@@ -311,7 +308,14 @@ ul {
   color: var(--clr-text-primary);
 }
 
+#description {
+  display: flex;
+  flex-direction: column;
+  height: 13rem;
+}
+
 #description h3 {
+  justify-content: center;
   max-height: 9rem;
   padding: 1rem;
   overflow-y: auto;
