@@ -27,10 +27,28 @@
         <h1 class="title text-big">main information</h1>
         <div class="pageContent">
           <div class="mainInfo">
-            <img src="../img/probalogo.png" alt="">
+            <div class="imgContainer">
+              <img src="../img/probalogo.png" alt="">
+              <label for="fileInput" id="fileLabel">
+                <Icon name="mdi:pencil" size="200%" />
+              </label>
+              <input type="file" id="fileInput">
+            </div>
             <div class="data">
               <div id="name">
-                <h2>Name: Kacsa sziget</h2>
+                <h2 v-if="inputRef == 'title'">Name: Kacsa sziget</h2>
+                <input v-if="inputRef == 'input'" type="text" placeholder="Name" class="nameChange">
+              </div>
+              <div id="description">
+                <h2>Description</h2>
+                <h3 v-if="inputRef == 'title'">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti harum
+                  neque facilis totam necessitatibus, officiis reiciendis iusto est beatae ad? Obcaecati
+                  voluptatum iste impedit reprehenderit cumque architecto molestias non dignissimos?
+                  Repellat odit ipsum aperiam error debitis delectus cum dolor, laboriosam temporibus quod
+                  quibusdam nisi provident unde necessitatibus eveniet dolore amet illo accusamus dolores
+                  maxime, tempore molestias nulla! Ad, velit veniam!
+                </h3>
+                <input type="text" v-if="inputRef == 'input'" class="descChange" placeholder="Description">
               </div>
               <h2>Owner: Kicsi Kacsa</h2>
               <h2>Created at: 1.01.01-01:01</h2>
@@ -38,7 +56,6 @@
           </div>
           <div class="dataBtns">
             <button class="btn ok" id="save" disabled>Save</button>
-            <button class="btn tertiary" id="upload" disabled>Upload image</button>
             <button class="btn secondary" id="modify">Modify</button>
           </div>
         </div>
@@ -75,10 +92,11 @@ definePageMeta({
   layout: false
 })
 
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const sidebarRef = ref(null)
 const contentRef = ref(null)
+const inputRef = ref('title')
 let startX = 0;
 
 
@@ -109,31 +127,40 @@ onMounted(() => {
   const pages = ['main', 'chats', 'members']
   const btnArray = [...button]
   const saveBtn = document.getElementById('save')
-  const uploadBtn = document.getElementById('upload')
   const modifyBtn = document.getElementById('modify')
+  const fileLabel = document.getElementById('fileLabel')
   const nameContainer = document.getElementById('name')
-  uploadBtn.disabled = true
   saveBtn.disabled = true
+  fileLabel.style.display = 'none'
 
   const modiflyClick = () => {
 
-    saveBtn.disabled = false
-    uploadBtn.disabled = false
-    modifyBtn.disabled = true
-    nameContainer.innerHTML = `<input type="text" placeholder="Type here" class="nameChange">`
+    if (modifyBtn.textContent == "Modify") {
+      saveBtn.disabled = false
+      fileLabel.style.display = 'flex'
+      modifyBtn.textContent = 'Cancel'
+      inputRef.value = "input"
+    }
+
+    else {
+      saveBtn.disabled = true
+      fileLabel.style.display = 'none'
+      modifyBtn.textContent = 'Modify'
+      inputRef.value = 'title'
+    }
+
   }
 
   const saveClick = () => {
-
     saveBtn.disabled = true
-    uploadBtn.disabled = true
     modifyBtn.disabled = false
-    nameContainer.innerHTML = `<h2>Name: Kacsa falva</h2>`
+    fileLabel.style.display = 'none'
+    modifyBtn.textContent = 'Modify'
+    inputRef.value = 'title'
   }
 
   modifyBtn.addEventListener("click", modiflyClick)
   saveBtn.addEventListener('click', saveClick)
-
 
   for (let i = 0; i < btnArray.length; i++) {
     button[i].onclick = function () {
@@ -206,25 +233,88 @@ ul {
   align-items: center;
 }
 
-.mainInfo img {
+.imgContainer img {
   border-radius: 50%;
   height: 20rem;
+  display: block;
+}
+
+.imgContainer {
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  align-items: center;
+}
+
+#fileInput {
+  display: none;
+}
+
+#fileLabel {
+  position: absolute;
+  bottom: .1rem;
+  right: .1rem;
+  display: flex;
+  background-color: var(--clr-primary);
+  width: 70px;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  float: right;
+}
+
+#fileLabel:hover {
+  background-color: var(--clr-secondary);
 }
 
 .data {
-  gap: 2rem;
+  gap: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  width: 50%;
 }
 
 .data h2 {
   padding: 1rem;
+
 }
 
-input {
-  background-color: var(--clr-ui-primary);
+.data>* {
+  width: 100%;
+  background-color: var(--clr-ui-secondary);
+  border-radius: var(--border-rounded);
+}
+
+.nameChange {
+  border-radius: var(--border-rounded);
+  background-color: var(--clr-ui-secondary);
+  border: none;
+  padding: 1rem;
+  color: var(--clr-text-primary);
+  width: 100%;
+}
+
+.descChange {
+  height: 9rem;
+  padding: 1rem;
+  overflow-y: auto;
+  border-radius: var(--border-rounded);
+  width: 100%;
+  border-radius: var(--border-rounded);
+  background-color: var(--clr-ui-secondary);
+  border: none;
+  padding: 1rem;
+  color: var(--clr-text-primary);
+}
+
+#description h3 {
+  max-height: 9rem;
+  padding: 1rem;
+  overflow-y: auto;
   border-radius: var(--border-rounded);
 }
 
@@ -238,12 +328,6 @@ input {
   gap: .5rem;
   background-color: var(--clr-ui-secondary);
   border-radius: var(--border-rounded);
-}
-
-
-
-.dataBtns button {
-  width: max-content;
 }
 
 .chats h2 {
