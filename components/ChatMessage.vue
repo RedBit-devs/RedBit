@@ -52,7 +52,7 @@ onMounted(() => {
 </script>
 <style scoped>
 .message {
-    background-color: var(--clr-ui-primary);
+    background-color: var(--clr-ui-secondary);
     height: fit-content;
     display: flex;
     gap: 1rem;

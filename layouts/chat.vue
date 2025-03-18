@@ -6,7 +6,7 @@
             }" id="serverSelector" />
             <ChatSelector v-if="chatgroupsStatus === 'success'" :chatgroups="chatgroups" id="chatSelector" />
             <div v-else-if="chatgroupsStatus === 'pending'" id="chatSelector">Loading... please be patient</div>
-            <div v-else id="chatSelector">Click the chosen servers icon. <br/> If something went wrong or the chats wont show up reload the page</div>
+            <div v-else id="chatSelector">Click the chosen servers icon.</div>
             <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
@@ -94,7 +94,7 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
 #screen {
     display: grid;
     grid-template-columns: 22rem 1fr;
-    height: 100vh;
+    max-height: 100vh;
 }
 
 
@@ -121,8 +121,10 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
 #chatSelector {
     overflow-y: auto;
 }
-
-
+#content {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
 
 @media only screen and (max-width: 830px) {
     #sidebar {
