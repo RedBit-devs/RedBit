@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     }
     if(!reqBody.description)
     {
-        reqBody.description = "The description of the server"
+        reqBody.description = " "
     }
 
     apiResponse.params = {
