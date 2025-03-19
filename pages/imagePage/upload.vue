@@ -9,16 +9,19 @@
     </div>
 </template>
 <script lang="ts" setup>
+definePageMeta({
+    middleware: ["protected"]
+})
 const { handleFileInput, files } = useFileStorage();
 const {getToken, tokenRefresh} = useToken()
 
-//if(!getToken()) await tokenRefresh();
+if(!getToken()) await tokenRefresh();
 
 const { data: imageUploadResponse, execute: imageUpload } = useFetch("/api/image/", {
     method: "PUT",
     immediate: false,
     headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA"
+        "Authorization": getToken()
     },
     transform: (e) => e.data.items,
     onRequest({options}){
