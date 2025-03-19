@@ -1,7 +1,6 @@
 import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
 import deleteRecord from "~/lib/prisma/databaseOperations/deleteRecord";
-import updateRecord from "~/lib/prisma/databaseOperations/updateRecord";
 import {
   type CustomErrorMessage,
   errorExpectedFroms,
@@ -44,16 +43,16 @@ export default defineEventHandler(async (event) => {
         },
       }),
       prisma.friend_Connect.deleteMany({
-        where:{
-          OR:[
+        where: {
+          OR: [
             {
-              user1_id: userId
+              user1_id: userId,
             },
             {
-              user2_id: userId
-            }
-          ]
-        }
+              user2_id: userId,
+            },
+          ],
+        },
       }),
       prisma.server_User_Connect.deleteMany({
         where: {
@@ -64,7 +63,7 @@ export default defineEventHandler(async (event) => {
         where: {
           sufferer_id: userId,
         },
-      })
+      }),
     ]);
     const servers = await prisma.server.findMany({
       where: {
@@ -90,9 +89,12 @@ export default defineEventHandler(async (event) => {
             owner_id: oldestUser.user_id,
           },
         });
-      }
-      else {
-        const test = await deleteRecord("server",serverId,customErrorMessages)
+      } else {
+        const test = await deleteRecord(
+          "server",
+          serverId,
+          customErrorMessages
+        );
       }
       updatedServers += 1;
     }
@@ -101,17 +103,20 @@ export default defineEventHandler(async (event) => {
   }
   if (updatedData) {
     updatedData = {
-      totalItems:updatedData.length,
+      totalItems: updatedData.length,
       items: updatedData,
     };
   }
-  if(customErrorMessages.length > 0) {
+  if (customErrorMessages.length > 0) {
     const { errors } = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);
   }
 
-
-  const { errors } = apiResponseHandler(event, customErrorMessages, updatedData);
+  const { errors } = apiResponseHandler(
+    event,
+    customErrorMessages,
+    updatedData
+  );
 
   if (customErrorMessages.length > 0) {
     throw createError(errors);
