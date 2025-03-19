@@ -42,7 +42,8 @@ enum errorExpectedFroms {
   Prisma = "Prisma",
   User = "User",
   Server = "Server",
-  Invite = "Invite"
+  Invite = "Invite",
+  Image = "Image",
 }
 
 export {
