@@ -79,10 +79,13 @@
       <div v-if="currentPage == 'banned'" class="members">
         <h2 class="text-big ">Banned users</h2>
         <div class="pageContent">
-          <ChaSettingsUserCard />
-          <ChaSettingsUserCard />
-          <ChaSettingsUserCard />
-          <ChaSettingsUserCard />
+          <BannedUserCard />
+          <BannedUserCard />
+          <BannedUserCard />
+          <BannedUserCard />
+          <BannedUserCard />
+          <BannedUserCard />
+          <BannedUserCard />
         </div>
       </div>
     </div>

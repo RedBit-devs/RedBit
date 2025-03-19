@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="buttons">
-            <button class="btn primary">Remove</button>
+            <button class="btn primary">Ban</button>
         </div>
     </div>
 </template>
