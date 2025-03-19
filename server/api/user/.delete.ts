@@ -30,10 +30,9 @@ export default defineEventHandler(async (event) => {
     id: userId,
   };
 
-  let updatedData;
-  let updatedServers = 0;
+  let valueChanges = 0;
   try {
-    updatedData = await prisma.$transaction([
+    const updatedData = await prisma.$transaction([
       prisma.message.updateMany({
         where: {
           user_id: userId,
@@ -65,6 +64,7 @@ export default defineEventHandler(async (event) => {
         },
       }),
     ]);
+    valueChanges += updatedData.length;
     const servers = await prisma.server.findMany({
       where: {
         owner_id: userId,
@@ -81,7 +81,7 @@ export default defineEventHandler(async (event) => {
         },
       });
       if (oldestUser) {
-        await prisma.server.update({
+       const updated = await prisma.server.update({
           where: {
             id: serverId,
           },
@@ -90,22 +90,23 @@ export default defineEventHandler(async (event) => {
           },
         });
       } else {
-        const test = await deleteRecord(
-          "server",
-          serverId,
-          customErrorMessages
-        );
+        await deleteRecord("server", serverId, customErrorMessages);
       }
-      updatedServers += 1;
+      valueChanges += 1;
     }
   } catch (error) {
     prismaErrorHandler(error, "message", customErrorMessages, userId);
   }
-  if (updatedData) {
-    updatedData = {
-      totalItems: updatedData.length,
-      items: updatedData,
-    };
+  let responseData;
+  if (valueChanges > 0) {
+    responseData = {
+      deleted: true,
+      totalItems: 2,
+      items:[{
+          changedValue: valueChanges
+        }
+      ]
+    }
   }
   if (customErrorMessages.length > 0) {
     const { errors } = apiResponseHandler(event, customErrorMessages);
@@ -115,7 +116,7 @@ export default defineEventHandler(async (event) => {
   const { errors } = apiResponseHandler(
     event,
     customErrorMessages,
-    updatedData
+    responseData
   );
 
   if (customErrorMessages.length > 0) {
