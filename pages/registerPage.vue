@@ -64,7 +64,7 @@ const birthDateRef = ref(null)
 const emailRef = ref(null)
 const usernameRef = ref(null)
 const passwordRef = ref(null)
-const passwordAgainRef = ref(null)
+const passwordAgainRef = ref(null)  
 const errors = ref([]);
 
 const { data,error, status, execute } = useFetch(`/api/user/`, {
@@ -84,7 +84,7 @@ const { data,error, status, execute } = useFetch(`/api/user/`, {
  * @return {boolean} - True if the user data is valid, false if not.
  */
   const validateUserData = () => {
-    !firstnameRef.value.value ||
+    firstnameRef.value.value &&
     firstnameRef.value.value &&
     lastnameRef.value.value &&
     birthDateRef.value.value &&
