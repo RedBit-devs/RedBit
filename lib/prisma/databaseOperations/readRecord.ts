@@ -17,10 +17,19 @@ import {
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @returns {Promise<any>}
  */
+
+interface ReadRecordOptions {
+  exclude?: string[];
+  include?: string[];
+}
+
+
 const readRecord = async (
   table: string,
   id: string,
-  customErrorMessages: CustomErrorMessage[]
+  customErrorMessages: CustomErrorMessage[],
+  exclude?: string[],
+  include?: string[]
 ): Promise<any> => {
   if (!(await checkTable(table))) {
     const error: CustomErrorMessage = {
@@ -29,20 +38,27 @@ const readRecord = async (
       table: table,
     };
     customErrorMessages.push(error);
-    return;
+    return null;
   }
-  let dbResponse;
+
   try {
-    dbResponse = await prisma[table].findFirst({
-      where: {
-        id: id,
-      },
+    const select: ReadRecordOptions = {};
+    if (exclude) {
+      select.exclude = exclude;
+    }
+    if (include) {
+      select.include = include;
+    }
+
+    const result = await prisma[table].findUnique({
+      where: { id },
+      select,
     });
+    return result;
   } catch (error) {
-    prismaErrorHandler(error, table, customErrorMessages, id);
-    return;
+    prismaErrorHandler(error,table, customErrorMessages);
+    return null;
   }
-  return dbResponse;
 };
 
 export default readRecord;
