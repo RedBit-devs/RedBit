@@ -77,7 +77,8 @@ export default defineEventHandler(async (event) => {
                 }
             }
         })
-        createRecord("server_user_connect",{server_id: dbResponse.id,user_id: event.context.auth.user.id},errorMessages);
+        console.log(dbResponse.id,event.context.auth.user.id)
+        await createRecord("Server_User_Connect",{server_id: dbResponse.id,user_id: event.context.auth.user.id},errorMessages);
     } catch (error) {
         prismaErrorHandler(error,"server",errorMessages);
     }
