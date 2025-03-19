@@ -35,6 +35,9 @@ const inviteErrorReasonAndMessages = {
   ...generalErrorReasonAndMessages,
   Expired: "Invite link expired",
 };
+const imageErrorReasonAndMessages = {
+  ...generalErrorReasonAndMessages,
+};
 
 const prismaErrorReasonAndMessages = {
   TableNotFound: "Can't read from the {table} table because it doesn't exist",
@@ -59,6 +62,7 @@ const errorHttpStatusCodes = {
   454: "BadCustomErrorReason",
   455: "BadCustomErrorExpectedFrom",
   456: "ErrorsOcuredOnServerRoute",
+  457: "ErrorsOcuredOnImageRoute",
 };
 
 /**
@@ -186,6 +190,26 @@ const apiResponseHandler = (
           reason,
           inviteErrorReasonAndMessages[
             reason as keyof typeof inviteErrorReasonAndMessages
+          ]
+        );
+      } else {
+        badCustomErrorReason(apiResponse, customErrorObject);
+      }
+    }
+    return { errors: customErrorObject };
+  }else if (
+    customErrorMessages[0].expectedFrom === errorExpectedFroms.Image
+  ) {
+    setStatusMessageAndCode(customErrorObject, 457);
+    for (let i = 0; i < customErrorMessages.length; i++) {
+      const reason = customErrorMessages[i].reason;
+      if (reason in imageErrorReasonAndMessages) {
+        newError(
+          customErrorObject,
+          apiResponse.context,
+          reason,
+          imageErrorReasonAndMessages[
+            reason as keyof typeof imageErrorReasonAndMessages
           ]
         );
       } else {
