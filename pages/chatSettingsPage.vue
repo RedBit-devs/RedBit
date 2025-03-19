@@ -13,7 +13,7 @@
           <li>Members</li>
         </NuxtLink>
         <NuxtLink class="button">
-          <li></li>
+          <li>Banned users</li>
         </NuxtLink>
       </ul>
     </div>
@@ -76,6 +76,15 @@
           <ChaSettingsUserCard />
         </div>
       </div>
+      <div v-if="currentPage == 'banned'" class="members">
+        <h2 class="text-big ">Banned users</h2>
+        <div class="pageContent">
+          <ChaSettingsUserCard />
+          <ChaSettingsUserCard />
+          <ChaSettingsUserCard />
+          <ChaSettingsUserCard />
+        </div>
+      </div>
     </div>
 
 
@@ -120,7 +129,7 @@ onMounted(() => {
 
 
   const button = document.getElementsByClassName('button')
-  const pages = ['main', 'chats', 'members']
+  const pages = ['main', 'chats', 'members', 'banned']
   const btnArray = [...button]
   const saveBtn = document.getElementById('save')
   const modifyBtn = document.getElementById('modify')
@@ -195,8 +204,6 @@ ul {
   cursor: pointer;
   margin: 1rem;
 }
-
-
 
 .close {
   text-align: right;
