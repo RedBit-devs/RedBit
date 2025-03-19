@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     }
   
     const userId = event.context.auth.user.id;
-    const updateUserData: User = await readBody(event);
+    let updateUserData = await readBody(event);
     apiResponse.params = {
       id: userId,
       email: updateUserData.email,
@@ -39,6 +39,7 @@ export default defineEventHandler(async (event) => {
       description: updateUserData.description,
       profile_picture: updateUserData.profile_picture
     };
+    updateUserData = apiResponse.params
     if(updateUserData.email && !(await isEmailValid(updateUserData.email))) {
       customErrorMessages.push({
           expectedFrom: errorExpectedFroms.User,
@@ -47,10 +48,7 @@ export default defineEventHandler(async (event) => {
     }
     if(updateUserData.email && (await isEmailValid(updateUserData.email)))
     {
-      apiResponse.params = {
-        ...apiResponse.params,
-        email_verified: false
-      }
+      updateUserData.email_verified = false;
     }
     event.context.apiResponse = apiResponse;
 
@@ -84,8 +82,7 @@ export default defineEventHandler(async (event) => {
         throw createError(errors);  
     }
       
-    const data = await updateRecord("user", apiResponse.params, event.context.auth.user.id,customErrorMessages);
-
+    const data = await updateRecord("user", updateUserData, userId,customErrorMessages);
     const {errors} = apiResponseHandler(event,customErrorMessages,data);
   
     if (customErrorMessages.length > 0) {
