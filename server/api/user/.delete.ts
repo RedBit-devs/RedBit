@@ -54,6 +54,16 @@ export default defineEventHandler(async (event) => {
             }
           ]
         }
+      }),
+      prisma.server_User_Connect.deleteMany({
+        where: {
+          user_id: userId,
+        },
+      }),
+      prisma.ban.deleteMany({
+        where: {
+          sufferer_id: userId,
+        },
       })
     ]);
     const servers = await prisma.server.findMany({
