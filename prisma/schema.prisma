@@ -60,6 +60,7 @@ model User {
   Bans           Ban[]                 @relation("sufferer") //List of bans suffered by the user
   Bans_created   Ban[]                 @relation("initiator") //List of bans created by the user
   Roles          User_Role_Connect[] //List of roles assigned to the user
+  Images         Image[]
 
   @@map("users")
 }
@@ -212,4 +213,15 @@ model User_Role_Connect {
 
   @@id([role_id, user_id])
   @@map("user_role_connect")
+}
+
+model Image {
+  id        String @id @default(cuid())
+  author_id String
+  content   String
+  name      String
+
+  Author User @relation(fields: [author_id], references: [id], onDelete: Cascade)
+
+  @@map("images")
 }
