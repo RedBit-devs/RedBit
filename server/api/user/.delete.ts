@@ -1,5 +1,6 @@
 import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
+import deleteRecord from "~/lib/prisma/databaseOperations/deleteRecord";
 import updateRecord from "~/lib/prisma/databaseOperations/updateRecord";
 import {
   type CustomErrorMessage,
@@ -42,22 +43,18 @@ export default defineEventHandler(async (event) => {
           user_id: "deleteduser",
         },
       }),
-      prisma.friend_Connect.updateMany({
-        where: {
-          user1_id: userId,
-        },
-        data: {
-          user1_id: "deleteduser",
-        },
-      }),
-      prisma.friend_Connect.updateMany({
-        where: {
-          user2_id: userId,
-        },
-        data: {
-          user2_id: "deleteduser",
-        },
-      }),
+      prisma.friend_Connect.deleteMany({
+        where:{
+          OR:[
+            {
+              user1_id: userId
+            },
+            {
+              user2_id: userId
+            }
+          ]
+        }
+      })
     ]);
     const servers = await prisma.server.findMany({
       where: {
@@ -71,7 +68,7 @@ export default defineEventHandler(async (event) => {
           server_id: serverId,
         },
         orderBy: {
-          created_at: "desc",
+          created_at: "asc",
         },
       });
       if (oldestUser) {
@@ -85,14 +82,7 @@ export default defineEventHandler(async (event) => {
         });
       }
       else {
-        await prisma.server.update({
-            where: {
-              id: serverId,
-            },
-            data: {
-              owner_id: "deleteduser",
-            },
-          });
+        const test = await deleteRecord("server",serverId,customErrorMessages)
       }
       updatedServers += 1;
     }
