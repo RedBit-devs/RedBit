@@ -48,6 +48,9 @@
             </div>
         </div>
     </div>
+    <div v-if="err" class="toaster">
+            <Toast v-for="(error, i) in errors" :key="i" class="danger" :title="error.reason" :content="error.message" />
+        </div>
 </template>
 
 <script setup>
@@ -62,7 +65,7 @@ const emailRef = ref(null)
 const usernameRef = ref(null)
 const passwordRef = ref(null)
 const passwordAgainRef = ref(null)
-
+const errors = ref([]);
 const sendRegisterRequest = async () => {
     
     if (!firstnameRef.value.value ||
@@ -73,11 +76,16 @@ const sendRegisterRequest = async () => {
         
     if (!(passwordRef.value.value === passwordAgainRef.value.value)) return;
     
-    const response = await $fetch("/api/user/", {
-        ignoreResponseError : true,
 
-        method: 'PUT',
-        body: {
+    if (!getToken()) await tokenRefresh();
+
+    const { data, status } = useFetch(`/api/server/`, {
+    method: "PUT",
+    headers: {
+      Authorization: getToken(),
+      "Content-Type": "application/json",
+    },
+    body: {
             first_name: firstnameRef.value.value,
             last_name: lastnameRef.value.value,
             birthdate: birthDateRef.value.value,
@@ -85,12 +93,16 @@ const sendRegisterRequest = async () => {
             username: usernameRef.value.value,
             password: passwordRef.value.value
         
-        }
-        
-    })
+        },
+    immediate: true,
+  });
 
-    if (!response.error) {
-        navigateTo('/loginPage')    
+
+  if (status === "success") {
+        navigateTo('/chatpage/')
+}
+    if (stat.value === "error") {
+        errors.value = error.data
     }
     return;
     
