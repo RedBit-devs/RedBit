@@ -1,6 +1,7 @@
 import { type Server } from "@prisma/client";
 import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
+import createRecord from "~/lib/prisma/databaseOperations/createRecord";
 import { paramsCheck } from "~/shared/utils/userValidation";
 import {  errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
 
@@ -76,6 +77,7 @@ export default defineEventHandler(async (event) => {
                 }
             }
         })
+        await createRecord("Server_User_Connect",{server_id: dbResponse.id,user_id: event.context.auth.user.id},errorMessages);
     } catch (error) {
         prismaErrorHandler(error,"server",errorMessages);
     }
