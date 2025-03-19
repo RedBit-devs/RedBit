@@ -85,7 +85,6 @@ const { data,error, status, execute } = useFetch(`/api/user/`, {
  */
   const validateUserData = () => {
     firstnameRef.value.value &&
-    firstnameRef.value.value &&
     lastnameRef.value.value &&
     birthDateRef.value.value &&
     emailRef.value.value &&
@@ -95,11 +94,8 @@ const { data,error, status, execute } = useFetch(`/api/user/`, {
   }
 const sendRegisterRequest = async () => {
     
-    if (!validateUserData()) return;
-        
-    if (!(passwordRef.value.value === passwordAgainRef.value.value)) return;
+    if (!validateUserData() || !(passwordRef.value.value === passwordAgainRef.value.value)) return;
     
-
     if (!getToken()) await tokenRefresh();
 
     const {data, error, status } = await execute({
