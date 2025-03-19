@@ -66,36 +66,52 @@ const usernameRef = ref(null)
 const passwordRef = ref(null)
 const passwordAgainRef = ref(null)
 const errors = ref([]);
+
+const { data,error, status, execute } = useFetch(`/api/user/`, {
+    method: "PUT",
+    headers: {
+      Authorization: getToken(),
+      "Content-Type": "application/json",
+    },
+    immediate: false,
+  });
+
+/**
+ * Checks if the user data is valid.
+ *
+ * Checks if all the required fields have been filled.
+ *
+ * @return {boolean} - True if the user data is valid, false if not.
+ */
+  const validateUserData = () => {
+    !firstnameRef.value.value ||
+    firstnameRef.value.value &&
+    lastnameRef.value.value &&
+    birthDateRef.value.value &&
+    emailRef.value.value &&
+    usernameRef.value.value &&
+    passwordRef.value.value &&
+    passwordAgainRef.value.value
+  }
 const sendRegisterRequest = async () => {
     
-    if (!firstnameRef.value.value ||
-        !lastnameRef.value.value ||
-        !birthDateRef.value.value || !emailRef.value.value ||
-        !usernameRef.value.value || !passwordRef.value.value ||
-        !passwordAgainRef.value.value) return;
+    if (!validateUserData()) return;
         
     if (!(passwordRef.value.value === passwordAgainRef.value.value)) return;
     
 
     if (!getToken()) await tokenRefresh();
 
-    const { data, status } = useFetch(`/api/server/`, {
-    method: "PUT",
-    headers: {
-      Authorization: getToken(),
-      "Content-Type": "application/json",
-    },
-    body: {
-            first_name: firstnameRef.value.value,
-            last_name: lastnameRef.value.value,
-            birthdate: birthDateRef.value.value,
+    const {data, error, status } = await execute({
+        body: {
+            firstname: firstnameRef.value.value,
+            lastname: lastnameRef.value.value,
+            birthDate: birthDateRef.value.value,
             email: emailRef.value.value,
             username: usernameRef.value.value,
             password: passwordRef.value.value
-        
-        },
-    immediate: true,
-  });
+        }
+    })
 
 
   if (status === "success") {
