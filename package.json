@@ -13,10 +13,14 @@
     "@nuxt/icon": "^1.10.3",
     "@nuxtjs/device": "^3.2.4",
     "@prisma/nuxt": "^0.0.35",
+    "@vueuse/core": "^12.7.0",
+    "@vueuse/nuxt": "^12.7.0",
     "bcrypt": "^5.1.1",
-    "jsonwebtoken": "^9.0.2",
+    "crypto": "^1.0.1",
+    "jose": "^6.0.6",
     "markdown-it": "^14.1.0",
     "nuxt": "^3.14.0",
+    "nuxt-file-storage": "^0.3.0",
     "vue": "latest",
     "vue-router": "latest"
   },
@@ -24,9 +28,12 @@
     "@iconify-json/mdi": "^1.2.1",
     "@prisma/client": "^5.22.0",
     "@types/bcrypt": "^5.0.2",
-    "@types/jsonwebtoken": "^9.0.7",
     "prisma": "^5.22.0",
+    "tsx": "^4.19.3",
     "typescript": "5.6.2",
     "vue-tsc": "^2.1.10"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

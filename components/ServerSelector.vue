@@ -7,48 +7,32 @@
         <hr>
         <div class="chatList">
             <!--Szintén Mivel még nincsenek szerverek így teszt gyanánt képet használok-->
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink to=""><img src="../img/probalogo.png"></NuxtLink>
-            <NuxtLink id="addServer">
+            <NuxtLink v-for="server in servers" @click="chatgroupsRefresh()" :key="server?.id" :to="`/chatpage/${server?.id}/`"><img :title="server?.name" :src="server?.picture" :alt="server?.name?.slice(0,2)"></NuxtLink>
+
+            <div @click="() => {
+                addServerFunc()
+            }" id="addServer">
                 <Icon name="mdi:plus" size="120%" />
-            </NuxtLink>
+            </div>
         </div>
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+
+const { addServerFunc, servers, chatgroupsRefresh } = defineProps({
+    'addServerFunc': {
+        type: Function,
+        default: () => { }
+    },
+    'chatgroupsRefresh': {
+        type: Function,
+        default: () => { }
+    },
+    'servers': {
+        default: []
+    }
+})
 
 
 </script>
@@ -82,6 +66,7 @@ hr {
     justify-content: center;
     align-items: center;
     padding-inline: .3rem;
+    overflow-y: auto;
 }
 
 .chatList img {

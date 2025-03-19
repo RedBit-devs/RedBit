@@ -39,17 +39,18 @@ enum Message_Type {
 }
 
 model User {
-  id              String   @id @default(cuid())
-  username        String
-  email           String   @unique
-  profile_picture String?
-  birthdate       DateTime
-  first_name      String
-  last_name       String
-  description     String?
-  created_at      DateTime @default(now())
-  password        String
-  email_verified  Boolean  @default(false)
+  id                String   @id @default(cuid())
+  username          String
+  email             String   @unique
+  profile_picture   String?
+  birthdate         DateTime
+  first_name        String
+  last_name         String
+  description       String?
+  created_at        DateTime @default(now())
+  password          String
+  email_verified    Boolean  @default(false)
+  verification_code String   @default(cuid())
 
   Servers_joined Server_User_Connect[] //List of servers joined by the user
   Servers_owned  Server[] //List of servers owned by the user
@@ -59,6 +60,7 @@ model User {
   Bans           Ban[]                 @relation("sufferer") //List of bans suffered by the user
   Bans_created   Ban[]                 @relation("initiator") //List of bans created by the user
   Roles          User_Role_Connect[] //List of roles assigned to the user
+  Images         Image[]
 
   @@map("users")
 }
@@ -70,8 +72,8 @@ model Friend_Connect {
   user1_id String
   user2_id String
 
-  User1 User @relation("friended_by", fields: [user1_id], references: [id]) // reference to the user who created the friendship
-  User2 User @relation("friend_of", fields: [user2_id], references: [id]) // reference to the user who is targeted by the friendship
+  User1 User @relation("friended_by", fields: [user1_id], references: [id], onDelete: Cascade) // reference to the user who created the friendship
+  User2 User @relation("friend_of", fields: [user2_id], references: [id], onDelete: Cascade) // reference to the user who is targeted by the friendship
 
   @@id([user1_id, user2_id])
   @@map("friends_connect")
@@ -104,7 +106,7 @@ model Invite {
 
   server_id String
 
-  Server Server @relation(fields: [server_id], references: [id]) // reference to the server to which the invitation belongs
+  Server Server @relation(fields: [server_id], references: [id], onDelete: Cascade) // reference to the server to which the invitation belongs
 
   @@map("invites")
 }
@@ -115,8 +117,8 @@ model Server_User_Connect {
   server_id String
   user_id   String
 
-  User   User   @relation(fields: [user_id], references: [id]) // reference to the user in the connection
-  Server Server @relation(fields: [server_id], references: [id]) // reference to the server in the connection
+  User   User   @relation(fields: [user_id], references: [id], onDelete: Cascade) // reference to the user in the connection
+  Server Server @relation(fields: [server_id], references: [id], onDelete: Cascade) // reference to the server in the connection
 
   @@id([server_id, user_id])
   @@map("server_user_connect")
@@ -130,7 +132,7 @@ model Chat_Group {
 
   Chat_rooms Chat_Room[] // list of chatrooms connected to this group
 
-  Server Server @relation(fields: [server_id], references: [id]) // reference to the server where the chat group belongs
+  Server Server @relation(fields: [server_id], references: [id], onDelete: Cascade) // reference to the server where the chat group belongs
 
   @@map("chat_groups")
 }
@@ -146,7 +148,7 @@ model Chat_Room {
 
   Messages Message[] // list of messages in the chat room
 
-  Chat_Group Chat_Group @relation(fields: [chat_group_id], references: [id]) // reference to the chat group where the room belongs
+  Chat_Group Chat_Group @relation(fields: [chat_group_id], references: [id], onDelete: Cascade) // reference to the chat group where the room belongs
 
   @@map("chat_rooms")
 }
@@ -164,9 +166,9 @@ model Message {
 
   Replyes Message[] @relation("reply") //The list of replyes to this message
 
-  Message   Message?  @relation("reply", fields: [reply_to_id], references: [id]) //The referenced message
+  Message   Message?  @relation("reply", fields: [reply_to_id], references: [id], onDelete: Cascade) //The referenced message
   User      User      @relation(fields: [user_id], references: [id]) //reference to the author of the message
-  Chat_Room Chat_Room @relation(fields: [chat_room_id], references: [id]) //reference to the chat room which has the message
+  Chat_Room Chat_Room @relation(fields: [chat_room_id], references: [id], onDelete: Cascade) //reference to the chat room which has the message
 
   @@map("messages")
 }
@@ -179,8 +181,8 @@ model Ban {
   initiator_id String
   server_id    String
 
-  Server    Server @relation(fields: [server_id], references: [id]) // reference to the server of origin of the ban
-  Sufferer  User   @relation("sufferer", fields: [sufferer_id], references: [id]) // reference to the target of the ban
+  Server    Server @relation(fields: [server_id], references: [id], onDelete: Cascade) // reference to the server of origin of the ban
+  Sufferer  User   @relation("sufferer", fields: [sufferer_id], references: [id], onDelete: Cascade) // reference to the target of the ban
   Initiator User   @relation("initiator", fields: [initiator_id], references: [id]) // reference to the creator of the ban
 
   @@id([server_id, sufferer_id])
@@ -196,7 +198,7 @@ model Role {
 
   Users User_Role_Connect[] // list of users which got this role
 
-  Server Server @relation(fields: [server_id], references: [id]) // reference to the server of the role
+  Server Server @relation(fields: [server_id], references: [id], onDelete: Cascade) // reference to the server of the role
 
   @@id([id, server_id])
   @@map("roles")
@@ -206,9 +208,20 @@ model User_Role_Connect {
   role_id String
   user_id String
 
-  Role Role @relation(fields: [role_id], references: [id]) // reference to the role
-  User User @relation(fields: [user_id], references: [id]) // reference to the user who has the role
+  Role Role @relation(fields: [role_id], references: [id], onDelete: Cascade) // reference to the role
+  User User @relation(fields: [user_id], references: [id], onDelete: Cascade) // reference to the user who has the role
 
   @@id([role_id, user_id])
   @@map("user_role_connect")
+}
+
+model Image {
+  id        String @id @default(cuid())
+  author_id String
+  content   String
+  name      String
+
+  Author User @relation(fields: [author_id], references: [id], onDelete: Cascade)
+
+  @@map("images")
 }

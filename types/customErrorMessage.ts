@@ -35,13 +35,15 @@ enum errorReasons {
   EmailDoesntMatch = "EmailDoesntMatch",
   NoDatabaseResponse = "NoDatabaseResponse",
   FailedToLogin = "FailedToLogin",
-  Expired = "Expired"
+  Expired = "Expired",
+  ServerAccessDenied = "ServerAccessDenied",
 }
 enum errorExpectedFroms {
   Prisma = "Prisma",
   User = "User",
   Server = "Server",
-  Invite = "Invite"
+  Invite = "Invite",
+  Image = "Image",
 }
 
 export {

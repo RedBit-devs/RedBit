@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <NuxtLink>
+        <NuxtLink to="/discoverServerPage">
             <Icon name="mdi:web" style="color: white;" size="300%" />
         </NuxtLink>
 

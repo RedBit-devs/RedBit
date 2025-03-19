@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="submit">
-                    <button :disabled="stat == 'pending'" @click="sendLoginRequest()" class="btn ui-secondary">
+                    <button  @click="sendLoginRequest()" class="btn ui-secondary">
                         Submit</button>
                 </div>
 
@@ -26,6 +26,11 @@
                 <label>Not registered yet?</label>
                 <NuxtLink to="/registerPage" class="btn secondary">
                     Register
+                </NuxtLink>
+            </div>
+            <div class="forgottenPassword">
+                <NuxtLink to="/resetPasswordPage">
+                    Forgott your password?
                 </NuxtLink>
             </div>
         </div>
@@ -44,38 +49,28 @@ definePageMeta({
 
 const emailRef = ref(null)
 const passwordRef = ref(null)
-const { setToken } = useToken()
+const { getNewRefreshToken } = useToken()
 
 const err = ref([]);
-const stat = ref(null)
+const stat = ref(null);
+const isRequestPending = ref(false);
 
 const sendLoginRequest = async () => {
+    isRequestPending.value = true;
+    if (!emailRef.value.value || !passwordRef.value.value) return isRequestPending.value = false;
 
-    if (!emailRef.value.value || !passwordRef.value.value) return;
-
-
-    const { data, error, status } = await useFetch("/api/user/login", {
-        method: "POST",
-        body: {
-            email: emailRef.value.value,
-            password: passwordRef.value.value
-        }
-    })
+    const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
     stat.value = status
 
-    if (status.value == "error") {
-        err.value = error.value.data.data
-
-        return setToken(null);
+    if (stat.value === "success") {
+        navigateTo('/chatpage/')
     }
 
-    if (status.value === "success") {
-        setToken(data.value.data.items[0].token.split(" ")[1]);
-
-        ////TODO this should navigate to the chat
-        navigateTo('/test')
+    if (stat.value === "error") {
+        err.value = error.data
     }
+    isRequestPending.value = false;
 }
 
 </script>
@@ -155,6 +150,12 @@ input {
     justify-content: space-between;
     align-items: center;
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
+}
+
+.forgottenPassword a{
+    cursor: pointer;
+    color: var(--clr-primary);
+    text-decoration: none;
 }
 
 @media only screen and (max-width:1100px) {

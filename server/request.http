@@ -8,12 +8,12 @@ PUT {{baseUrl}}/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "ssssg",
-    "email": "josshndodddda@dexample.com",
+    "username": "julis",
+    "email": "julis@example.com",
     "birthdate": "1990-02-12",
-    "first_name": "sssss",
-    "last_name": "sssss",
-    "password": "ssss2sS#ss"
+    "first_name": "Fake",
+    "last_name": "Julis",
+    "password": "Pass123@"
 }
 
 ###
@@ -21,8 +21,8 @@ POST  {{baseUrl}}/user/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"josshndodddda@dexample.com",
-    "password":"ssss2sS#ss"
+    "email":"lajos@example.com",
+    "password":"Pass123@"
 }
 
 ###
@@ -44,28 +44,68 @@ GET  {{baseUrl}}/user/verifyEmail?id=cm5o7wq7p000011xyazpwyoks&email=josshndoddd
 ###
 
 PUT  {{baseUrl}}/server/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzd3cTdwMDAwMDExeHlhenB3eW9rcyIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3MzcwNTM5NDYsImV4cCI6MTczODc4MTk0Nn0.9B7kGHVdiTQ_mr0Ky3cHxK6IXgaw0p7SjRA0Avhno4LXaCn90cRFQl0PoWROAcTXi7p6_7vXtlh0BHEmLKdv8g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTI4MDg0NiwiZXhwIjoxNzQzMDA4ODQ2fQ.dCd4dGhYwl3SfWTqJ1S8-_x7Wj1Gm9mGuj-0RlK0Wde3BqgBp3c6lAkjdzaC3-SxcO45mi4Rzia1F6sKmKnM8Q
 Content-Type: application/json
 
 {
-    "name":"Jons",
+    "name":"Lajoska szerverkéje",
     "picture": "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d",
     "visibility":"public"
 }
 
 
 ###
+
+GET  {{baseUrl}}/server/get/cm7xlp3xn0000ia0jk7pyi8a9 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
+
+###
 PUT  {{baseUrl}}/server/invite/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY201bzd3cTdwMDAwMDExeHlhenB3eW9rcyIsImVtYWlsIjoiam9zc2huZG9kZGRAZGRleGFtcGxlLmNvbSJ9LCJpYXQiOjE3MzcwNTM5NDYsImV4cCI6MTczODc4MTk0Nn0.9B7kGHVdiTQ_mr0Ky3cHxK6IXgaw0p7SjRA0Avhno4LXaCn90cRFQl0PoWROAcTXi7p6_7vXtlh0BHEmLKdv8g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTI4MDg0NiwiZXhwIjoxNzQzMDA4ODQ2fQ.dCd4dGhYwl3SfWTqJ1S8-_x7Wj1Gm9mGuj-0RlK0Wde3BqgBp3c6lAkjdzaC3-SxcO45mi4Rzia1F6sKmKnM8Q
 Content-Type: application/json
 
 {
     "lifetime": 99999000,
-    "server_id":"cm6cesl4q000047jgdcjxlojc"
+    "server_id":"cm7xlp3xn0000ia0jk7pyi8a9"
 }
 
 
 ###
-GET  {{baseUrl}}/server/invite/cm6t2p3sj0001pnpg9utcnin9 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiY202dDJteG5vMDAwMHBucGc3NmsxdnJjbiIsImVtYWlsIjoiam9zc2huZG9kZGRkYUBkZXhhbXBsZS5jb20ifSwiaWF0IjoxNzM4ODMwMjYxLCJleHAiOjE3NDA1NTgyNjF9.mkdtPZ7oyYqxrg4oTMsdWky-8J3LksYyhalyB5485RbVtylb9ylS9CzGgSGTXu0mdjXXoff5kniZ21pA4sqkbw
+GET  {{baseUrl}}/server/invite/cm7xlqct00003ia0jn5k6u73p HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTI4MDg0NiwiZXhwIjoxNzQzMDA4ODQ2fQ.dCd4dGhYwl3SfWTqJ1S8-_x7Wj1Gm9mGuj-0RlK0Wde3BqgBp3c6lAkjdzaC3-SxcO45mi4Rzia1F6sKmKnM8Q
 
+###
+
+GET  {{baseUrl}}/token/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIiwidmVyaWZpY2F0aW9uX2NvZGUiOiJhc2QyIn0sImlhdCI6MTc0MjI0NDU5MCwiZXhwIjoxNzQzOTcyNTkwfQ._87NUnsZbPpuWzFLp8YC-HhJ4R_sDnnLb4lNgabyDq__Y14SKr-mUSQSA_YrAZZB3o2Hmb-dEHGMbiMyQ1Cv7Q
+###
+GET  {{baseUrl}}/user/servers HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
+
+###
+
+#/server/get/:serverID/rooms/
+GET  {{baseUrl}}/server/get/cm7xlp3xn0000ia0jk7pyi8a9/rooms HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
+
+###
+#/server/get/:serverID/chatgroups/
+PUT {{baseUrl}}/server/get/cm7xlp3xn0000ia0jk7pyi8a9/chatgroups/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
+Content-Type: application/json
+
+{
+    "name":"Hi"
+}
+
+###
+#/server/chatgroups/get/:chatgroupId/
+PUT {{baseUrl}}/server/chatgroups/get/cm8d6kwoj0000rmaizf3wjrjs/rooms HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY203dWRwZzV5MDAwMDJmNmpqZzRnMWJlbCIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imxham9zIn0sImlhdCI6MTc0MTk3MTAzNSwiZXhwIjoxNzQzNjk5MDM1fQ.cHBbomaMXwx1do_8LcASQnkMWyQKq4AiDHUpRMF1NsQU_gfELhkrvqP3WWcYm-R6NRyTydTqOubBS5dcoaEytA
+Content-Type: application/json
+
+{
+    "name":"Hi chat"
+}
+
+###

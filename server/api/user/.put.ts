@@ -1,6 +1,6 @@
 import createRecord from "~/lib/prisma/databaseOperations/createRecord";
 import { apiResponseHandler } from "~/server/utils/apiResponseHandler";
-import { userValidation, hashPassword } from "~/server/utils/userValidation";
+import { userValidation, hashPassword } from "~/shared/utils/userValidation";
 import {
   type CustomErrorMessage,
 } from "~/types/customErrorMessage";
@@ -10,14 +10,15 @@ export default defineEventHandler(async (event) => {
   const apiResponse = {} as ApiResponse;
   apiResponse.context = "User/Create";
   apiResponse.method = "PUT";
-  apiResponse.params = {
+  const params:User = {
     username: newUser.username,
     email: newUser.email,
     birthdate: newUser.birthdate,
     first_name: newUser.first_name,
     last_name: newUser.last_name,
     password: newUser.password,
-  };
+  }
+  apiResponse.params = params;
   const customErrorMessages: CustomErrorMessage[] = [];
   event.context.apiResponse = apiResponse;
 
@@ -28,13 +29,15 @@ export default defineEventHandler(async (event) => {
 
   newUser.birthdate = new Date(newUser.birthdate);
   newUser.password = await hashPassword(newUser.password, customErrorMessages);
-  
+  params.password = "SuperSecretPassword";
+  apiResponse.params = params;
   if (customErrorMessages.length > 0) {
     const {errors} = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);  
   }
   
   const data = await createRecord("user", newUser,customErrorMessages);
+  delete data.password
   const {errors} = apiResponseHandler(event,customErrorMessages,data);
   
   if (customErrorMessages.length > 0) {

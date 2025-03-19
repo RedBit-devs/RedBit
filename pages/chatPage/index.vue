@@ -1,19 +1,13 @@
 <template>
-    <div class="content">
-        <ChatFieldNavbar />
         <div id="chat">
-
+          <h1>Chose a server</h1>
         </div>
-        <ChatInputFiled id="input" />
-    </div>
 </template>
 
-<script setup>
-
+<script lang="ts" setup>
 definePageMeta({
     layout: 'chat'
 })
-
 
 </script>
 
