@@ -101,12 +101,8 @@ export default defineEventHandler(async (event) => {
   }
   if (updatedData) {
     updatedData = {
-      totalItems:
-        updatedData[0].count +
-        updatedData[1].count +
-        updatedData[2].count +
-        updatedServers,
-      items: [],
+      totalItems:updatedData.length,
+      items: updatedData,
     };
   }
   if(customErrorMessages.length > 0) {
