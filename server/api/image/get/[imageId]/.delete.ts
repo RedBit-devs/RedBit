@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     throw createError(errors);
   }
 
-  const data = await prisma.images.delete({
+  const data = await prisma.image.delete({
     where: {
         id: imageId,
         author_id: userId

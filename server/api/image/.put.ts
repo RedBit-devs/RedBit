@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
 
 
 
-    const dbResponse = await prisma.images.create({
+    const dbResponse = await prisma.image.create({
         data: {
             name: reqBody.name,
             content: reqBody.content,
@@ -72,7 +72,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const data = {
-        fields: prisma.images.fields,
+        fields: prisma.image.fields,
         totalItems: 1,
         items: [
             dbResponse

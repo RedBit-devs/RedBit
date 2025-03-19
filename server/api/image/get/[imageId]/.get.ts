@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     throw createError(errors);
   }
 
-  const data: Prisma.ImagesFieldRefs = await readRecord("image", imageId, customErrorMessages);
+  const data: Prisma.ImageFieldRefs = await readRecord("image", imageId, customErrorMessages);
   const { errors } = apiResponseHandler(event, customErrorMessages, {totalItems: 1, fields: prisma.server.fields, items: [data]});
   if (customErrorMessages.length > 0) {
     throw createError(errors);
