@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="buttons">
-            <button class="btn primary">Remove ban </button>
+            <button class="btn primary">Unban </button>
         </div>
     </div>
 </template>
@@ -22,6 +22,11 @@
     padding: 1rem;
     display: flex;
     justify-content: space-between;
+}
+
+.cardContent:hover {
+    background-color: var(--clr-ui-secondary);
+    border-radius: var(--border-rounded);
 }
 
 img {

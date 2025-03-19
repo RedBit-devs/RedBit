@@ -32,6 +32,10 @@
 }
 
 
+.cardContent:hover {
+    background-color: var(--clr-ui-secondary);
+    border-radius: var(--border-rounded);
+}
 
 .data {
     display: flex;

@@ -24,6 +24,11 @@
     justify-content: space-between;
 }
 
+.cardContent:hover {
+    background-color: var(--clr-ui-secondary);
+    border-radius: var(--border-rounded);
+}
+
 img {
     height: 2.875rem;
     border-radius: 50%;
