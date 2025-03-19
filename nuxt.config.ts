@@ -38,5 +38,8 @@ export default defineNuxtConfig({
         {rel: "icon", type: "image/svg+xml", href:"logos.svg" }
       ]
     }
+  },
+  fileStorage:{
+    mount: "./" // I just dont understand what does this do, sooooo... leave it like this
   }
 })
