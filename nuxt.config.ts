@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '~/assets/css/fonts.css'
   ],
   devtools: { enabled: true },
-  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt'],
+  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt', 'nuxt-file-storage'],
   prisma: {
     installStudio: false,
     autoSetupPrisma: true
