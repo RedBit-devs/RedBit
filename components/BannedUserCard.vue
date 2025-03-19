@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="buttons">
-            <button class="btn primary">Remove ban</button>
+            <button class="btn primary">Remove ban </button>
         </div>
     </div>
 </template>
@@ -32,5 +32,9 @@ img {
 .data {
     display: flex;
     gap: .5rem;
+}
+
+button {
+    width: fit-content;
 }
 </style>
