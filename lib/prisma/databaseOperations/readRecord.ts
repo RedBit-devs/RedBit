@@ -18,17 +18,11 @@ import {
  * @returns {Promise<any>}
  */
 
-interface ReadRecordOptions {
-  exclude?: string[];
-  include?: string[];
-}
-
 
 const readRecord = async (
   table: string,
   id: string,
   customErrorMessages: CustomErrorMessage[],
-  exclude?: string[],
   include?: string[]
 ): Promise<any> => {
   if (!(await checkTable(table))) {
@@ -42,20 +36,25 @@ const readRecord = async (
   }
 
   try {
-    const select: ReadRecordOptions = {};
-    if (exclude) {
-      select.exclude = exclude;
-    }
-    if (include) {
-      select.include = include;
+    let select:{ select: { [key: string]: boolean } };
+    let filter = { where: { id } };
+
+
+    if (include !== undefined) {
+      select = {select: {}}
+      select.select =   include.reduce((acc, key) => ({ ...acc, [key]: true }), {});
     }
 
-    const result = await prisma[table].findUnique({
-      where: { id },
-      select,
-    });
+
+    const querry = {...filter,...select};
+
+    const result = await prisma[table].findUnique(
+      querry
+    );
+
     return result;
   } catch (error) {
+    console.log(error)
     prismaErrorHandler(error,table, customErrorMessages);
     return null;
   }
