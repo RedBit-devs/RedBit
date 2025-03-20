@@ -48,12 +48,19 @@
             </div>
         </div>
     </div>
+    <div v-if="error?.data || goodToast?.length !== 0" class="toaster">
+        <Toast v-for="(error, i) in error?.data?.data" :key="i" class="danger" :title="error.reason"
+            :content="error.message" />
+        <Toast v-for="(toast, i) in goodToast" :key="i" class="ok" :title="toast.title" :content="toast.message" />
+    </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 definePageMeta({
     layout: false
 })
+
+const goodToast = ref([])
 
 const firstnameRef = ref(null)
 const lastnameRef = ref(null)
@@ -63,37 +70,57 @@ const usernameRef = ref(null)
 const passwordRef = ref(null)
 const passwordAgainRef = ref(null)
 
-const sendRegisterRequest = async () => {
-    
-    if (!firstnameRef.value.value ||
-        !lastnameRef.value.value ||
-        !birthDateRef.value.value || !emailRef.value.value ||
-        !usernameRef.value.value || !passwordRef.value.value ||
-        !passwordAgainRef.value.value) return;
-        
-    if (!(passwordRef.value.value === passwordAgainRef.value.value)) return;
-    
-    const response = await $fetch("/api/user/", {
-        ignoreResponseError : true,
-
-        method: 'PUT',
-        body: {
+const { error, status, execute, clear } = useFetch(`/api/user/`, {
+    method: "PUT",
+    immediate: false,
+    onRequest({ options }) {
+        options.body = {
             first_name: firstnameRef.value.value,
             last_name: lastnameRef.value.value,
             birthdate: birthDateRef.value.value,
             email: emailRef.value.value,
             username: usernameRef.value.value,
-            password: passwordRef.value.value
-        
+            password: passwordRef.value.value,
         }
-        
-    })
-
-    if (!response.error) {
-        navigateTo('/loginPage')    
     }
-    return;
-    
+});
+
+// If somehow some data remains in the refs
+clear()
+
+
+
+/**
+ * Checks if the user data is valid.
+ *
+ * Checks if all the required fields have been filled.
+ *
+ */
+const validateUserData = () => {
+    if (firstnameRef.value?.value &&
+        lastnameRef.value?.value &&
+        birthDateRef.value?.value &&
+        emailRef.value?.value &&
+        usernameRef.value?.value &&
+        passwordRef.value?.value &&
+        passwordAgainRef.value?.value) return true;
+    return false
+
+}
+const sendRegisterRequest = async () => {
+    if (!validateUserData() || !(passwordRef.value.value === passwordAgainRef.value.value)) return;
+
+    clear()
+
+    await execute()
+
+
+    if (status.value === "success") {
+        setTimeout(() => {
+            navigateTo("/loginpage/")
+        }, 5000);
+        goodToast.value.push({ title: "Success", message: "Successfully registed" })
+    }
 }
 
 </script>
