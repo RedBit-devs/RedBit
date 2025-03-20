@@ -3,7 +3,7 @@
         <div v-if="picture != ''" class="profPic"><img :src="picture" alt=""></div>
         <div class="name">
             <h3>{{name}}</h3>
-            <p v-if="picture != ''">{{activity}}</p>
+            <p v-if="activity != ''">{{activity}}</p>
         </div>
     </div>
 </template>
@@ -11,8 +11,7 @@
 <script setup>
     const { name, picture, activity } = defineProps({
     'name': {
-        type: String,
-        default: "mmm"
+        type: String
     },
     'picture': {
         type: String,
