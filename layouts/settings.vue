@@ -9,7 +9,7 @@
                 <NuxtLink class="button" :to="`/chatPage/${routes.params.serverId}/settings/chats`">
                     <li>Chats</li>
                 </NuxtLink>
-                <NuxtLink class="button">
+                <NuxtLink class="button" :to="`/chatPage/${routes.params.serverId}/settings/members`">
                     <li>Members</li>
                 </NuxtLink>
                 <NuxtLink class="button">
