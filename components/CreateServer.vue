@@ -2,12 +2,7 @@
   <dialog @click.self="closeDialogFunc" :open="isShown">
     <div class="modal">
       <div class="close">
-        <Icon
-          @click.self="closeDialogFunc"
-          name="mdi:close"
-          size="150%"
-          class="btn primary"
-        />
+        <Icon @click.self="closeDialogFunc" name="mdi:close" size="150%" class="btn primary" />
       </div>
       <div class="content">
         <h1 id="title">Create server</h1>
@@ -28,23 +23,12 @@
         <div id="visibilityInput">
           <div id="check">
             <label>
-              <input
-                type="radio"
-                name="visibility"
-                checked
-                v-model="visibility"
-                :value="'public'"
-              />Public
+              <input type="radio" name="visibility" checked v-model="visibility" :value="'public'" />Public
             </label>
           </div>
           <div id="check">
             <label>
-              <input
-                type="radio"
-                name="visibility"
-                v-model="visibility"
-                :value="'private'"
-              />Private
+              <input type="radio" name="visibility" v-model="visibility" :value="'private'" />Private
             </label>
           </div>
         </div>
@@ -75,6 +59,7 @@ const createServer = async () => {
       Authorization: getToken(),
       "Content-Type": "application/json",
     },
+    immediate: false,
     body: {
       name: name.value.value,
       description: description.value.value,
@@ -92,7 +77,7 @@ const { isShown } = defineProps({
   },
   closeDialogFunc: {
     type: Function,
-    default: () => {},
+    default: () => { },
   },
 });
 </script>
@@ -191,9 +176,7 @@ label:has([type="radio"]:checked) {
 
 [type="radio"]:checked {
   border-color: transparent;
-  background: #fff
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" width="1rem" height="1rem"><circle cx="0.5" cy="0.5" r="0.5" fill="none" stroke="%23EF3333" stroke-width="0.05"/><polyline points="0.2,0.5 0.4,0.7 0.8,0.3" style="fill:none;stroke:%23EF3333;stroke-linecap:round;stroke-width:0.1;"/></svg>')
-    no-repeat 50% / 1rem;
+  background: #fff url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" width="1rem" height="1rem"><circle cx="0.5" cy="0.5" r="0.5" fill="none" stroke="%23EF3333" stroke-width="0.05"/><polyline points="0.2,0.5 0.4,0.7 0.8,0.3" style="fill:none;stroke:%23EF3333;stroke-linecap:round;stroke-width:0.1;"/></svg>') no-repeat 50% / 1rem;
 }
 
 .submit {
