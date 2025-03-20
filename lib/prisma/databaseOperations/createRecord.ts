@@ -7,6 +7,7 @@ import {
   errorReasons,
 } from "~/types/customErrorMessage";
 
+
 /**
  * Creates a new record in the given table with the given data.
  *
