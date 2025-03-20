@@ -26,7 +26,7 @@
                     <div class="userProfileWrapper">
                         <input id="imageInput" type="file" @input="handleFileInput" accept="image/*" />
                         <label for="imageInput">
-                            <img class="profPic" v-if="files[0]" :src="files[0].content" :alt="files[0].name">
+                            <img class="profPic" v-if="files[0]" :src="`${files[0].content}`" :alt="files[0].name">
                             <Icon class="profPic" v-else name="mdi:account-edit" size="4rem" />
                         </label>
                         <div class="input" id="username">
@@ -93,8 +93,8 @@ const { error, status, execute, clear } = useFetch(`/api/user/`, {
             password: passwordRef.value.value,
             profile_picture: files.value[0].content
         }
-    })
-}
+    }
+})
 
 
 // If somehow some data remains in the refs
@@ -142,7 +142,12 @@ const sendRegisterRequest = async () => {
 <style scoped>
 .profPic {
     border-radius: 100%;
-    width: 4rem;
+    max-width: 5rem;
+    max-height: 5rem;
+
+    width: auto;
+    height: auto;
+
     aspect-ratio: initial;
 }
 
@@ -161,7 +166,10 @@ label[for="imageInput"] {
     cursor: pointer;
     border-radius: 100%;
     border: 3px solid var(--clr-text-primary);
-
+    width: 5rem;
+    height: 5rem;
+    display: grid;
+    place-content: center;
 }
 
 label[for="imageInput"]:hover,
