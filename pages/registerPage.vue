@@ -49,7 +49,7 @@
         </div>
     </div>
     <div v-if="err" class="toaster">
-            <Toast v-for="(error, i) in errors" :key="i" class="danger" :title="error.reason" :content="error.message" />
+            <Toast v-for="(error, i) in error.data" :key="i" class="danger" :title="error.reason" :content="error.message" />
         </div>
 </template>
 
@@ -65,7 +65,6 @@ const emailRef = ref(null)
 const usernameRef = ref(null)
 const passwordRef = ref(null)
 const passwordAgainRef = ref(null)  
-const errors = ref([]);
 
 const { data,error, status, execute } = useFetch(`/api/user/`, {
     method: "PUT",
@@ -98,7 +97,7 @@ const sendRegisterRequest = async () => {
     
     if (!getToken()) await tokenRefresh();
 
-    const {data, error, status } = await execute({
+    await execute({
         body: {
             firstname: firstnameRef.value.value,
             lastname: lastnameRef.value.value,
@@ -112,9 +111,6 @@ const sendRegisterRequest = async () => {
 
   if (status === "success") {
         navigateTo('/chatpage/')
-}
-    if (stat.value === "error") {
-        errors.value = error.data
     }
     return;
     
