@@ -23,14 +23,13 @@ const readRecord = async (
   table: string,
   id: string,
   customErrorMessages: CustomErrorMessage[],
-  tableData?: TableData,
   include?: string[]
 ): Promise<any> => {
-  if (!(await checkTable(tableData.tableName))) {
+  if (!(await checkTable(table))) {
     const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.Prisma,
       reason: errorReasons.TableNotFound,
-      table: tableData.tableName,
+      table: table,
     };
     customErrorMessages.push(error);
     return null;
@@ -38,7 +37,7 @@ const readRecord = async (
 
   try {
     let select:{ select: { [key: string]: boolean } };
-    const filter = { where: { [tableData.idCloumnName]: tableData.id } };
+    const filter = { where: { id } };
 
 
     if (include !== undefined) {
@@ -49,14 +48,14 @@ const readRecord = async (
 
     const querry = {...filter,...select};
 
-    const result = await prisma[tableData.tableName].findUnique(
+    const result = await prisma[table].findUnique(
       querry
     );
 
     return result;
   } catch (error) {
     console.log(error)
-    prismaErrorHandler(error,tableData.tableName, customErrorMessages);
+    prismaErrorHandler(error,table, customErrorMessages);
     return null;
   }
 };
