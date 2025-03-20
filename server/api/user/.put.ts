@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     first_name: newUser.first_name,
     last_name: newUser.last_name,
     password: newUser.password,
+    profile_picture: newUser.profile_picture
   }
   apiResponse.params = params;
   const customErrorMessages: CustomErrorMessage[] = [];
