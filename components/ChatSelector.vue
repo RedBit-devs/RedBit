@@ -7,12 +7,13 @@
             <div class="chatList">
                 <dir v-for="group in chatgroups" :key="group?.id">
                     <h4>
-                        {{group?.name}}
+                        {{ group?.name }}
                     </h4>
-                    <NuxtLink v-for="chat in group?.Chat_rooms" :key="chat?.id" :to="`/chatpage/${route.params.serverId}/${chat?.id}`">
+                    <NuxtLink v-for="chat in group?.Chat_rooms" :key="chat?.id"
+                        :to="`/chatpage/${route.params.serverId}/rooms/${chat?.id}`">
                         <ChatCard :name="chat?.name" />
                     </NuxtLink>
-            </dir>
+                </dir>
 
             </div>
         </div>

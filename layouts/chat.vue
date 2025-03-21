@@ -11,7 +11,7 @@
             <UserCard id="userCard" />
         </div>
         <div id="content" ref="contentRef">
-            <ChatFieldNavbar />
+            <ChatFieldNavbar :serverId="route.params.serverId" />
             <slot>
 
             </slot>
@@ -76,7 +76,7 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
     transform: (e) => e.data.items
 })
 
-if (route.params.chatId)chatgroupsRefresh();
+if (route.params.chatId) chatgroupsRefresh();
 
 </script>
 
@@ -122,6 +122,7 @@ if (route.params.chatId)chatgroupsRefresh();
 #chatSelector {
     overflow-y: auto;
 }
+
 #content {
     display: grid;
     grid-template-rows: min-content 1fr;
