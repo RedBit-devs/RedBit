@@ -12,7 +12,7 @@
                 <NuxtLink class="button" :to="`/chatPage/${routes.params.serverId}/settings/members`">
                     <li>Members</li>
                 </NuxtLink>
-                <NuxtLink class="button">
+                <NuxtLink class="button" :to="`/chatPage/${routes.params.serverId}/settings/banned`">
                     <li>Banned users</li>
                 </NuxtLink>
             </ul>

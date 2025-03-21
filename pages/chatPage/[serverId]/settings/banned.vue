@@ -6,9 +6,8 @@
             </NuxtLink>
         </div>
         <div class="members">
-            <h2 class="text-big">Members of the server</h2>
+            <h2 class="text-big ">Banned users</h2>
             <div class="pageContent">
-
             </div>
         </div>
     </div>

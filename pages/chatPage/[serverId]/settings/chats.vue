@@ -15,6 +15,9 @@
 </template>
 
 <script setup>
+definePageMeta({
+    layout: 'settings'
+})
 
 </script>
 
@@ -22,5 +25,9 @@
 .chats h2 {
     text-align: center;
     text-transform: capitalize;
+}
+
+.close {
+    text-align: right;
 }
 </style>
