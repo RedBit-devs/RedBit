@@ -208,6 +208,8 @@ const paramsCheck = (params: any): boolean => {
 export {
   isEmailValid,
   isPasswordValid,
+  isUsernameValid,
+  isNameValid,
   compareHashes,
   userValidation,
   hashPassword,
