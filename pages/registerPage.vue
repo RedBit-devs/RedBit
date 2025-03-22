@@ -23,9 +23,16 @@
                         <label>Email</label>
                         <input ref="emailRef" type="text" placeholder="Type here">
                     </div>
-                    <div class="input" id="username">
-                        <label>Username</label>
-                        <input ref="usernameRef" type="text" placeholder="Type here">
+                    <div class="userProfileWrapper">
+                        <input id="imageInput" type="file" @input="handleFileInput" accept="image/*" />
+                        <label for="imageInput">
+                            <img class="profPic" v-if="files[0]" :src="`${files[0].content}`" :alt="files[0].name">
+                            <Icon class="profPic" v-else name="mdi:account-edit" size="4rem" />
+                        </label>
+                        <div class="input" id="username">
+                            <label>Username</label>
+                            <input ref="usernameRef" type="text" placeholder="Type here">
+                        </div>
                     </div>
                     <div class="input" id="password">
                         <label>Password</label>
@@ -70,6 +77,9 @@ const usernameRef = ref(null)
 const passwordRef = ref(null)
 const passwordAgainRef = ref(null)
 
+const { handleFileInput, files } = useFileStorage();
+
+
 const { error, status, execute, clear } = useFetch(`/api/user/`, {
     method: "PUT",
     immediate: false,
@@ -81,9 +91,11 @@ const { error, status, execute, clear } = useFetch(`/api/user/`, {
             email: emailRef.value.value,
             username: usernameRef.value.value,
             password: passwordRef.value.value,
+            profile_picture: files.value[0].content
         }
     }
-});
+})
+
 
 // If somehow some data remains in the refs
 clear()
@@ -103,7 +115,8 @@ const validateUserData = () => {
         emailRef.value?.value &&
         usernameRef.value?.value &&
         passwordRef.value?.value &&
-        passwordAgainRef.value?.value) return true;
+        passwordAgainRef.value?.value &&
+        files.value[0]?.content) return true;
     return false
 
 }
@@ -127,6 +140,44 @@ const sendRegisterRequest = async () => {
 
 
 <style scoped>
+.profPic {
+    border-radius: 100%;
+    max-width: 5rem;
+    max-height: 5rem;
+
+    width: auto;
+    height: auto;
+
+    aspect-ratio: initial;
+}
+
+#imageInput {
+    display: none;
+}
+
+.userProfileWrapper {
+    display: flex;
+    grid-column: span 2;
+    align-items: center;
+    gap: 1rem;
+}
+
+label[for="imageInput"] {
+    cursor: pointer;
+    border-radius: 100%;
+    border: 3px solid var(--clr-text-primary);
+    width: 5rem;
+    height: 5rem;
+    display: grid;
+    place-content: center;
+}
+
+label[for="imageInput"]:hover,
+label[for="imageInput"]:focus {
+    color: var(--clr-tertiary);
+
+}
+
 #goBack {
     position: absolute;
 }
@@ -172,6 +223,7 @@ h1 {
     gap: 1rem;
     display: grid;
     grid-template-areas: "firstName lastName" "birthDate birthDate" "email email" "username username" "password password" "passwordAgain passwordAgain";
+    grid-template-columns: repeat(2, 1fr);
 }
 
 #firstname {
