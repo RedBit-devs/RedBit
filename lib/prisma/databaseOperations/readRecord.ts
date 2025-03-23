@@ -7,7 +7,6 @@ import {
   errorReasons,
 } from "~/types/customErrorMessage";
 
-
 /**
  * Reads a single record from the specified table by its ID.
  *
@@ -40,21 +39,17 @@ const readRecord = async (
     let select;
     const where = { id };
 
-
     if (include !== undefined) {
       select = include.reduce((acc, key) => ({ ...acc, [key]: true }), {});
     }
 
+    const querry = { where, select };
 
-    const querry = {where, select};
-
-    const result = await prisma[table].findUnique(
-      querry
-    );
+    const result = await prisma[table].findUnique(querry);
 
     return result;
   } catch (error) {
-    prismaErrorHandler(error,table, customErrorMessages);
+    prismaErrorHandler(error, table, customErrorMessages);
     return null;
   }
 };
