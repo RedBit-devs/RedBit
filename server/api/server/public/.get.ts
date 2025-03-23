@@ -1,3 +1,4 @@
+import { useRoute } from "vue-router";
 import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
 import readRecords from "~/lib/prisma/databaseOperations/readRecords";
@@ -7,8 +8,11 @@ export default defineEventHandler(async (event) => {
     const customErrorMessages: CustomErrorMessage[] = [];
     const apiResponse = {} as ApiResponse;
 
-    const page = Number(event.context.params?.page);
-    const limit = Number(event.context.params?.limit);
+    //let page = Number(useRoute().query.page) || 1;
+    //let limit = Number(useRoute().query.limit) || 10;
+
+    let page = 2;
+    let limit = 10;
 
     apiResponse.context = "Server/GetPublicServers";
     apiResponse.method = "GET";
