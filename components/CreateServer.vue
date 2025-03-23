@@ -2,12 +2,7 @@
   <dialog @click.self="closeDialogFunc" :open="isShown">
     <div class="modal">
       <div class="close">
-        <Icon
-          @click.self="closeDialogFunc"
-          name="mdi:close"
-          size="150%"
-          class="btn primary"
-        />
+        <Icon @click.self="closeDialogFunc" name="mdi:close" size="150%" class="btn primary" />
       </div>
       <div class="content">
         <h1 id="title">Create server</h1>
@@ -28,23 +23,12 @@
         <div id="visibilityInput">
           <div id="check">
             <label>
-              <input
-                type="radio"
-                name="visibility"
-                checked
-                v-model="visibility"
-                :value="'public'"
-              />Public
+              <input type="radio" name="visibility" checked v-model="visibility" :value="'public'" />Public
             </label>
           </div>
           <div id="check">
             <label>
-              <input
-                type="radio"
-                name="visibility"
-                v-model="visibility"
-                :value="'private'"
-              />Private
+              <input type="radio" name="visibility" v-model="visibility" :value="'private'" />Private
             </label>
           </div>
         </div>
@@ -52,6 +36,10 @@
           <button class="btn primary" @click="createServer()">Create</button>
         </div>
       </div>
+    </div>
+    <div v-if="status !== 'idle'" class="toaster">
+      <Toast v-for="(error, i) in error?.data?.data" :key="i" class="danger" :title="error.reason" :content="error.message" />
+      <Toast v-for="(dat, i) in data" class="ok" title="Success" :content="`Server ${dat.name} was successfully created`" />
     </div>
   </dialog>
 </template>
@@ -63,26 +51,33 @@ const description = ref(null);
 const visibility = ref("public");
 const picture = ref(null);
 
+
+const { data, execute, error, status, clear } = useFetch(`/api/server/`, {
+  method: "PUT",
+  headers: {
+    Authorization: getToken(),
+    "Content-Type": "application/json",
+  },
+  onRequest({ request, options }) {
+    options.body = {
+      name: name.value?.value,
+      description: description.value?.value,
+      visibility: visibility.value,
+      picture: picture.value?.value
+    }
+  },
+  immediate: false,
+  transform: r => r.data.items[0]
+});
+
+
 const createServer = async () => {
+  clear()
   if (name.value.value === "" || description.value.value === "") {
     return;
   }
   if (!getToken()) await tokenRefresh();
-
-  const { data } = useFetch(`/api/server/`, {
-    method: "PUT",
-    headers: {
-      Authorization: getToken(),
-      "Content-Type": "application/json",
-    },
-    body: {
-      name: name.value.value,
-      description: description.value.value,
-      visibility: visibility.value,
-      picture: picture.value.value
-    },
-    immediate: true,
-  });
+  execute()
 };
 
 const { isShown } = defineProps({
@@ -92,7 +87,7 @@ const { isShown } = defineProps({
   },
   closeDialogFunc: {
     type: Function,
-    default: () => {},
+    default: () => { },
   },
 });
 </script>
@@ -191,9 +186,7 @@ label:has([type="radio"]:checked) {
 
 [type="radio"]:checked {
   border-color: transparent;
-  background: #fff
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" width="1rem" height="1rem"><circle cx="0.5" cy="0.5" r="0.5" fill="none" stroke="%23EF3333" stroke-width="0.05"/><polyline points="0.2,0.5 0.4,0.7 0.8,0.3" style="fill:none;stroke:%23EF3333;stroke-linecap:round;stroke-width:0.1;"/></svg>')
-    no-repeat 50% / 1rem;
+  background: #fff url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" width="1rem" height="1rem"><circle cx="0.5" cy="0.5" r="0.5" fill="none" stroke="%23EF3333" stroke-width="0.05"/><polyline points="0.2,0.5 0.4,0.7 0.8,0.3" style="fill:none;stroke:%23EF3333;stroke-linecap:round;stroke-width:0.1;"/></svg>') no-repeat 50% / 1rem;
 }
 
 .submit {
