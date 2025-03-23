@@ -24,7 +24,7 @@ import {
 const readRecords = async (
     table: string,
     customErrorMessages: CustomErrorMessage[],
-    where: { [key: string]: any },
+    filterBY: { [key: string]: any },
     include?: string[],
     limit?: number,
     page?: number
@@ -40,25 +40,25 @@ const readRecords = async (
     }
   
     try {
-      const filter = { where: { ...where } };
+      const where = { ...filterBY };
       let select;
       let skip;
       let take;
       let query;
       if (include !== undefined && include.length > 0) {
-        select = { select:  include.reduce((acc, key) => ({ ...acc, [key]: true }), {}) };
+        select = include.reduce((acc, key) => ({ ...acc, [key]: true }), {});
       }
 
       if (page) {
-        skip = {skip: (page-1) * limit};
+        skip = (page-1) * limit;
 
       }
       if(limit)
       {
-        take = {take: limit};
+        take = limit;
       }
   
-      query = { ...filter, ...select, ...skip, ...take };
+      query = { where, select, skip, take };
       const result = await prisma[table].findMany(query);
   
       return result;
