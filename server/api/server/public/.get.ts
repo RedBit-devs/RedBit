@@ -1,5 +1,4 @@
 import { useRoute } from "vue-router";
-import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
 import readRecords from "~/lib/prisma/databaseOperations/readRecords";
 import {
