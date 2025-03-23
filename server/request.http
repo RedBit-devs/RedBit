@@ -129,3 +129,16 @@ DELETE {{baseUrl}}/user/ HTTP/1.1
 Authorization: {{lajostoken}}
 
 ###
+GET {{baseUrl}}/server/getPublicServers HTTP/1.1
+Authorization: {{lajostoken}}
+
+###
+
+###
+GET {{baseUrl}}/server/public/page=0&limit=10 HTTP/1.1
+Authorization: {{lajostoken}}
+
+###
+
+GET {{baseUrl}}/server/public?page=1&limit=10 HTTP/1.1
+Authorization: {{lajostoken}}
