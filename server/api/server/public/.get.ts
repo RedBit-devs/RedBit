@@ -8,12 +8,9 @@ export default defineEventHandler(async (event) => {
     const customErrorMessages: CustomErrorMessage[] = [];
     const apiResponse = {} as ApiResponse;
 
-    //let page = Number(useRoute().query.page) || 1;
-    //let limit = Number(useRoute().query.limit) || 10;
-
-    let page = 2;
-    let limit = 10;
-
+    let { page = 1, limit = 10 } = useRoute().query || {};
+    page = Number(page);
+    limit = Number(limit);
     apiResponse.context = "Server/GetPublicServers";
     apiResponse.method = "GET";
 
@@ -33,17 +30,6 @@ export default defineEventHandler(async (event) => {
       event.context.apiResponse = apiResponse;
       let data;
       try {
-        /*
-        const servers = await prisma.server.findMany({
-          where: {
-            visibility: "public",
-          },
-        });
-        apiResponse.data = {
-          totalItems: servers.length,
-          items: servers,
-        };
-        */
        data = await readRecords("server", customErrorMessages, {visibility: "public"}, [], limit,page);
       } catch (error) {
         prismaErrorHandler(error,"Server", customErrorMessages);
