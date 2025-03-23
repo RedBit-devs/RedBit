@@ -16,8 +16,12 @@
             <input type="text" placeholder="Description" ref="description" />
           </div>
           <div class="inputWrapper">
-            <label>Picture</label>
-            <input type="text" placeholder="Picture" ref="picture" />
+            <input id="imageInput" type="file" @input="handleFileInput" accept="image/*" />
+            <label for="imageInput">
+              Picture
+              <Icon name="mdi:edit" size="1.3rem"/>
+              <img class="profPic" v-if="files[0]?.content" :src="`${files[0].content}`" :alt="files[0].name">
+            </label>
           </div>
         </div>
         <div id="visibilityInput">
@@ -38,8 +42,10 @@
       </div>
     </div>
     <div v-if="status !== 'idle'" class="toaster">
-      <Toast v-for="(error, i) in error?.data?.data" :key="i" class="danger" :title="error.reason" :content="error.message" />
-      <Toast v-for="(dat, i) in data" class="ok" title="Success" :content="`Server ${dat.name} was successfully created`" />
+      <Toast v-for="(error, i) in error?.data?.data" :key="i" class="danger" :title="error.reason"
+        :content="error.message" />
+      <Toast v-for="(dat, i) in data" class="ok" title="Success"
+        :content="`Server ${dat.name} was successfully created`" />
     </div>
   </dialog>
 </template>
@@ -49,7 +55,8 @@ const { getToken, tokenRefresh } = useToken();
 const name = ref(null);
 const description = ref(null);
 const visibility = ref("public");
-const picture = ref(null);
+
+const { handleFileInput, files } = useFileStorage();
 
 
 const { data, execute, error, status, clear } = useFetch(`/api/server/`, {
@@ -63,7 +70,7 @@ const { data, execute, error, status, clear } = useFetch(`/api/server/`, {
       name: name.value?.value,
       description: description.value?.value,
       visibility: visibility.value,
-      picture: picture.value?.value
+      picture: files.value[0]?.content
     }
   },
   immediate: false,
@@ -77,6 +84,7 @@ const createServer = async () => {
     return;
   }
   if (!getToken()) await tokenRefresh();
+
   execute()
 };
 
@@ -93,6 +101,21 @@ const { isShown } = defineProps({
 </script>
 
 <style scoped>
+.profPic {
+  border-radius: 100%;
+  max-width: 5rem;
+  max-height: 5rem;
+
+  width: auto;
+  height: auto;
+
+  aspect-ratio: initial;
+}
+
+#imageInput {
+  display: none;
+}
+
 dialog {
   width: 100%;
   height: 100%;
