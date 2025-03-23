@@ -37,17 +37,16 @@ const readRecord = async (
   }
 
   try {
-    let select:{ select: { [key: string]: boolean } };
-    const filter = { where: { id } };
+    let select;
+    const where = { id };
 
 
     if (include !== undefined) {
-      select = {select: {}}
-      select.select =   include.reduce((acc, key) => ({ ...acc, [key]: true }), {});
+      select = include.reduce((acc, key) => ({ ...acc, [key]: true }), {});
     }
 
 
-    const querry = {...filter,...select};
+    const querry = {where, select};
 
     const result = await prisma[table].findUnique(
       querry
