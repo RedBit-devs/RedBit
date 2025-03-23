@@ -8,7 +8,19 @@ import {
 } from "~/types/customErrorMessage";
 
 
-
+/**
+ * Reads multiple records from the given table with the given where object.
+ *
+ * If the table does not exist creates a new custom error.
+ *
+ * @param table The name of the table to read from.
+ * @param customErrorMessages - An array to collect error messages for any error failures.
+ * @param where The object to filter records with like {visibility: "public"}.
+ * @param {string[]} [include] - An optional array of fields to include in the response.
+ * @param limit An optional limit to the number of records to return.
+ * @param page An optional page number to return.
+ * @returns {Promise<any>} The result of the query or null.
+ */
 const readRecords = async (
     table: string,
     customErrorMessages: CustomErrorMessage[],
