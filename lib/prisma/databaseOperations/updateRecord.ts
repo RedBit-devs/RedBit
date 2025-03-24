@@ -48,7 +48,7 @@ const updateRecord = async <T>(
     prismaErrorHandler(error, table, customErrorMessages, id);
     return;
   }
-  // Return the result of the database operation
+  // return the result of the query
   return dbResponse;
 };
 

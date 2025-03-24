@@ -44,7 +44,7 @@ const createRecord = async <T>(
     prismaErrorHandler(error, table, customErrorMessages);
     return;
   }
-  // Return the result of the database operation
+  // return the result of the query
   return dbResponse;
 };
 

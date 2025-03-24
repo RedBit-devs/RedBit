@@ -45,6 +45,8 @@ const deleteRecord = async <T>(
     prismaErrorHandler(error, table, customErrorMessages, id);
     return;
   }
+
+  // return the result of the query
   return dbResponse;
 };
 

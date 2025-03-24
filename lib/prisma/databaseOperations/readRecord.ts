@@ -49,7 +49,7 @@ const readRecord = async (
     // Attempt to find the record in the specified table
     const result = await prisma[table].findUnique(querry);
 
-    // Return the result of the database operation
+  // return the result of the query
     return result;
   } catch (error) {
     // Handle any errors that occur during the creation process
