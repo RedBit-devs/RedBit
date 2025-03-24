@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
   const apiResponse = {} as ApiResponse;
 
-  let { page = 1, limit = 20 } = useRoute().query || {};
+  let { page = 1, limit = 20 } = getQuery(event) || {};
   page = Number(page);
   limit = Number(limit);
   apiResponse.context = "Server/GetPublicServers";
@@ -34,7 +34,15 @@ export default defineEventHandler(async (event) => {
     data = await readRecords(
       "server",
       customErrorMessages,
-      { visibility: "public" },
+      { visibility: "public",
+        NOT: {
+          Users_connected:{
+            some: {
+              user_id: event.context.auth.user
+              .id
+            }
+          }
+        }},
       [],
       limit,
       page
