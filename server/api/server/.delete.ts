@@ -1,7 +1,7 @@
 import prisma from "~/lib/prisma";
 import deleteRecord from "~/lib/prisma/databaseOperations/deleteRecord";
 import readRecord from "~/lib/prisma/databaseOperations/readRecord";
-import {errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
+import { errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
@@ -18,13 +18,11 @@ export default defineEventHandler(async (event) => {
     const { errors } = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);
   }
+
   const userId = event.context.auth.user.id;
-  console.log(userId);
-  
-  const {serverId,authorId} = await readBody(event);
-  console.log(serverId)
-  if(!serverId)
-  {
+  const { serverId, authorId } = await readBody(event);
+
+  if (!serverId) {
     customErrorMessages.push({
       expectedFrom: errorExpectedFroms.Server,
       reason: errorReasons.MissingParameters,
@@ -33,22 +31,33 @@ export default defineEventHandler(async (event) => {
     throw createError(errors);
   }
   apiResponse.params = {
-    severId : serverId,
+    severId: serverId,
+  }
+  const server = await prisma.server.findFirst({
+    where: {
+      id: serverId,
+      owner_id: userId,
+    }
+  })
+
+  if (!server) {
+    customErrorMessages.push(
+      {
+        expectedFrom: errorExpectedFroms.Prisma,
+        reason: errorReasons.NoDatabaseResponse
+      }
+    )
+    const { errors } = apiResponseHandler(event, customErrorMessages);
+    throw createError(errors);
   }
 
-  const server = readRecord("server",serverId,customErrorMessages,["author_id"]);
-  console.log(server);
-
   await deleteRecord("server", serverId, customErrorMessages);
-  await prisma.server_User_Connect.deleteMany({
-    where: {
-      user_id: userId,
-    },
-  })
 
   if (customErrorMessages.length > 0) {
     const { errors } = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);
   }
-  await apiResponseHandler(event,customErrorMessages,{deleted:true, totalItems:0,items:[]});
+  await apiResponseHandler(event, customErrorMessages, { deleted: true, totalItems: 0, items: [] });
+
+  return apiResponse
 })

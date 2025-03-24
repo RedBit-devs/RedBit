@@ -134,9 +134,9 @@ Authorization: {{lajostoken}}
 
 ###
 DELETE {{baseUrl}}/server HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY204ZW5scmF5MDAwMW14aTUycGFwZ3hxMiIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Ikxham9za2EiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHJheTAwMDJteGk1OGR0amxwdXUifSwiaWF0IjoxNzQyODA2NjQ2LCJleHAiOjE3NDQ1MzQ2NDZ9.ppYRZDkrGCEm_6CMQ08f9o44KtuHeYnVlJIqtFqfQ-oxFjrDwPcE6S4p-j26Zz0QyHSZu2gctUPbzA4D1vf86A
+Authorization: {{lajostoken}}
 Content-Type: application/json
 
 {
-    "serverId": 1,
+    "serverId": "cm8lmu4xs000uuklnjcgecz00"
 }
