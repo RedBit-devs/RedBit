@@ -1,7 +1,9 @@
 <template>
     <div class="message">
         <div class="message-author-image">
-            <img :src="authorImage" :alt="`profile picture of ${authorName}`">
+
+            <img v-if="authorImage" :src="authorImage" :alt="`picture of ${authorName}`">
+            <Icon v-else name="mdi:account" size="4rem" :title="`Could not load picture of ${authorName}`" />
         </div>
         <div class="message-right">
             <h3 class="message-author-name" @click.self="isDialogOpenRef = true">{{ authorName }}</h3>
@@ -52,7 +54,7 @@ onMounted(() => {
 </script>
 <style scoped>
 .message {
-    background-color: var(--clr-ui-primary);
+    background-color: var(--clr-ui-secondary);
     height: fit-content;
     display: flex;
     gap: 1rem;

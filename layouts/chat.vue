@@ -6,7 +6,7 @@
             }" id="serverSelector" />
             <ChatSelector v-if="chatgroupsStatus === 'success'" :chatgroups="chatgroups" id="chatSelector" />
             <div v-else-if="chatgroupsStatus === 'pending'" id="chatSelector">Loading... please be patient</div>
-            <div v-else id="chatSelector">Click the chosen servers icon. <br/> If something went wrong or the chats wont show up reload the page</div>
+            <div v-else id="chatSelector">Click the chosen servers icon.</div>
             <DiscoverServers id="discoverServers" />
             <UserCard id="userCard" />
         </div>
@@ -67,7 +67,7 @@ const { data: servers, refresh: serversRefresh } = useFetch("/api/user/servers",
     transform: (e) => e.data.items
 })
 
-const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus } = useFetch(`/api/server/${route.params.serverId}/rooms/`, {
+const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus } = useFetch(() => `/api/server/get/${route.params.serverId}/rooms/`, {
     method: "GET",
     immediate: false,
     headers: {
@@ -76,6 +76,7 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
     transform: (e) => e.data.items
 })
 
+if (route.params.chatId)chatgroupsRefresh();
 
 </script>
 
@@ -94,7 +95,7 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
 #screen {
     display: grid;
     grid-template-columns: 22rem 1fr;
-    height: 100vh;
+    max-height: 100vh;
 }
 
 
@@ -121,8 +122,10 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
 #chatSelector {
     overflow-y: auto;
 }
-
-
+#content {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
 
 @media only screen and (max-width: 830px) {
     #sidebar {

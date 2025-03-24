@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     first_name: newUser.first_name,
     last_name: newUser.last_name,
     password: newUser.password,
+    profile_picture: newUser.profile_picture
   }
   apiResponse.params = params;
   const customErrorMessages: CustomErrorMessage[] = [];
@@ -37,8 +38,8 @@ export default defineEventHandler(async (event) => {
   }
   
   const data = await createRecord("user", newUser,customErrorMessages);
-  delete data.password
-  const {errors} = apiResponseHandler(event,customErrorMessages,data);
+  const dataWithoutPassword = {...data, password: "SuperSecretPassword"}
+  const {errors} = apiResponseHandler(event,customErrorMessages,dataWithoutPassword);
   
   if (customErrorMessages.length > 0) {
     throw createError(errors);  

@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '~/assets/css/fonts.css'
   ],
   devtools: { enabled: true },
-  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt'],
+  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt', 'nuxt-file-storage'],
   prisma: {
     installStudio: false,
     autoSetupPrisma: true
@@ -38,5 +38,8 @@ export default defineNuxtConfig({
         {rel: "icon", type: "image/svg+xml", href:"logos.svg" }
       ]
     }
+  },
+  fileStorage:{
+    mount: "./" // I just dont understand what does this do, sooooo... leave it like this
   }
 })

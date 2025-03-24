@@ -92,9 +92,6 @@ export default defineEventHandler(async (event) => {
         items: [dbResponse]
     }
 
-    console.log("contition");
-
-
     const { errors } = apiResponseHandler(event, errorMessages, data)
 
     if (errors) throw createError(errors);
