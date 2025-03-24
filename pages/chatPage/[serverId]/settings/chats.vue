@@ -8,7 +8,11 @@
         <div class="chats">
             <h2 class="text-big">Chats of the server</h2>
             <div class="pageContent">
-
+                <SettingsChatCard />
+                <SettingsChatCard />
+                <SettingsChatCard />
+                <SettingsChatCard />
+                <SettingsChatCard />
             </div>
         </div>
     </div>
@@ -29,5 +33,12 @@ definePageMeta({
 
 .close {
     text-align: right;
+}
+
+.pageContent {
+    margin: .5rem;
+    padding: 1rem;
+    border-radius: var(--border-rounded);
+    background-color: var(--clr-ui-primary);
 }
 </style>
