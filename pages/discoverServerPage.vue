@@ -28,7 +28,7 @@ const {data: publicServers, error, status, clear, execute } = useFetch("/api/ser
     headers: {
         "Authorization": getToken()
     },
-    transform: r => r.data.items.at,
+    transform: r => r.data.items,
     immediate: false
 })
 clear()
