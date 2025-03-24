@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
     pageIndex: page,
     itemsPerPage: limit,
     nextLink: `api/server/public?page=${page+1}&limit=${limit}`,
-    previousLink: (page-1 > 0)`api/server/public?page=${page-1}&limit=${limit}`:"",
+    previousLink: (page-1 > 0)?`api/server/public?page=${page-1}&limit=${limit}`:"",
     items: data,
   });
   return apiResponse;
