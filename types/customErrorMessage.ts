@@ -36,6 +36,7 @@ enum errorReasons {
   NoDatabaseResponse = "NoDatabaseResponse",
   FailedToLogin = "FailedToLogin",
   Expired = "Expired",
+  FailedToSendEmail = "FailedToSendEmail",
   ServerAccessDenied = "ServerAccessDenied",
 }
 enum errorExpectedFroms {

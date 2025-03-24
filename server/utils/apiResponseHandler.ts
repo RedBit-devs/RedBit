@@ -39,6 +39,10 @@ const imageErrorReasonAndMessages = {
   ...generalErrorReasonAndMessages,
 };
 
+const mailErrorReasonAndMessages = {
+  FailedToSendEmail: "Some error occurred while sending the email",
+};
+
 const prismaErrorReasonAndMessages = {
   TableNotFound: "Can't read from the {table} table because it doesn't exist",
   UniqueConstraintFailed:
