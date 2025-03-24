@@ -8,11 +8,9 @@ type ResponseData = {
   fields?: Object; // like primsma.[table].fields
   deleted?: boolean;
   updated?: Date;
-  totalItems: Number; //allData.length
-  currentItemCount?: Number; //items.length
+  totalItems: Number; // items.length
   itemsPerPage?: Number;
   pageIndex?: Number;
-  totalPages?: Number;
   nextLink?: String;
   previousLink?: String;
   items: any[];
