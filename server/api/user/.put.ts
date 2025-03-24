@@ -10,6 +10,8 @@ import Handlebars from "handlebars";
 import fs from 'fs'
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+  const mailConfig = config.mailer;
   const newUser: User = await readBody(event);
   const apiResponse = {} as ApiResponse;
   apiResponse.context = "User/Create";
@@ -49,11 +51,16 @@ export default defineEventHandler(async (event) => {
     throw createError(errors);  
   }
 
-    const { sendMail } = useNodeMailer()
     let htmlTeamplate = fs.readFileSync('./server/emailTemplates/verifyEmail.html', 'utf-8');
     htmlTeamplate = await Handlebars.compile(htmlTeamplate)({ name: `${newUser.first_name} ${newUser.last_name}`,verifyurl: `https://redbit.netlify.app/api/user/verifyEmail?id=${apiResponse.data.items[0].id}&email=${newUser.email}` });
     try {      
-      sendMail({ subject: `${newUser.first_name} ${newUser.last_name}`, html: htmlTeamplate, to: newUser.email})
+
+        await mailConfig.sendMail({
+          to: newUser.email,
+          subject: `${newUser.first_name} ${newUser.last_name} verify your email`,
+          html: htmlTeamplate,
+        })
+
     } catch (error) {
       
     }

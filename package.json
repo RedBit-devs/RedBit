@@ -23,6 +23,7 @@
     "markdown-it": "^14.1.0",
     "nuxt": "^3.14.0",
     "nuxt-file-storage": "^0.3.0",
+    "nuxt-mail": "^5.1.1",
     "vue": "latest",
     "vue-router": "latest"
   },
