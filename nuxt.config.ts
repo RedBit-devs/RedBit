@@ -14,6 +14,8 @@ export default defineNuxtConfig({
   modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt', 'nuxt-file-storage', ['nuxt-mail', {
     message: {
       to: process.env.MAILER_EMAIL,
+      cc: [],
+      bcc:[]
     },
     smtp: {
       host: 'smtp.gmail.com',
