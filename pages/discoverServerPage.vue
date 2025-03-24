@@ -17,6 +17,7 @@
 
 definePageMeta({
     layout: false,
+    middleware: ["protected"]
 })
 
 const { getToken, tokenRefresh } = useToken()
