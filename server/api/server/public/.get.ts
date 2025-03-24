@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const customErrorMessages: CustomErrorMessage[] = [];
   const apiResponse = {} as ApiResponse;
 
-  let { page = 1, limit = 10 } = useRoute().query || {};
+  let { page = 1, limit = 20 } = useRoute().query || {};
   page = Number(page);
   limit = Number(limit);
   apiResponse.context = "Server/GetPublicServers";
@@ -52,6 +52,8 @@ export default defineEventHandler(async (event) => {
     totalItems: data.length,
     pageIndex: page,
     itemsPerPage: limit,
+    nextLink: `api/server/public?page=${page+1}&limit=${limit}`,
+    previousLink: (page-1 > 0)`api/server/public?page=${page-1}&limit=${limit}`:"",
     items: data,
   });
   return apiResponse;
