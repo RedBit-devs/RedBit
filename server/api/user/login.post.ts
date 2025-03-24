@@ -1,6 +1,7 @@
 import prisma from "~/lib/prisma";
-import { compareHashes, isEmailValid, isPasswordValid } from "~/server/utils/userValidation";
-import jwt from "jsonwebtoken"
+
+import { compareHashes, hashPassword, isEmailValid, isPasswordValid, paramsCheck } from "~/shared/utils/userValidation";
+
 import {
     errorExpectedFroms,
     errorReasons,
@@ -15,10 +16,11 @@ export default eventHandler(async (event) => {
     const apiResponse = {} as ApiResponse;
     apiResponse.context = "UserLogin";
     apiResponse.method = "POST";
-    apiResponse.params = {
+    const params = {
         email: email,
         password: password,
-    };
+    }
+    apiResponse.params = params;
 
     const customErrorMessages: CustomErrorMessage[] = [];
     event.context.customErrorMessages = customErrorMessages;
@@ -54,7 +56,10 @@ export default eventHandler(async (event) => {
         select: {
             id: true,
             email: true,
-            password: true
+            password: true,
+            username: true,
+            profile_picture: true,
+            verification_code: true
         }
     })
 
@@ -72,7 +77,8 @@ export default eventHandler(async (event) => {
             reason: errorReasons.FailedToLogin
         })
     }
-
+    params.password = "SuperSecretPassword";
+    apiResponse.params = params;
     if (customErrorMessages.length > 0) {
         const { errors } = apiResponseHandler(event, customErrorMessages);
         throw createError(errors);
@@ -82,19 +88,16 @@ export default eventHandler(async (event) => {
     const tokenData = {
         user: {
             id: userCredentials?.id,
-            email: userCredentials?.email
+            email: userCredentials?.email,
+            picture: userCredentials?.profile_picture,
+            username: userCredentials?.username,
+            verification_code: userCredentials?.verification_code
         },
     }
 
-    const token = `Bearer ${jwt.sign(
-        tokenData,
-        config.JWT_SECRET,
-        {
-            algorithm: "HS512",
-            expiresIn: config.JWT_REFR_EXP_TIME,
-        }
-    )
-        }`
+
+
+    const token = `Bearer ${await generateJWT(tokenData, "20d")}`
 
 
     apiResponse.data = {

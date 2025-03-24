@@ -8,19 +8,22 @@ import {
 } from "~/types/customErrorMessage";
 
 /**
- * Read a single record in the given table with the given id.
+ * Reads a single record from the specified table by its ID.
  *
  * If the table does not exist creates a new custom error.
  *
- * @param table The name of the table to update.
- * @param id The id of the record to be updated.
- * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
- * @returns {Promise<any>}
+ * @param {string} table - The name of the table to read from.
+ * @param {string} id - The ID of the record to retrieve.
+ * @param customErrorMessages - An array to collect error messages for any error failures.
+ * @param {string[]} [include] - An optional array of fields to include in the response.
+ * @returns {Promise<any>} The result of the query or null.
  */
+
 const readRecord = async (
   table: string,
   id: string,
-  customErrorMessages: CustomErrorMessage[]
+  customErrorMessages: CustomErrorMessage[],
+  include?: string[]
 ): Promise<any> => {
   if (!(await checkTable(table))) {
     const error: CustomErrorMessage = {
@@ -29,20 +32,26 @@ const readRecord = async (
       table: table,
     };
     customErrorMessages.push(error);
-    return;
+    return null;
   }
-  let dbResponse;
+
   try {
-    dbResponse = await prisma[table].findFirst({
-      where: {
-        id: id,
-      },
-    });
+    let select;
+    const where = { id };
+
+    if (include !== undefined) {
+      select = include.reduce((acc, key) => ({ ...acc, [key]: true }), {});
+    }
+
+    const querry = { where, select };
+
+    const result = await prisma[table].findUnique(querry);
+
+    return result;
   } catch (error) {
-    prismaErrorHandler(error, table, customErrorMessages, id);
-    return;
+    prismaErrorHandler(error, table, customErrorMessages);
+    return null;
   }
-  return dbResponse;
 };
 
 export default readRecord;

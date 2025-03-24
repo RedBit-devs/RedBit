@@ -1,22 +1,13 @@
 <template>
-    <div class="content">
-        <ChatFieldNavbar />
         <div id="chat">
-            <ChatMessage author-image="asd" author-name="Kaki" message="kakao" />
+          <h1>Chose a server</h1>
         </div>
-        <ChatInputFiled id="input" />
-    </div>
 </template>
 
-<script setup>
-import ChatMessage from '~/components/ChatMessage.vue';
-
-
-
+<script lang="ts" setup>
 definePageMeta({
     layout: 'chat'
 })
-
 
 </script>
 

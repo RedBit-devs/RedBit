@@ -1,14 +1,17 @@
 <template>
     <div id="screen">
         <div id="sidebar" ref="sidebarRef">
-            <ServerSelector :add-server-func="() => {
+            <ServerSelector :servers="servers" :chatgroupsRefresh="chatgroupsRefresh" :add-server-func="() => {
                 appearRef = true
             }" id="serverSelector" />
-            <ChatSelector id="chatSelector" />
-                <DiscoverServers id="discoverServers" />
-            <UserCard id="userCard" />
+            <ChatSelector v-if="chatgroupsStatus === 'success'" :chatgroups="chatgroups" id="chatSelector" />
+            <div v-else-if="chatgroupsStatus === 'pending'" id="chatSelector">Loading... please be patient</div>
+            <div v-else id="chatSelector">Click the chosen servers icon.</div>
+            <DiscoverServers id="discoverServers" />
+            <UserCard id="userCard" :name="userData?.username" :picture="userData?.profile_picture" :id="userData?.id" />
         </div>
         <div id="content" ref="contentRef">
+            <ChatFieldNavbar />
             <slot>
 
             </slot>
@@ -51,6 +54,41 @@ onMounted(() => {
 })
 
 
+const { getToken, tokenRefresh } = useToken();
+const route = useRoute()
+
+if (!getToken()) await tokenRefresh()
+
+const { data: servers, refresh: serversRefresh } = useFetch("/api/user/servers", {
+    method: "GET",
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: (e) => e.data.items
+})
+
+const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus } = useFetch(() => `/api/server/get/${route.params.serverId}/rooms/`, {
+    method: "GET",
+    immediate: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: (e) => e.data.items
+})
+
+if (route.params.chatId)await chatgroupsRefresh();
+
+
+const { data: userData } = useFetch("/api/user/", {
+    method: "GET",
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: r => r.data.items[0],
+})
+
+console.log(userData.value);
+
 
 </script>
 
@@ -69,7 +107,7 @@ onMounted(() => {
 #screen {
     display: grid;
     grid-template-columns: 22rem 1fr;
-    height: 100vh;
+    max-height: 100vh;
 }
 
 
@@ -96,8 +134,10 @@ onMounted(() => {
 #chatSelector {
     overflow-y: auto;
 }
-
-
+#content {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
 
 @media only screen and (max-width: 830px) {
     #sidebar {

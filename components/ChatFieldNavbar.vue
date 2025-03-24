@@ -1,6 +1,6 @@
 <template>
     <div id="header" ref="headerRef">
-        <ChatCard id="chatCard" />
+        <ChatCard disabled id="chatCard" :name="name" />
         <input id="searchChat" type="text" placeholder="Search in the chat" ref="searchRef">
         <div id="functions">
             <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
@@ -12,8 +12,12 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-
+const { name } = defineProps({
+    'name': {
+        type: String,
+        default: "Chat" //TODO could be set to the current chat name or title
+    }
+})
 const headerRef = ref(null)
 const searchRef = ref(null)
 let appearance = true
@@ -46,6 +50,7 @@ const handleSearchbarMove = () => {
     grid-template-rows: min-content min-content;
     align-items: center;
     transition: linear .3s;
+    padding-block: .2rem;
 }
 
 #functions {

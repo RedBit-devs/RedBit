@@ -1,5 +1,5 @@
 import readRecord from "~/lib/prisma/databaseOperations/readRecord";
-import { paramsCheck } from "~/server/utils/userValidation";
+import { paramsCheck } from "~/shared/utils/userValidation";
 import {
   type CustomErrorMessage,
   errorExpectedFroms,
@@ -44,7 +44,9 @@ export default defineEventHandler(async (event) => {
   }
 
   const data = await readRecord("user", userId, customErrorMessages);
-  const {errors} = apiResponseHandler(event, customErrorMessages,data);
+  delete data.id;
+  delete data.password;
+  const {errors} = apiResponseHandler(event, customErrorMessages, {totalItems: 1, items: [data]});
 
   if (customErrorMessages.length > 0) {
     throw createError(errors);

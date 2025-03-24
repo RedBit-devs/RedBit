@@ -44,7 +44,7 @@ enum errorExpectedFroms {
   User = "User",
   Server = "Server",
   Invite = "Invite",
-  Mail = "Mail",
+  Image = "Image",
 }
 
 export {

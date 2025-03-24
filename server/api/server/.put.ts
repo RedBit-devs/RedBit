@@ -1,6 +1,8 @@
 import { type Server } from "@prisma/client";
 import prisma from "~/lib/prisma";
 import prismaErrorHandler from "~/lib/prisma/databaseErrorHandling";
+import createRecord from "~/lib/prisma/databaseOperations/createRecord";
+import { paramsCheck } from "~/shared/utils/userValidation";
 import {  errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
@@ -9,15 +11,24 @@ export default defineEventHandler(async (event) => {
     const apiResponse = {} as ApiResponse;
     apiResponse.context = "Server/Create";
     apiResponse.method = "PUT";
+
+    if(!reqBody.picture)
+    {
+        reqBody.picture = "https://preview.redd.it/ot08x5mn9xk71.png?auto=webp&s=55dc457d26c3b79c805fd4068f98987fffec111d"
+    }
+    if(!reqBody.description)
+    {
+        reqBody.description = " "
+    }
+
     apiResponse.params = {
         name: reqBody.name,
         picture: reqBody.picture,
-        visibility: reqBody.visibility
+        visibility: reqBody.visibility,
+        description: reqBody.description
     }
-
     event.context.apiResponse = apiResponse;
     let errorMessages: CustomErrorMessage[] = []
-
 
 
     if (!event.context.auth) {
@@ -46,6 +57,7 @@ export default defineEventHandler(async (event) => {
                 name: reqBody.name,
                 picture: reqBody.picture,
                 visibility: reqBody.visibility,
+                description: reqBody.description,
                 Owner: {
                     connect: {
                         id: event.context.auth.user.id
@@ -64,6 +76,7 @@ export default defineEventHandler(async (event) => {
                 }
             }
         })
+        await createRecord("Server_User_Connect",{server_id: dbResponse.id,user_id: event.context.auth.user.id},errorMessages);
     } catch (error) {
         prismaErrorHandler(error,"server",errorMessages);
     }

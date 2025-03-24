@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="submit">
-                    <button :disabled="stat == 'pending'" @click="sendLoginRequest()" class="btn ui-secondary">
+                    <button  @click="sendLoginRequest()" class="btn ui-secondary">
                         Submit</button>
                 </div>
 
@@ -28,9 +28,15 @@
                     Register
                 </NuxtLink>
             </div>
+            <div class="forgottenPassword">
+                <NuxtLink to="/resetPasswordPage">
+                    Forgott your password?
+                </NuxtLink>
+            </div>
         </div>
-        <div v-if="err" class="toaster">
-            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason" :content="error.message" />
+        <div v-if="err?.length > 0" class="toaster">
+            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason.toString()"
+                :content="error.message" />
         </div>
 
     </div>
@@ -46,26 +52,32 @@ const emailRef = ref(null)
 const passwordRef = ref(null)
 const { getNewRefreshToken } = useToken()
 
-const err = ref([]);
-const stat = ref(null)
+const err = ref<CustomError[] | null>(null);
+const stat = ref(null);
+const isRequestPending = ref(false);
+
 
 const sendLoginRequest = async () => {
-    if (!emailRef.value.value || !passwordRef.value.value) return;
+    isRequestPending.value = true;
+    err.value = null;
+    stat.value = null;
+    if (!emailRef.value.value || !passwordRef.value.value) return isRequestPending.value = false;
 
-    const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
+    const { error, status } = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
-    stat.value = status.value
+    stat.value = status;
+    err.value = null;
 
-    if (status.value === "success") {
-        ////TODO this should navigate to the chat
-        navigateTo('/test')
+    if (stat.value === "success") {
+        navigateTo('/chatpage/')
     }
 
-    if (status.value === "error") {
-        err.value = error.value.data
+    if (stat.value === "error") {
+        err.value = error.data
     }
+    isRequestPending.value = false;
+
 }
-
 </script>
 
 <style scoped>
@@ -143,6 +155,12 @@ input {
     justify-content: space-between;
     align-items: center;
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
+}
+
+.forgottenPassword a {
+    cursor: pointer;
+    color: var(--clr-primary);
+    text-decoration: none;
 }
 
 @media only screen and (max-width:1100px) {

@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', 'nuxt-nodemailer'],
+  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt', 'nuxt-file-storage'],
   prisma: {
     installStudio: false,
     autoSetupPrisma: true
@@ -37,6 +38,21 @@ export default defineNuxtConfig({
         ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
       }
     }
+  },
+  nitro: {
+    experimental: {
+      websocket: true
+    }
+  },
+  app:{
+    head: {
+      link:[
+        {rel: "icon", type: "image/svg+xml", href:"logos.svg" }
+      ]
+    }
+  },
+  fileStorage:{
+    mount: "./" // I just dont understand what does this do, sooooo... leave it like this
   }
 })
 

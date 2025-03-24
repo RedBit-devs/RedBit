@@ -1,5 +1,6 @@
 import type { Invite } from "@prisma/client";
 import prisma from "~/lib/prisma";
+import { paramsCheck } from "~/shared/utils/userValidation";
 import { type CustomErrorMessage, errorExpectedFroms, errorReasons } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
@@ -90,9 +91,6 @@ export default defineEventHandler(async (event) => {
         fields: prisma.invite.fields,
         items: [dbResponse]
     }
-
-    console.log("contition");
-
 
     const { errors } = apiResponseHandler(event, errorMessages, data)
 
