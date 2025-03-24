@@ -14,7 +14,7 @@ import {
  *
  * @param {string} table - The name of the table to read from.
  * @param {string} id - The ID of the record to retrieve.
- * @param customErrorMessages - An array to collect error messages for any error failures.
+ * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @param {string[]} [include] - An optional array of fields to include in the response.
  * @returns {Promise<any>} The result of the query or undefined.
  */
