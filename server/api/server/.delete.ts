@@ -1,5 +1,6 @@
 import prisma from "~/lib/prisma";
 import deleteRecord from "~/lib/prisma/databaseOperations/deleteRecord";
+import readRecord from "~/lib/prisma/databaseOperations/readRecord";
 import {errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
@@ -20,7 +21,7 @@ export default defineEventHandler(async (event) => {
   const userId = event.context.auth.user.id;
   console.log(userId);
   
-  const serverId = event.context.body;
+  const {serverId,authorId} = await readBody(event);
   console.log(serverId)
   if(!serverId)
   {
@@ -34,6 +35,9 @@ export default defineEventHandler(async (event) => {
   apiResponse.params = {
     severId : serverId,
   }
+
+  const server = readRecord("server",serverId,customErrorMessages,["author_id"]);
+  console.log(server);
 
   await deleteRecord("server", serverId, customErrorMessages);
   await prisma.server_User_Connect.deleteMany({
