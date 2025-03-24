@@ -10,9 +10,6 @@
             <div class="pageContent">
                 <SettingsChatCard />
                 <SettingsChatCard />
-                <SettingsChatCard />
-                <SettingsChatCard />
-                <SettingsChatCard />
             </div>
         </div>
     </div>
