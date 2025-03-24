@@ -1,18 +1,13 @@
 <template>
     <div class="selfContainer">
-        <img src="../img/probalogo.png" alt="">
+        <img v-if="picture" :src="picture" alt="">
+        <Icon v-else name="mdi:account" size="2rem"/>
         <div class="items">
             <div class="name">
-                <h4>Kicsi kacs</h4>
-                <p>Úszik</p>
+                <h4>{{ name }}</h4>
+               
             </div>
             <div class="buttons">
-                <div class="mircophone">
-                    <Icon name="mingcute:mic-line" size="120%" />
-                </div>
-                <div class="headset">
-                    <Icon name="mingcute:headphone-line" size="120%" />
-                </div>
                 <div class="settings">
                     <Icon name="mingcute:settings-5-line" size="120%" />
                 </div>
@@ -21,8 +16,19 @@
     </div>
 </template>
 
-<script setup>
-
+<script lang="ts" setup>
+// Szia Peti :*. Remélem jól haladtok a projektel. Sok locsolót és boldog karácsonyt. Áradjon a tisza!!!!!
+const {name, id, picture} = defineProps({
+    "name":{
+        type: String
+    },
+    "picture":{
+        type: String
+    },
+    "id":{
+        type: String
+    }
+})
 </script>
 
 <style scoped>
