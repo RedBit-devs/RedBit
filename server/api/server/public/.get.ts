@@ -38,7 +38,8 @@ export default defineEventHandler(async (event) => {
         NOT: {
           Users_connected:{
             some: {
-              user_id: event.context.auth.user.id
+              user_id: event.context.auth.user
+              .id
             }
           }
         }},
