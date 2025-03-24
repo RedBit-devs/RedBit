@@ -13,7 +13,7 @@ import {
  * @param {string} table The name of the table that the operation was performed on.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
  * @param {string} [id] The id of the record that the operation was performed on.
- * @returns {Promise<void>}
+ * @returns {Promise<void>} returns nothing
  */
 const prismaErrorHandler = async (
   error: any,
@@ -21,8 +21,10 @@ const prismaErrorHandler = async (
   customErrorMessages: CustomErrorMessage[],
   id?: string
 ) => {
+  // Check if the error is a Prisma error
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === "P2002") {
+      // Handle unique constraint failure
       const customError: CustomErrorMessage = {
         expectedFrom: errorExpectedFroms.Prisma,
         reason: errorReasons.UniqueConstraintFailed,
@@ -30,7 +32,9 @@ const prismaErrorHandler = async (
         target: error.meta?.target,
       };
       customErrorMessages.push(customError);
-    } else if (error.code === "P2025") {
+    }
+    else if (error.code === "P2025") {
+      // Handle identifier not found
       const customError: CustomErrorMessage = {
         expectedFrom: errorExpectedFroms.Prisma,
         reason: errorReasons.IdentifierNotFound,
@@ -39,6 +43,7 @@ const prismaErrorHandler = async (
       };
       customErrorMessages.push(customError);
     } else if (error instanceof Prisma.PrismaClientValidationError) {
+      // Handle validation error
       const customError: CustomErrorMessage = {
         expectedFrom: errorExpectedFroms.Prisma,
         reason: errorReasons.ValidationError,
@@ -46,6 +51,7 @@ const prismaErrorHandler = async (
       };
       customErrorMessages.push(customError);
     } else {
+      // Handle unknown error
       const customError: CustomErrorMessage = {
         expectedFrom: errorExpectedFroms.Prisma,
         reason: errorReasons.UnknownError,

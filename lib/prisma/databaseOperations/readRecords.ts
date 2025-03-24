@@ -14,7 +14,7 @@ import {
  *
  * @param {string} table The name of the table to read from.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
- * @param {object} where The object to filter records with like {visibility: "public"}.
+ * @param {object} filterBY The object to filter records with like {visibility: "public"}.
  * @param {string[]} [include] - An optional array of fields to include in the response.
  * @param {number} limit An optional limit to the number of records to return.
  * @param {number} page An optional page number to return.
