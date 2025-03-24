@@ -1,20 +1,44 @@
 <template>
     <div id="cardContainer">
         <div id="profPic">
-            <img src="../img/probalogo.png" alt="">
+            <img :src="picture" alt="">
         </div>
         <div id="serverName">
-            <p>The wonderful server name</p>
+            <p>{{name}}</p>
         </div>
         <div id="join">
-            <button class="btn ok">Join</button>
+            <button class="btn ok" :disabled="joinUrl === ''" @click="execute()">Join</button>
         </div>
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+const {joinUrl, name, picture} = defineProps({
+    "joinUrl":{
+        type: String,
+        default: ""
+    },
+    "name":{
+        type: String,
+        required: true
+    },
+    "picture":{
+        type: String,
+        required: true
+    }
+    })
+    const { getToken, tokenRefresh } = useToken()
+
+if (!getToken()) await tokenRefresh()
+const {execute} = useFetch(()=> joinUrl, {
+    headers: {
+        "Authorization": getToken()
+    },
+    immediate: false
+})
 
 </script>
+
 
 <style scoped>
 #cardContainer {
