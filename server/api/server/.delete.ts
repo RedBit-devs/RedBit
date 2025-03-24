@@ -1,6 +1,5 @@
 import prisma from "~/lib/prisma";
 import deleteRecord from "~/lib/prisma/databaseOperations/deleteRecord";
-import readRecord from "~/lib/prisma/databaseOperations/readRecord";
 import { errorExpectedFroms, errorReasons, type CustomErrorMessage } from "~/types/customErrorMessage";
 
 export default defineEventHandler(async (event) => {
@@ -20,7 +19,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const userId = event.context.auth.user.id;
-  const { serverId, authorId } = await readBody(event);
+  const { serverId } = await readBody(event);
 
   if (!serverId) {
     customErrorMessages.push({
