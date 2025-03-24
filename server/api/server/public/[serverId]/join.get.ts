@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
     const { errors } = apiResponseHandler(event, customErrorMessages);
     throw createError(errors);
   }
-  const { serverId } = useRoute().params
-  const userId = event.context.auth.id
+  const { serverId } = getRouterParams(event)
+  const userId = event.context.auth.user.id
   apiResponse.params = {
     serverId,
     userId
