@@ -9,20 +9,21 @@ import {
 
 
 /**
- * Creates a new record in the given table with the given data.
+ * Creates a new record in the specified table with the provided data.
  *
- * If the table does not exist creates a new custom error.
+ * If the table does not exist, it creates a new custom error.
  *
- * @param {string} table - The name of the table to create in.
- * @param {T} data - The data to be used for the create.
+ * @param {string} table The name of the table to create the record in.
+ * @param {T} data The data to be used for creating the record.
  * @param {CustomErrorMessage[]} customErrorMessages - An array to collect error messages for any error failures.
- * @returns {Promise<any>}
+ * @returns {Promise<any>} The result of the query or undefined.
  */
 const createRecord = async <T>(
   table: string,
   data: T,
   customErrorMessages: CustomErrorMessage[]
 ): Promise<any> => {
+  // Check if the table exists in the database
   if (!(await checkTable(table))) {
     const error: CustomErrorMessage = {
       expectedFrom: errorExpectedFroms.Prisma,
@@ -34,13 +35,16 @@ const createRecord = async <T>(
   }
   let dbResponse;
   try {
+    // Attempt to create a new record in the specified table
     dbResponse = await prisma[table].create({
       data: data,
     });
   } catch (error) {
+    // Handle any errors that occur during the creation process
     prismaErrorHandler(error, table, customErrorMessages);
     return;
   }
+  // Return the result of the database operation
   return dbResponse;
 };
 
