@@ -102,11 +102,10 @@ Content-Type: application/json
 ###
 
 PATCH {{baseUrl}}/user
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY204OXhibXdiMDAwMG9qb2JxbGd4NDdvdSIsImVtYWlsIjoianVsaXNAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Imp1bGlzIn0sImlhdCI6MTc0MjIzMjg1MiwiZXhwIjoxNzQzOTYwODUyfQ.Llq7A1puxmBwqr4Y95ha2b_plNb9Wx3017QknAGdc02YXNKfswB1EsArvVNLG44uxbIwejttPEeGfAB0iWWnfQ
+Authorization: {{lajostoken}}
 Content-Type: application/json
 
 {
-    "email": "julis@example.com",
     "password": "Pass123@",
     "first_name":"testfromearth",
     "description":"me myself and i"

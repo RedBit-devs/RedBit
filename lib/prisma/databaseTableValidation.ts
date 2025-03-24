@@ -6,9 +6,9 @@ import prisma from "~/lib/prisma";
  * @param {string} table - The name of the table to check for existence.
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating whether the table exists.
  */
-
 const checkTable = async (table: string): Promise<boolean> => {
   let tableExists = true;
+  // Check if the table exists in the database
   if (!prisma[table]) {
     tableExists = false;
   }
