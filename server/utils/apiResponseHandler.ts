@@ -66,28 +66,32 @@ const errorHttpStatusCodes = {
 };
 
 /**
- * Handles API response creation based on custom error messages and event context.
+ * Handles custom error messages and returns an errors object .
  *
- * Depending on the presence and source of custom error messages, the function constructs
- * an appropriate ApiResponse object with corresponding HTTP status codes and error details.
+ * If there are no custom error messages, it sets the data property of the api response object to the given data or a default value.
  *
- * - If no custom errors are present, sets a success response with HTTP 200.
- * - If errors originate from Prisma, sets an HTTP 453 response with Prisma-related error details.
- * - If errors originate from User validation, sets an HTTP 452 response with user-related error details.
- * - If the error is not expected from any known source , sets an HTTP 455 response with the releted error details.
- * - If the error reason is not in the expected custom error object , sets an HTTP 454 response with the releted error details.
- * - Unknown errors are expected errors in the error messages thats why there are no handling for that specific type of error
+ * If there are custom error messages, it will return a customThrowError object containing the errors and the status code and status message.
  *
- * @param {any} event - The event object containing the context and ApiResponse reference.
- * @param {CustomErrorMessage[]} customErrorMessages - An array of error messages detailing the issues encountered.
+ * The status code and status message are determined by the expectedFrom property of the custom error messages.
+ *
+ * If the expectedFrom property is not one of the expected values, it sets the status code to 455 and the status message to "BadCustomErrorExpectedFrom"
+ *
+ * If the reason property of the custom error message is not in the expected custom error object it sets the status code to 454 and the status message to "BadCustomErrorReason".
+ *
+ * if the reason property of the custom error message is in the expected custom error object, it sets the status code to the corresponding http status code and the status message to the corresponding http status message and adds the custom error message to the errors array with the corresponding data.
+ *
+ * @param {any} event - The event object of the route.
+ * @param {CustomErrorMessage[]} customErrorMessages - The custom error messages to be handled.
+ * @param {ResponseData} data - The data to be returned if there are no custom error messages.
+ * @returns {any} An object containing the errors property which is a customThrowError object or an empty object if there are no custom error messages.
  */
-
 const apiResponseHandler = (
   event: any,
   customErrorMessages: CustomErrorMessage[],
   data?: ResponseData
 ): any => {
   const apiResponse = event.context.apiResponse;
+  // initialize the errors object
   let customErrorObject: customThrowError = {
     statusCode: 400,
     statusMessage: "Bad request",
@@ -95,6 +99,7 @@ const apiResponseHandler = (
   };
 
   if (customErrorMessages.length == 0) {
+    // set the data property of the api response object
     if (data) {
       apiResponse.data = data;
     } else {
@@ -107,6 +112,7 @@ const apiResponseHandler = (
   }
 
   for (let i = 0; i < customErrorMessages.length; i++) {
+    // check if the expectedFrom property is one of the expected values
     if (!(customErrorMessages[i].expectedFrom in errorExpectedFroms)) {
       const reason = errorReasons.BadCustomErrorExpectedFrom;
       setStatusMessageAndCode(customErrorObject, 455);
@@ -120,12 +126,21 @@ const apiResponseHandler = (
       );
       return { errors: customErrorObject };
     }
-  
+
+    /*
+     * set the status code and status message
+     * check if the reason property is one of the expected values
+     * if not Handle the case where the reason property is not in the expected custom error object
+     * if it is, add the custom error message to the errors array
+     */
     switch (customErrorMessages[i].expectedFrom) {
       case errorExpectedFroms.Prisma:
         const reason = customErrorMessages[i].reason;
+        // set the status code and status message
         setStatusMessageAndCode(customErrorObject, 453);
+        // check if the reason property is in the expected custom error object
         if (reason in prismaErrorReasonAndMessages) {
+          // add the custom error message to the errors array
           newError(
             customErrorObject,
             errorExpectedFroms.Prisma,
@@ -137,6 +152,7 @@ const apiResponseHandler = (
             customErrorMessages[i].target
           );
         } else {
+          // Handle the case where the reason property is not in the expected custom error object
           badCustomErrorReason(apiResponse, customErrorObject);
         }
         break;
@@ -148,7 +164,8 @@ const apiResponseHandler = (
             apiResponse.context,
             customErrorMessages[i].reason,
             userErrorReasonAndMessages[
-              customErrorMessages[i].reason as keyof typeof userErrorReasonAndMessages
+              customErrorMessages[i]
+                .reason as keyof typeof userErrorReasonAndMessages
             ]
           );
         } else {
@@ -163,7 +180,8 @@ const apiResponseHandler = (
             apiResponse.context,
             customErrorMessages[i].reason,
             serverErrorReasonAndMessages[
-              customErrorMessages[i].reason as keyof typeof serverErrorReasonAndMessages
+              customErrorMessages[i]
+                .reason as keyof typeof serverErrorReasonAndMessages
             ]
           );
         } else {
@@ -178,7 +196,8 @@ const apiResponseHandler = (
             apiResponse.context,
             customErrorMessages[i].reason,
             inviteErrorReasonAndMessages[
-              customErrorMessages[i].reason as keyof typeof inviteErrorReasonAndMessages
+              customErrorMessages[i]
+                .reason as keyof typeof inviteErrorReasonAndMessages
             ]
           );
         } else {
@@ -193,7 +212,8 @@ const apiResponseHandler = (
             apiResponse.context,
             customErrorMessages[i].reason,
             imageErrorReasonAndMessages[
-              customErrorMessages[i].reason as keyof typeof imageErrorReasonAndMessages
+              customErrorMessages[i]
+                .reason as keyof typeof imageErrorReasonAndMessages
             ]
           );
         } else {
