@@ -59,6 +59,8 @@ const isRequestPending = ref(false);
 
 const sendLoginRequest = async () => {
     isRequestPending.value = true;
+    err.value = null;
+    stat.value = null;
     if (!emailRef.value.value || !passwordRef.value.value) return isRequestPending.value = false;
 
     const { error, status } = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
