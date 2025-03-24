@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000/api
-@lajostoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY204ZW5scmF5MDAwMW14aTUycGFwZ3hxMiIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Ikxham9za2EiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHJheTAwMDJteGk1OGR0amxwdXUifSwiaWF0IjoxNzQyMzEzODQ0LCJleHAiOjE3NDQwNDE4NDR9.B5_jEW9xgpVR2ViFoJpEd3ueB_UQOBJOdhGO4G77DnIewZFFoOSICl2cPo8C8HM9tc0jukxgds60MIFUMmmy8w
+@lajostoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY204ZW5scmF5MDAwMW14aTUycGFwZ3hxMiIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Ikxham9za2EiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHJheTAwMDJteGk1OGR0amxwdXUifSwiaWF0IjoxNzQyODA2NjQ2LCJleHAiOjE3NDQ1MzQ2NDZ9.ppYRZDkrGCEm_6CMQ08f9o44KtuHeYnVlJIqtFqfQ-oxFjrDwPcE6S4p-j26Zz0QyHSZu2gctUPbzA4D1vf86A
 @deletedusertoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiZGVsZXRlZHVzZXIiLCJlbWFpbCI6Im5vcEBub3Aubm9wIiwicGljdHVyZSI6bnVsbCwidXNlcm5hbWUiOiJkZWxldGVkX3VzZXIiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHIzaDAwMDBteGk1b2Z4eWQxanMifSwiaWF0IjoxNzQyMzE2MTM2LCJleHAiOjE3NDQwNDQxMzZ9.iHPdX2pdP3tADMomSJtUHQn6alv0D6cR-FdbsyR2nCcAMiAD8ga7DnkQgzHEO1JgWefPbt_jEuy9G1L9E0f5NA
 
 GET {{baseUrl}} HTTP/1.1
@@ -22,7 +22,7 @@ POST  {{baseUrl}}/user/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"julis@example.com",
+    "email":"lajos@example.com",
     "password":"Pass123@"
 }
 
@@ -131,3 +131,12 @@ Authorization: {{lajostoken}}
 ###
 GET {{baseUrl}}/server/public/ HTTP/1.1
 Authorization: {{lajostoken}}
+
+###
+DELETE {{baseUrl}}/server HTTP/1.1
+Authorization: {{lajostoken}}
+Content-Type: application/json
+
+{
+    "serverId": "cm8lmu4xs000uuklnjcgecz00"
+}
