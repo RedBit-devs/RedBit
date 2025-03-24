@@ -8,7 +8,7 @@
             <div v-else-if="chatgroupsStatus === 'pending'" id="chatSelector">Loading... please be patient</div>
             <div v-else id="chatSelector">Click the chosen servers icon.</div>
             <DiscoverServers id="discoverServers" />
-            <UserCard id="userCard" />
+            <UserCard id="userCard" :name="userData?.username" :picture="userData?.profile_picture" :id="userData?.id" />
         </div>
         <div id="content" ref="contentRef">
             <ChatFieldNavbar />
@@ -76,7 +76,19 @@ const { data: chatgroups, refresh: chatgroupsRefresh, status: chatgroupsStatus }
     transform: (e) => e.data.items
 })
 
-if (route.params.chatId)chatgroupsRefresh();
+if (route.params.chatId)await chatgroupsRefresh();
+
+
+const { data: userData } = useFetch("/api/user/", {
+    method: "GET",
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: r => r.data.items[0],
+})
+
+console.log(userData.value);
+
 
 </script>
 
