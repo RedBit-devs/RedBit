@@ -129,3 +129,5 @@ DELETE {{baseUrl}}/user/ HTTP/1.1
 Authorization: {{lajostoken}}
 
 ###
+GET {{baseUrl}}/server/public/ HTTP/1.1
+Authorization: {{lajostoken}}

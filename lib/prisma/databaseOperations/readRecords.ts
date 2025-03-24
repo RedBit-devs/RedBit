@@ -8,22 +8,25 @@ import {
 } from "~/types/customErrorMessage";
 
 /**
- * Reads a single record from the specified table by its ID.
+ * Reads multiple records from the given table with the given where object.
  *
  * If the table does not exist creates a new custom error.
  *
- * @param {string} table - The name of the table to read from.
- * @param {string} id - The ID of the record to retrieve.
+ * @param table The name of the table to read from.
  * @param customErrorMessages - An array to collect error messages for any error failures.
+ * @param where The object to filter records with like {visibility: "public"}.
  * @param {string[]} [include] - An optional array of fields to include in the response.
+ * @param limit An optional limit to the number of records to return.
+ * @param page An optional page number to return.
  * @returns {Promise<any>} The result of the query or null.
  */
-
-const readRecord = async (
+const readRecords = async (
   table: string,
-  id: string,
   customErrorMessages: CustomErrorMessage[],
-  include?: string[]
+  filterBY: { [key: string]: any },
+  include?: string[],
+  limit?: number,
+  page?: number
 ): Promise<any> => {
   if (!(await checkTable(table))) {
     const error: CustomErrorMessage = {
@@ -36,22 +39,29 @@ const readRecord = async (
   }
 
   try {
+    const where = { ...filterBY };
     let select;
-    const where = { id };
-
-    if (include !== undefined) {
+    let skip;
+    let take;
+    let query;
+    if (include !== undefined && include.length > 0) {
       select = include.reduce((acc, key) => ({ ...acc, [key]: true }), {});
     }
 
-    const querry = { where, select };
+    if (page) {
+      skip = (page - 1) * limit;
+    }
+    if (limit) {
+      take = limit;
+    }
 
-    const result = await prisma[table].findUnique(querry);
+    query = { where, select, skip, take };
+    const result = await prisma[table].findMany(query);
 
     return result;
   } catch (error) {
     prismaErrorHandler(error, table, customErrorMessages);
-    return null;
   }
 };
 
-export default readRecord;
+export default readRecords;
