@@ -7,12 +7,6 @@
                 <p>Úszik</p>
             </div>
             <div class="buttons">
-                <div class="mircophone">
-                    <Icon name="mingcute:mic-line" size="120%" />
-                </div>
-                <div class="headset">
-                    <Icon name="mingcute:headphone-line" size="120%" />
-                </div>
                 <div class="settings">
                     <Icon name="mingcute:settings-5-line" size="120%" />
                 </div>
