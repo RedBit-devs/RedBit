@@ -10,6 +10,7 @@
             <div class="pageContent">
                 <SettingsChatCard />
                 <SettingsChatCard />
+                <SettingsChatCard />
             </div>
         </div>
     </div>

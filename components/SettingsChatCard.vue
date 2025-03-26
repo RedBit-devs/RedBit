@@ -3,11 +3,12 @@
         <div class="data">
             <Icon name="mdi:pound" size="200%" />
             <h2>Chat name</h2>
+            <input v-if="inputAppear == true" type="text" placeholder="Chat name">
         </div>
         <div class="functions">
             <Icon name="mdi:dots-vertical" size="200%" id="functions" />
-            <div id="buttons">
-                <button class="btn warn">Rename</button>
+            <div v-if="functionAppear == true" id="buttons">
+                <button class="btn warn" id="rename">Rename</button>
                 <button class="btn danger">Delete</button>
             </div>
         </div>
@@ -17,21 +18,30 @@
 
 <script setup>
 import { onMounted } from 'vue';
+let inputAppear = false
+let functionAppear = false
 
 onMounted(() => {
     const appearBtn = document.getElementById('functions')
     const functionBtns = document.getElementById('buttons')
+    const renameBtn = document.getElementById('rename')
     const apperFuncitons = () => {
-        functionBtns.style.zIndex = '1'
-        functionBtns.style.display = 'flex'
+        functionAppear = true
+        console.log(functionAppear);
+
     }
-    appearBtn.addEventListener('click', apperFuncitons)
+
+    const changeNameFunc = () => {
+        inputAppear = true
+    }
 
     window.onclick = function (event) {
         if (!event.target.matches('#functions')) {
-            functionBtns.style.display = 'none'
+            functionAppear = false
         }
     }
+
+    appearBtn.addEventListener('click', apperFuncitons)
 })
 
 
@@ -64,7 +74,7 @@ onMounted(() => {
 }
 
 #buttons {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     background-color: var(--clr-ui-secondary);
