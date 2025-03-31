@@ -2,12 +2,16 @@
     <div class="container">
         <div class="data">
             <Icon name="mdi:pound" size="200%" />
-            <h2>Chat name</h2>
-            <input v-if="inputAppear == true" type="text" placeholder="Chat name">
+            <h2 v-if="inputRef == false">Chat name</h2>
+            <div class="nameChange" v-show="inputRef == true">
+                <input type="text" placeholder="Chat name" id="nameInput">
+                <button class="btn ok">Save</button>
+                <button class="btn warn" id="cancelNameChange">Cancel</button>
+            </div>
         </div>
         <div class="functions">
             <Icon name="mdi:dots-vertical" size="200%" id="functions" />
-            <div v-if="functionAppear == true" id="buttons">
+            <div v-show="functionRef == true" id="buttons">
                 <button class="btn warn" id="rename">Rename</button>
                 <button class="btn danger">Delete</button>
             </div>
@@ -18,30 +22,37 @@
 
 <script setup>
 import { onMounted } from 'vue';
-let inputAppear = false
-let functionAppear = false
+const inputRef = ref(false)
+const functionRef = ref(false)
 
 onMounted(() => {
     const appearBtn = document.getElementById('functions')
-    const functionBtns = document.getElementById('buttons')
     const renameBtn = document.getElementById('rename')
+    const cancelBtn = document.getElementById('cancelNameChange')
     const apperFuncitons = () => {
-        functionAppear = true
-        console.log(functionAppear);
+        functionRef.value = true
+    }
+
+    const disappearFunctions = () => {
+        functionRef.value = false
+        console.log(functionRef.value);
 
     }
 
     const changeNameFunc = () => {
-        inputAppear = true
+        inputRef.value = true
     }
 
     window.onclick = function (event) {
         if (!event.target.matches('#functions')) {
-            functionAppear = false
+            functionRef.value = false
         }
     }
 
+
     appearBtn.addEventListener('click', apperFuncitons)
+    renameBtn.addEventListener('click', changeNameFunc)
+    cancelBtn.addEventListener('click', disappearFunctions)
 })
 
 
@@ -82,5 +93,23 @@ onMounted(() => {
     padding: .3rem;
     border-radius: var(--border-rounded);
     position: absolute;
+}
+
+#nameInput {
+    border-radius: var(--border-rounded);
+    background-color: var(--clr-ui-secondary);
+    border: none;
+    padding: 1rem;
+    color: var(--clr-text-primary);
+}
+
+#nameInput:hover {
+    background-color: var(--clr-ui-primary);
+}
+
+.nameChange {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 </style>

@@ -9,8 +9,6 @@
             <h2 class="text-big">Chats of the server</h2>
             <div class="pageContent">
                 <SettingsChatCard />
-                <SettingsChatCard />
-                <SettingsChatCard />
             </div>
         </div>
     </div>
@@ -19,7 +17,10 @@
 <script setup>
 definePageMeta({
     layout: 'settings'
+
+
 })
+
 
 </script>
 
