@@ -8,6 +8,7 @@
         <div class="members">
             <h2 class="text-big ">Banned users</h2>
             <div class="pageContent">
+                <SettingsBannedCard />
             </div>
         </div>
     </div>
@@ -27,5 +28,12 @@ definePageMeta({
 
 .close {
     text-align: right;
+}
+
+.pageContent {
+    margin: .5rem;
+    padding: 1rem;
+    border-radius: var(--border-rounded);
+    background-color: var(--clr-ui-primary);
 }
 </style>
