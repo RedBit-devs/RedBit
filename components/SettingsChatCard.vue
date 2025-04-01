@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div id="container">
         <div class="data">
             <Icon name="mdi:pound" size="200%" />
             <h2 v-if="inputRef == false">Chat name</h2>
@@ -34,9 +34,7 @@ onMounted(() => {
     }
 
     const disappearFunctions = () => {
-        functionRef.value = false
-        console.log(functionRef.value);
-
+        inputRef.value = false
     }
 
     const changeNameFunc = () => {
@@ -49,7 +47,6 @@ onMounted(() => {
         }
     }
 
-
     appearBtn.addEventListener('click', apperFuncitons)
     renameBtn.addEventListener('click', changeNameFunc)
     cancelBtn.addEventListener('click', disappearFunctions)
@@ -59,16 +56,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.container {
+#container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: var(--border-rounded);
     padding: 1rem;
     margin: .5rem;
+    height: 5rem;
 }
 
-.container:hover {
+#container:hover {
     background-color: var(--clr-ui-secondary);
 }
 
