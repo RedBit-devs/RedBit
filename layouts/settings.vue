@@ -78,6 +78,11 @@ ul {
     color: var(--clr-text-primary);
     cursor: pointer;
     margin: 1rem;
+
+}
+
+a {
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 830px) {
