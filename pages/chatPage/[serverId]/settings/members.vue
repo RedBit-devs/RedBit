@@ -8,7 +8,7 @@
         <div class="members">
             <h2 class="text-big">Members of the server</h2>
             <div class="pageContent">
-
+                <SettingsMemberCard />
             </div>
         </div>
     </div>
@@ -28,5 +28,12 @@ definePageMeta({
 
 .close {
     text-align: right;
+}
+
+.pageContent {
+    margin: .5rem;
+    padding: 1rem;
+    border-radius: var(--border-rounded);
+    background-color: var(--clr-ui-primary);
 }
 </style>
