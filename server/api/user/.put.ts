@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
       html: html.replace("{{name}}", `${newUser.first_name} ${newUser.last_name}`).replace("{{verifyurl}}", `https://redbit.netlify.app/verifyemail?email=${newUser.email}&id=${data.id}` )
     })
   } catch (error) {
-    console.log(error)
+    
   }
   return apiResponse
 
