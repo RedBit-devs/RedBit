@@ -1,20 +1,48 @@
 <template>
     <div id="cardContainer">
         <div id="profPic">
-            <img src="../img/probalogo.png" alt="">
+            <img :src="picture" alt="">
         </div>
         <div id="serverName">
-            <p>The wonderful server name</p>
+            <p>{{ name }}</p>
         </div>
         <div id="join">
-            <button class="btn ok">Join</button>
+            <button class="btn ok" :disabled="joinUrl === ''" @click="execute()">Join</button>
         </div>
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+const { joinUrl, name, picture, token } = defineProps({
+    "joinUrl": {
+        type: String,
+        default: ""
+    },
+    "name": {
+        type: String,
+        required: true
+    },
+    "picture": {
+        type: String,
+        required: true
+    },
+    "token": {
+        type: String,
+        required: true
+    }
+})
+
+const { getToken, tokenRefresh } = useToken()
+
+const { execute } = useFetch(() => joinUrl, {
+    headers: {
+        "Authorization": token
+    },
+    immediate: false
+})
 
 </script>
+
 
 <style scoped>
 #cardContainer {
@@ -26,7 +54,7 @@
     max-width: 50rem;
     margin: 1rem auto;
     background-color: var(--clr-ui-primary);
-    border-radius:var(--border-rounded) ;
+    border-radius: var(--border-rounded);
 }
 
 #profPic img {
@@ -42,15 +70,16 @@ p {
     text-align: right;
 }
 
-@media only screen and (max-width:490px){
-    p{
+@media only screen and (max-width:490px) {
+    p {
         font-size: 1rem;
     }
 
-    #profPic img{
+    #profPic img {
         height: 2.5rem;
     }
-    #cardContainer{
+
+    #cardContainer {
         gap: .5rem;
     }
 }

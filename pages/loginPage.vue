@@ -34,8 +34,9 @@
                 </NuxtLink>
             </div>
         </div>
-        <div v-if="err" class="toaster">
-            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason" :content="error.message" />
+        <div v-if="err?.length > 0" class="toaster">
+            <Toast v-for="(error, i) in err" :key="i" class="danger" :title="error.reason.toString()"
+                :content="error.message" />
         </div>
 
     </div>
@@ -51,17 +52,21 @@ const emailRef = ref(null)
 const passwordRef = ref(null)
 const { getNewRefreshToken } = useToken()
 
-const err = ref([]);
+const err = ref<CustomError[] | null>(null);
 const stat = ref(null);
 const isRequestPending = ref(false);
 
+
 const sendLoginRequest = async () => {
     isRequestPending.value = true;
+    err.value = null;
+    stat.value = null;
     if (!emailRef.value.value || !passwordRef.value.value) return isRequestPending.value = false;
 
-    const {error, status} = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
+    const { error, status } = await getNewRefreshToken(emailRef.value.value, passwordRef.value.value)
 
-    stat.value = status
+    stat.value = status;
+    err.value = null;
 
     if (stat.value === "success") {
         navigateTo('/chatpage/')
@@ -71,8 +76,8 @@ const sendLoginRequest = async () => {
         err.value = error.data
     }
     isRequestPending.value = false;
-}
 
+}
 </script>
 
 <style scoped>
@@ -152,7 +157,7 @@ input {
     box-shadow: 10px 10px 21px 1px rgb(from var(--clr-text-inverse) r g b / .6);
 }
 
-.forgottenPassword a{
+.forgottenPassword a {
     cursor: pointer;
     color: var(--clr-primary);
     text-decoration: none;

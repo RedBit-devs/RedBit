@@ -4,7 +4,8 @@ import { userValidation, hashPassword } from "~/shared/utils/userValidation";
 import {
   type CustomErrorMessage,
 } from "~/types/customErrorMessage";
-
+import nodemailer from "nodemailer";
+import * as fs from 'fs/promises';
 export default defineEventHandler(async (event) => {
   const newUser: User = await readBody(event);
   const apiResponse = {} as ApiResponse;
@@ -17,6 +18,7 @@ export default defineEventHandler(async (event) => {
     first_name: newUser.first_name,
     last_name: newUser.last_name,
     password: newUser.password,
+    profile_picture: newUser.profile_picture
   }
   apiResponse.params = params;
   const customErrorMessages: CustomErrorMessage[] = [];
@@ -42,6 +44,23 @@ export default defineEventHandler(async (event) => {
   
   if (customErrorMessages.length > 0) {
     throw createError(errors);  
+  }
+
+  try {
+    const config = useRuntimeConfig();
+    const mailerConfig = config.mailer;
+
+    const transporter = nodemailer.createTransport(mailerConfig);
+    const filePath = "server/emailTemplates/verifyEmail.html"
+    const html = await fs.readFile(filePath, 'utf-8')
+    await transporter.sendMail({
+      from: process.env.MAILER_EMAIL,
+      to: newUser.email,
+      subject: "Account Creation",
+      html: html.replace("{{name}}", `${newUser.first_name} ${newUser.last_name}`).replace("{{verifyurl}}", `https://redbit.netlify.app/verifyemail?email=${newUser.email}&id=${data.id}` )
+    })
+  } catch (error) {
+    
   }
   return apiResponse
 
