@@ -11,22 +11,7 @@ export default defineNuxtConfig({
     '~/assets/css/fonts.css'
   ],
   devtools: { enabled: true },
-  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt', 'nuxt-file-storage', ['nuxt-mail', {
-    message: {
-      to: process.env.MAILER_EMAIL,
-      cc: [],
-      bcc:[]
-    },
-    smtp: {
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.MAILER_EMAIL,
-        pass: process.env.MAILER_PASSWORD
-      },
-    },
-  }]],
+  modules: ["@prisma/nuxt", '@nuxt/icon', '@nuxtjs/device', '@vueuse/nuxt', 'nuxt-file-storage'],
   prisma: {
     installStudio: false,
     autoSetupPrisma: true
