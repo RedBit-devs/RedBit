@@ -47,15 +47,10 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.MAILER_EMAIL,
-        pass: process.env.MAILER_PASSWORD
-      },
-    })
+    const config = useRuntimeConfig();
+    const mailerConfig = config.mailer;
+
+    const transporter = nodemailer.createTransport(mailerConfig);
     const filePath = "server/emailTemplates/verifyEmail.html"
     const html = await fs.readFile(filePath, 'utf-8')
     await transporter.sendMail({
