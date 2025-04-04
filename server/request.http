@@ -10,11 +10,12 @@ Content-Type: application/json
 
 {
     "username": "julis",
-    "email": "julis@example.com",
+    "email": "developer413ksz@gmail.com",
     "birthdate": "1990-02-12",
     "first_name": "Fake",
     "last_name": "Julis",
-    "password": "Pass123@"
+    "password": "Pass123@",
+    "profile_picture": " "
 }
 
 ###
