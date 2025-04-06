@@ -1,7 +1,7 @@
 <template>
     <main class="screen">
         <div v-if="status === 'success'">
-            <h1>Email successfuly verified.</h1>
+            <h1>Email successfully verified.</h1>
         </div>
         <div v-else-if="status === 'error'">
             <h1>Validating the email failed, try again later</h1>
@@ -31,7 +31,7 @@ const { data, status, error, refresh } = await useFetch(`/api/user/verifyEmail`,
 if (route.query.email && route.query.id) {
     refresh()
 } else {
-    toasts.value.push({ title: "Querry params missing", content: `email=${route.query.email}&id=${route.query.id}` })
+    toasts.value.push({ title: "Query params missing", content: `email=${route.query.email}&id=${route.query.id}` })
 }
 </script>
 <style scoped>
