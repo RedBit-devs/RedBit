@@ -12,9 +12,9 @@
         </div>
 
         <section class="toaster">
-            <Toast v-for="(error, i) in error?.data?.data" :key="i" class="danger" :title="error.reason"
+            <Toast v-for="(error, index) in error?.data?.data" :key="index" class="danger" :title="error.reason"
                 :content="error.message" />
-            <Toast v-for="(t, i) in toasts" :key="i" class="danger" :title="t.title" :content="t.content" />
+            <Toast v-for="(t, index) in toasts" :key="index" class="danger" :title="t.title" :content="t.content" />
         </section>
     </main>
 </template>
