@@ -11,7 +11,7 @@
             <UserCard id="userCard" :name="userData?.username" :picture="userData?.profile_picture" :id="userData?.id" />
         </div>
         <div id="content" ref="contentRef">
-            <ChatFieldNavbar />
+            <ChatFieldNavbar :serverId="route.params.serverId" />
             <slot>
 
             </slot>
@@ -87,7 +87,6 @@ const { data: userData } = useFetch("/api/user/", {
     transform: r => r.data.items[0],
 })
 
-console.log(userData.value);
 
 
 </script>
@@ -134,6 +133,7 @@ console.log(userData.value);
 #chatSelector {
     overflow-y: auto;
 }
+
 #content {
     display: grid;
     grid-template-rows: min-content 1fr;

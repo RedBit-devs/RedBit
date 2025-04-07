@@ -5,7 +5,10 @@
         <div id="functions">
             <Icon id="search" name="mdi:magnify" size="150%" @click="handleSearchbarMove()" />
             <Icon name="mdi:phone-in-talk" size="150%" />
-            <Icon name="mdi:account-box-outline" size="150%" />
+            <NuxtLink :to="`/chatPage/${serverId}/settings`">
+                <Icon name="mdi:cog" size="150%" />
+            </NuxtLink>
+
         </div>
     </div>
 
@@ -16,6 +19,9 @@ const { name } = defineProps({
     'name': {
         type: String,
         default: "Chat" //TODO could be set to the current chat name or title
+    },
+    'serverId': {
+        type: String
     }
 })
 const headerRef = ref(null)
