@@ -76,7 +76,7 @@ const { data, execute, error, status, clear } = useFetch(`/api/server/`, {
   immediate: false,
   transform: r => r.data.items[0]
 });
-
+execute()
 
 const createServer = async () => {
   clear()
@@ -86,6 +86,7 @@ const createServer = async () => {
   if (!getToken()) await tokenRefresh();
 
   execute()
+
 };
 
 const { isShown } = defineProps({
