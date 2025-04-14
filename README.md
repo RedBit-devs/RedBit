@@ -1,15 +1,18 @@
 # RedBit
+The documentation for users can be found at the repositories [wiki page](https://github.com/RedBit-devs/RedBit/wiki)
 
-## About
+
+## [About](https://github.com/RedBit-devs/RedBit/wiki)
 
 This project was made as a project for school.
 
-## Description
+## Goals
 
-This is a chat made with [NUXT](https://nuxt.com/).
+We aim to make a fully open source chat. With minimal data collection, and being fully transparent about that minimal data towards the user.
+We believe that everyone who uses a program should be given the opportunity to modify the software they use. (or contribute to the main project)
 
 
-# Minimal Starter
+# Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -18,17 +21,7 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
 Make sure to install dependencies:
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -36,17 +29,7 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -54,48 +37,114 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
-## How to Use
+# Development
+The documentation for the API can be found in the [user documentation on the wiki page](https://github.com/RedBit-devs/RedBit/wiki/API)
 
-At first you'll find your self on the landing page.
-From there you can navigate to the chat: 
+## Components
+<!--A detailed description of each software module or component, including their responsibilities and operation.-->
+### [BasicShowcaseCard](https://github.com/RedBit-devs/RedBit/blob/main/components/BasicShowcaseCard.vue)
+It is used for displaying information in a card form on the landingpage.
+#### Props
+```js
+"cardData": {
+        type: Object as PropType<CardData>
+    }
+```
+Types
+```js
+type CardData = {
+  imageUrl?: string;
+  headerText?: string;
+  bubbles?: Bubble[];
+  description?: string;
+};
+type Bubble = {
+  url: string;
+  name: string;
+  imageUrl: string;
+};
+```
 
-### If you are not logged in:
+### [ChatCard](https://github.com/RedBit-devs/RedBit/blob/main/components/ChatCard.vue)
 
-You will be sent to the login page. from there you can login or navigate to registration.
+#### Props
+```js
+'name': {
+    type: String
+},
+'picture': {
+    type: String,
+    default: ""
+},
+'activity': {
+    type: String,
+    default: ""
+}
+```
 
-### If you are logged in:
+### [ChatMessage](https://github.com/RedBit-devs/RedBit/blob/main/components/ChatMessage.vue)
+used for displaying messages sent.
+### Props
+```js
+authorImage: {
+    type: String,
+    required: true,
+    default: ""
+},
+authorName: {
+    type: String,
+    required: true
+},
+message: {
+    type: String,
+    required: true
+},
+```
 
-It will automatically send you to the chat.
-There you can navigate between chats, discover or create new servers.
-This is where your jurnei begins
+## Database
+<!-- A description of the database schema, including tables, columns, relations, and indexes. -->
+For the database we use [prisma.io](https://www.prisma.io/) ORM.
+The database schema can be found in the projects root folder [/prisma/schema.prisma](https://github.com/RedBit-devs/RedBit/blob/main/prisma/schema.prisma)
+
+## External
+<!-- If the system communicates with other systems, a detailed description of these integrations is provided. -->
+### [Mailing](https://support.google.com/a/answer/176600)
+
+# Hosting
+For production, after building the project successfully the builded files can be found at .output/server/index.mjs.
+It can be run with node
+```bash
+node .output/server/index.mjs
+```
+## ENV
+An [example for the env](https://github.com/RedBit-devs/RedBit/blob/main/.env.example) is found in the projects root directory.
+- DATABASE_URL
+    - A connection string for the database used
+    - Can use connection pooling 
+ 
+- DIRECT_URL
+   - Direct connection to the database. Used for migrations.
+   - A connection string for the database used
+   - Do not use connection pooling
+ 
+- JWT_SECRET
+  - JWT token encription key
+ 
+
+- NUXT_NODEMAILER_FROM
+  - Email address used for sending emails to the user
+- NUXT_NODEMAILER_AUTH_PASS
+  - Mailing secret
+
+[SMTP server provider used](https://support.google.com/a/answer/176600)
