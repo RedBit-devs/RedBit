@@ -1,3 +1,12 @@
+[![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/)
+[![Nuxtjs](https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82)](https://nuxt.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io/)
+
+<!--
+badges from:
+- https://github.com/Ileriayo/markdown-badges#readme
+-->
+
 # RedBit
 The documentation for users can be found at the repositories [wiki page](https://github.com/RedBit-devs/RedBit/wiki)
 
@@ -55,6 +64,16 @@ The documentation for the API can be found in the [user documentation on the wik
 <!--A detailed description of each software module or component, including their responsibilities and operation.-->
 ### [BasicShowcaseCard](https://github.com/RedBit-devs/RedBit/blob/main/components/BasicShowcaseCard.vue)
 It is used for displaying information in a card form on the landingpage.
+For the "picture" eather an icon or an image can be provided.
+To use an icon you must start it with ``icon:``
+<details>
+<summary>Picture</summary>
+        
+![kép](https://github.com/user-attachments/assets/c01e8cab-5e0f-4dcb-a26e-e0fb2b59f03b)
+![kép](https://github.com/user-attachments/assets/baec50d0-5c6b-4268-b509-05324c87ff9c)
+
+</details>
+
 #### Props
 ```js
 "cardData": {
@@ -77,7 +96,11 @@ type Bubble = {
 ```
 
 ### [ChatCard](https://github.com/RedBit-devs/RedBit/blob/main/components/ChatCard.vue)
-
+<details>
+<summary>Picture</summary>
+        
+![kép](https://github.com/user-attachments/assets/ed7bb19e-0275-4aa4-8693-edcbfe563b39)
+</details>
 #### Props
 ```js
 'name': {
