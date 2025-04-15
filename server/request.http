@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000/api
-@lajostoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY204ZW5scmF5MDAwMW14aTUycGFwZ3hxMiIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjpudWxsLCJ1c2VybmFtZSI6Ikxham9za2EiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHJheTAwMDJteGk1OGR0amxwdXUifSwiaWF0IjoxNzQyODA2NjQ2LCJleHAiOjE3NDQ1MzQ2NDZ9.ppYRZDkrGCEm_6CMQ08f9o44KtuHeYnVlJIqtFqfQ-oxFjrDwPcE6S4p-j26Zz0QyHSZu2gctUPbzA4D1vf86A
+@lajostoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiY205aXI1czBoMDAwMGkwdWtnMW9qaHVtbSIsImVtYWlsIjoibGFqb3NAZXhhbXBsZS5jb20iLCJwaWN0dXJlIjoiICIsInVzZXJuYW1lIjoianVsaXMiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOWlyNXMwaDAwMDFpMHVraHFtbWVteTIifSwiaWF0IjoxNzQ0NzM2NjY5LCJleHAiOjE3NDY0NjQ2Njl9.s8Zm21spechWi7fhsp_7jvm_PrOR_QxkpBksdHpB2ZEni-Uh-abFwLHKerqNYbTRW29BZzlraJrIRSJUhMj4Gw
 @deletedusertoken = Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjoiZGVsZXRlZHVzZXIiLCJlbWFpbCI6Im5vcEBub3Aubm9wIiwicGljdHVyZSI6bnVsbCwidXNlcm5hbWUiOiJkZWxldGVkX3VzZXIiLCJ2ZXJpZmljYXRpb25fY29kZSI6ImNtOGVubHIzaDAwMDBteGk1b2Z4eWQxanMifSwiaWF0IjoxNzQyMzE2MTM2LCJleHAiOjE3NDQwNDQxMzZ9.iHPdX2pdP3tADMomSJtUHQn6alv0D6cR-FdbsyR2nCcAMiAD8ga7DnkQgzHEO1JgWefPbt_jEuy9G1L9E0f5NA
 
 GET {{baseUrl}} HTTP/1.1
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
     "username": "julis",
-    "email": "developer413ksz@gmail.com",
+    "email": "lajos@example.com",
     "birthdate": "1990-02-12",
     "first_name": "Fake",
     "last_name": "Julis",
@@ -141,3 +141,7 @@ Content-Type: application/json
 {
     "serverId": "cm8lmu4xs000uuklnjcgecz00"
 }
+
+###
+GET  {{baseUrl}}/user/shared/servers/cm8naoubh00028o1atdqqtfv9
+Authorization: {{lajostoken}}
