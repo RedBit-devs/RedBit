@@ -23,7 +23,11 @@ export default defineEventHandler(async (event) => {
             id: event.context.auth.user.id
         },
         select: {
-            verification_code: true
+            verification_code: true,
+            id: true,
+            email: true,
+            profile_picture: true,
+            username: true
         }
     })
 
@@ -33,10 +37,10 @@ export default defineEventHandler(async (event) => {
 
     const tokenData = {
         user: {
-            id: event.context.auth.user.id,
-            email: event.context.auth.user.email,
-            picture: event.context.auth.user.picture,
-            username: event.context.auth.user.username,
+            id: userValidation?.id,
+            email: userValidation?.email,
+            picture: userValidation?.profile_picture,
+            username: userValidation?.username,
         },
     }
 
