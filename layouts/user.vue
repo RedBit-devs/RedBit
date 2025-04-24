@@ -3,16 +3,15 @@
         <div ref="sidebarRef" class="sidebar">
             <h1 class="text-title title">User settings</h1>
             <ul class="text-medium">
-                <NuxtLink class="button" :to="'account'">
+                <NuxtLink class="button" :to="{ name: 'userSettings' }">
                     <li>Account</li>
                 </NuxtLink>
-                <NuxtLink class="button" :to="'personal'">
+                <NuxtLink class="button" :to="{ name: 'userSettings-personal' }">
                     <li>Personal</li>
                 </NuxtLink>
 
             </ul>
         </div>
-
         <slot></slot>
     </div>
 </template>

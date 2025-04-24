@@ -1,11 +1,190 @@
 <template>
     <div>
-
+        <div class="close ">
+            <NuxtLink to="/chatPage">
+                <Icon name="mdi:close" size="550%" class="btn primary" />
+            </NuxtLink>
+        </div>
+        <h1 class="title text-big">Personal information</h1>
+        <div class="pageContent">
+            <div class="mainInfo">
+                <div class="datas">
+                    <div class="data">
+                        <h2 v-if="inputRef == 'title'">First name: Kis</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="First name" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">Last name: Kacsa</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="Last name" class="nameChange">
+                    </div>
+                    <div class="data">
+                        <h2 v-if="inputRef == 'title'">Email: kicsikacsa@haphap.com</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="Email" class="nameChange">
+                    </div>
+                    <div class="data">
+                        <h2 v-if="inputRef == 'title'">Username: Kacsa sziget</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="Name" class="nameChange">
+                    </div>
+                    <div class="data">
+                        <h2 v-if="inputRef == 'title'">Birth date: 2020.02.02</h2>
+                        <input v-if="inputRef == 'input'" type="date" class="nameChange">
+                    </div>
+                </div>
+            </div>
+            <div class="dataBtns">
+                <button class="btn ok" id="save" disabled>Save</button>
+                <button class="btn secondary" id="modify">Modify</button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+
+const inputRef = ref('title')
+definePageMeta({
+    layout: "user"
+})
+
+onMounted(() => {
+    const saveBtn = document.getElementById('save')
+    const modifyBtn = document.getElementById('modify')
+    saveBtn.disabled = true
+
+    const modiflyClick = () => {
+
+        if (modifyBtn.textContent == "Modify") {
+            saveBtn.disabled = false
+            modifyBtn.textContent = 'Cancel'
+            inputRef.value = "input"
+        }
+
+        else {
+            saveBtn.disabled = true
+            modifyBtn.textContent = 'Modify'
+            inputRef.value = 'title'
+        }
+
+    }
+
+    const saveClick = () => {
+        saveBtn.disabled = true
+        modifyBtn.disabled = false
+        modifyBtn.textContent = 'Modify'
+        inputRef.value = 'title'
+    }
+
+    modifyBtn.addEventListener("click", modiflyClick)
+    saveBtn.addEventListener('click', saveClick)
+})
 
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.close {
+    text-align: right;
+}
+
+.title {
+    text-align: center;
+}
+
+.pageContent {
+    background-color: var(--clr-ui-primary);
+    margin: 1rem 4rem;
+    padding: 1rem;
+    border-radius: var(--border-rounded)
+}
+
+.mainInfo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 30rem;
+}
+
+.datas {
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+
+}
+
+h2 {
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--clr-ui-secondary);
+    border-radius: var(--border-rounded);
+    color: var(--clr-text-primary);
+    width: 100%;
+}
+
+.datas>* {
+    width: 100%;
+}
+
+.data {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+
+.nameChange {
+    border-radius: var(--border-rounded);
+    background-color: var(--clr-ui-secondary);
+    border: none;
+    padding: 1.3rem;
+    color: var(--clr-text-primary);
+    width: 100%;
+
+}
+
+.dataBtns {
+    margin: 1rem;
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    padding: .5rem;
+    justify-content: end;
+    gap: .5rem;
+    background-color: var(--clr-ui-secondary);
+    border-radius: var(--border-rounded);
+}
+
+@media only screen and (max-width:1044px) {
+    .mainInfo {
+        flex-direction: column;
+    }
+
+    .datas {
+        width: fit-content;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .mainInfo {
+        flex-direction: column;
+    }
+
+    .dataBtns {
+        justify-content: center;
+    }
+
+    .mainInfo img {
+        height: 15rem;
+    }
+
+    .pageContent {
+        margin: 2rem .2rem;
+        padding: .5rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+}
+</style>
