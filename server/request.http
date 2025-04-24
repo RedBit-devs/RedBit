@@ -145,3 +145,8 @@ Content-Type: application/json
 ###
 GET  {{baseUrl}}/user/shared/servers/cm8naoubh00028o1atdqqtfv9
 Authorization: {{lajostoken}}
+
+###
+GET  {{baseUrl}}/user/shared/friends/cm936m8zu0000ku6sq7mwmok0
+Authorization: {{lajostoken}}
+
