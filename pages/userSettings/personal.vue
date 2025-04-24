@@ -160,7 +160,7 @@ h2 {
     }
 
     .datas {
-        width: fit-content;
+        width: 80%;
     }
 }
 
@@ -183,7 +183,8 @@ h2 {
     }
 
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        width: fit-content;
     }
 
 }
