@@ -10,21 +10,17 @@
             <div class="mainInfo">
                 <div class="datas">
                     <div class="data">
-                        <h2 v-if="inputRef == 'title'">First name: Kis</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="First name" class="nameChange">
-                        <h2 v-if="inputRef == 'title'">Last name: Kacsa</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Last name" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">First name: {{userData?.first_name}}</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="First name" :value="userData?.first_name" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">Last name: {{userData?.last_name}}</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="Last name" :value="userData?.last_name" class="nameChange">
                     </div>
                     <div class="data">
-                        <h2 v-if="inputRef == 'title'">Email: kicsikacsa@haphap.com</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Email" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">Email: {{userData?.email}}</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="Email" :value="userData?.email" class="nameChange">
                     </div>
                     <div class="data">
-                        <h2 v-if="inputRef == 'title'">Username: Kacsa sziget</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Name" class="nameChange">
-                    </div>
-                    <div class="data">
-                        <h2 v-if="inputRef == 'title'">Birth date: 2020.02.02</h2>
+                        <h2 v-if="inputRef == 'title'">Birth date: {{userData?.birthdate}}</h2>
                         <input v-if="inputRef == 'input'" type="date" class="nameChange">
                     </div>
                 </div>
@@ -76,6 +72,20 @@ onMounted(() => {
     modifyBtn.addEventListener("click", modiflyClick)
     saveBtn.addEventListener('click', saveClick)
 })
+
+const { getToken, tokenRefresh } = useToken()
+
+if (!getToken()) await tokenRefresh()
+
+const { data: userData } = useFetch("/api/user/", {
+    method: "GET",
+    server: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: r => r.data.items[0],
+})
+
 
 </script>
 

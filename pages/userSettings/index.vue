@@ -9,7 +9,7 @@
         <div class="pageContent">
             <div class="mainInfo">
                 <div class="imgContainer">
-                    <img src="/img/probalogo.png" alt="">
+                    <img :src="userData?.profile_picture" alt="">
                     <label for="fileInput" id="fileLabel">
                         <Icon name="mdi:pencil" size="200%" />
                     </label>
@@ -17,16 +17,14 @@
                 </div>
                 <div class="data">
                     <div id="name">
-                        <h2 v-if="inputRef == 'title'">Username: Kacsa sziget</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Name" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">Username: {{userData?.username}}</h2>
+                        <input v-if="inputRef == 'input'" type="text" placeholder="Name" :value="userData?.username" class="nameChange">
                     </div>
                     <div id="description">
                         <h2>Description</h2>
-                        <p v-if="inputRef == 'title'">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Corrupti harum
-                            neque facilis totam
+                        <p v-if="inputRef == 'title'">{{userData?.description}}
                         </p>
-                        <input type="text" v-if="inputRef == 'input'" class="descChange" placeholder="Description">
+                        <input type="text" v-if="inputRef == 'input'" class="descChange" :value="userData?.description" placeholder="Description">
                     </div>
                 </div>
             </div>
@@ -81,6 +79,19 @@ onMounted(() => {
 
     modifyBtn.addEventListener("click", modiflyClick)
     saveBtn.addEventListener('click', saveClick)
+})
+
+const { getToken, tokenRefresh } = useToken()
+
+if (!getToken()) await tokenRefresh()
+
+const { data: userData } = useFetch("/api/user/", {
+    method: "GET",
+    server: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: r => r.data.items[0],
 })
 
 </script>
