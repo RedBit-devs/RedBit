@@ -17,19 +17,21 @@
                 </div>
                 <div class="data">
                     <div id="name">
-                        <h2 v-if="inputRef == 'title'">Username: {{userData?.username}}</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Name" :value="userData?.username" class="nameChange">
+                        <h2 v-if="isEditRef === false">Username: {{ userData?.username }}</h2>
+                        <input v-else ref="usernameRef" type="text" placeholder="Name" :value="userData?.username"
+                            class="nameChange">
                     </div>
                     <div id="description">
                         <h2>Description</h2>
-                        <p v-if="inputRef == 'title'">{{userData?.description}}
+                        <p v-if="isEditRef === false">{{ userData?.description }}
                         </p>
-                        <input type="text" v-if="inputRef == 'input'" class="descChange" :value="userData?.description" placeholder="Description">
+                        <input type="text" v-else ref="descriptionRef" class="descChange" :value="userData?.description"
+                            placeholder="Description">
                     </div>
                 </div>
             </div>
             <div class="dataBtns">
-                <button class="btn ok" id="save" disabled>Save</button>
+                <button class="btn ok" id="save" disabled @click="patchUser">Save</button>
                 <button class="btn secondary" id="modify">Modify</button>
             </div>
         </div>
@@ -39,7 +41,7 @@
 <script setup>
 import { onMounted } from 'vue';
 
-const inputRef = ref('title')
+const isEditRef = ref(false)
 definePageMeta({
     layout: "user"
 })
@@ -57,14 +59,14 @@ onMounted(() => {
             saveBtn.disabled = false
             fileLabel.style.display = 'flex'
             modifyBtn.textContent = 'Cancel'
-            inputRef.value = "input"
+            isEditRef.value = true
         }
 
         else {
             saveBtn.disabled = true
             fileLabel.style.display = 'none'
             modifyBtn.textContent = 'Modify'
-            inputRef.value = 'title'
+            isEditRef.value = false
         }
 
     }
@@ -74,7 +76,7 @@ onMounted(() => {
         modifyBtn.disabled = false
         fileLabel.style.display = 'none'
         modifyBtn.textContent = 'Modify'
-        inputRef.value = 'title'
+        isEditRef.value = false
     }
 
     modifyBtn.addEventListener("click", modiflyClick)
@@ -85,7 +87,7 @@ const { getToken, tokenRefresh } = useToken()
 
 if (!getToken()) await tokenRefresh()
 
-const { data: userData } = useFetch("/api/user/", {
+const { data: userData, refresh: refreshUserData } = useFetch("/api/user/", {
     method: "GET",
     server: false,
     headers: {
@@ -93,6 +95,29 @@ const { data: userData } = useFetch("/api/user/", {
     },
     transform: r => r.data.items[0],
 })
+
+const usernameRef = ref(null)
+const descriptionRef = ref(null)
+
+const { refresh: patchUser } = useFetch("/api/user/", {
+    method: "PATCH",
+    server: false,
+    immediate: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    onRequest({ options }) {
+        options.body = {
+            username: usernameRef.value.value,
+            description: descriptionRef.value.value,
+        }
+    },
+    onResponse() {
+        refreshUserData()
+    }
+})
+
+
 
 </script>
 

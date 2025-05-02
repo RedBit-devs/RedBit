@@ -30,15 +30,11 @@ export default defineEventHandler(async (event) => {
     let updateUserData = await readBody(event);
     apiResponse.params = {
       id: userId,
-      email: updateUserData.email,
-      username: updateUserData.username,
-      first_name: updateUserData.first_name,
-      last_name: updateUserData.last_name,
-      password: "SuperSecretPassword",
-      birthdate: updateUserData.birthdate,
-      description: updateUserData.description,
-      profile_picture: updateUserData.profile_picture
+      ...updateUserData,
     };
+
+    console.log(updateUserData);
+    
     updateUserData = apiResponse.params
     if(updateUserData.email && !(await isEmailValid(updateUserData.email))) {
       customErrorMessages.push({
