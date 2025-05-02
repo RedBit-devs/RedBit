@@ -33,7 +33,6 @@ export default defineEventHandler(async (event) => {
       verification_code: true,
       id: true,
       email: true,
-      profile_picture: true,
       username: true,
     },
   });
@@ -49,7 +48,6 @@ export default defineEventHandler(async (event) => {
     user: {
       id: tokenvalidation?.id,
       email: tokenvalidation?.email,
-      picture: tokenvalidation?.profile_picture,
       username: tokenvalidation?.username,
     },
   };

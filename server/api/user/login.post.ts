@@ -58,7 +58,6 @@ export default eventHandler(async (event) => {
             email: true,
             password: true,
             username: true,
-            profile_picture: true,
             verification_code: true
         }
     })
