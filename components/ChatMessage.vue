@@ -9,7 +9,7 @@
             <h3 class="message-author-name" @click.self="isDialogOpenRef = true">{{ authorName }}</h3>
             <div class="message-content" v-html="content" />
         </div>
-        <CheckFriendProfileCard id="dialog" :is-dialog-open="isDialogOpenRef" :close-dialog-func="closeDialogFunc" />
+        <CheckFriendProfileCard id="dialog" :is-dialog-open="isDialogOpenRef" :close-dialog-func="closeDialogFunc" :user-id="authorId" :auth="authtoken" />
     </div>
 </template>
 
@@ -23,7 +23,7 @@ const closeDialogFunc = () => {
     isDialogOpenRef.value = false
 }
 
-const { authorImage, authorName, message } = defineProps({
+const { authorImage, authorName, message, authorId } = defineProps({
     authorImage: {
         type: String,
         required: true,
@@ -34,6 +34,16 @@ const { authorImage, authorName, message } = defineProps({
         required: true
     },
     message: {
+        type: String,
+        required: true
+
+    },
+    authorId: {
+        type: String,
+        required: true
+
+    },
+    authtoken: {
         type: String,
         required: true
 

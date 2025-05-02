@@ -21,19 +21,17 @@
             <div id="page">
                 <div v-if="currentPage == 'data'" id="content">
                     <div id="profPic">
-                        <img src="../img/probalogo.png" alt="alma">
+                        <img v-if="userData?.profile_picture" :src="userData?.profile_picture" alt="alma">
+                        <Icon v-else name="mdi:account" size="15rem" :title="`${userData?.username}`" />
                     </div>
                     <div id="dataField">
                         <div class="data">
-                            <h2 id="username">Kics kacsa</h2>
+                            <h2 id="username">{{userData?.username}}</h2>
                         </div>
                         <div class="data">
                             <p id="title">Description</p>
-                            <h2 id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti harum neque facilis totam necessitatibus, officiis reiciendis iusto est beatae ad? Obcaecati voluptatum iste impedit reprehenderit cumque architecto molestias non dignissimos?
-                            Repellat odit ipsum aperiam error debitis delectus cum dolor, laboriosam temporibus quod quibusdam nisi provident unde necessitatibus eveniet dolore amet illo accusamus dolores maxime, tempore molestias nulla! Ad, velit veniam!
-                            Aut saepe labore debitis aliquam eaque magnam, excepturi temporibus eligendi earum similique possimus non tempora ratione id. Explicabo sint inventore expedita, officia optio labore corporis quibusdam ea blanditiis, officiis eius.
-                            Exercitatioventore optio ut est tempore. Eaque suscipit fugit sapiente corrupti quae, tempore aspernatur eligendi cum quis iure delectus, ut voluptate ipsa. Nemo, nobis reiciendis!
-                            Earum minima, id ne delectus cupiditate maiores, nobis eum repellat consequatur quae mollitia, et blanditiis error non animi odio quidem aliquam perspiciatis voluptatum accusamus perferendis! Explicabo porro earum sunt libero quos?
+                            <h2 id="description">
+                                {{userData?.description}}
                             </h2>
                         </div>
                     </div>
@@ -42,15 +40,10 @@
                     <div class="data">
                         <p class="text-big title">Common Friends</p>
                     </div>
+
+                    <!-- ALEX i can not figure out what is returned in your API -->
+                    {{commonFriends}}
                     <div id="list">
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
                         <ChatCard />
                     </div>
                 </div>
@@ -98,7 +91,7 @@
 <script setup>
 import { onMounted } from 'vue';
 
-const { closeDialogFunc, isDialogOpen } = defineProps({
+const { closeDialogFunc, isDialogOpen, userId, auth } = defineProps({
     closeDialogFunc: {
         type: Function,
         default: () => { }
@@ -107,10 +100,18 @@ const { closeDialogFunc, isDialogOpen } = defineProps({
     isDialogOpen: {
         type: Boolean,
         default: ref(false)
+    },
+    userId: {
+        type: String,
+        default: ""
+    },
+    auth: {
+        type: String,
+        default: ""
     }
 })
 
-const currentPage = ref("data")
+const currentPage = ref("comFriend")
 
 onMounted(() => {
     const button = document.getElementsByClassName('buttonContainer')
@@ -120,7 +121,7 @@ onMounted(() => {
 
     for (let i = 0; i < btnArray.length; i++) {
         button[i].onclick = function () {
-            currentPage.value = pages[i]
+            currentPage.value = pages[i%pages.length]
             button[i].style.backgroundColor = "var(--clr-ui-primary)"
             btnArray.map(m => {
                 if (m !== button[i]) {
@@ -130,6 +131,26 @@ onMounted(() => {
         }
     }
 })
+
+
+const { data: userData } = useFetch(()=> `/api/user/get/${userId}`, {
+    method: "GET",
+    server: false,
+    headers: {
+        "Authorization": auth
+    },
+    transform: r => r.data.items[0]
+})
+
+const { data: commonFriends } = useFetch(()=> `/api/user/shared/friends/${userId}`, {
+    method: "GET",
+    server: false,
+    headers: {
+        "Authorization": auth
+    },
+    transform: r => r.data.items[0]
+})
+
 
 
 
