@@ -19,9 +19,9 @@
                 </button>
             </div>
             <div id="page">
-                <div v-if="currentPage == 'data'" id="content">
+                <div v-if="currentPage == 'data'" class="content">
                     <div id="profPic">
-                        <img v-if="userData?.profile_picture" :src="userData?.profile_picture" alt="alma">
+                        <img v-if="userData?.profile_picture" :src="userData?.profile_picture" alt="profile">
                         <Icon v-else name="mdi:account" size="15rem" :title="`${userData?.username}`" />
                     </div>
                     <div id="dataField">
@@ -36,45 +36,29 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="currentPage == 'comFriend'" id="contentFriend">
+                <div v-if="currentPage == 'comFriend'" class="contentWithTitle">
                     <div class="data">
                         <p class="text-big title">Common Friends</p>
                     </div>
 
                     <!-- ALEX i can not figure out what is returned in your API -->
-                    {{commonFriends}}
+                    <!--{{commonFriends}}-->
                     <div id="list">
                         <ChatCard />
                     </div>
                 </div>
-                <div v-if="currentPage == 'comServer'" id="contentFriend">
+                <div v-if="currentPage == 'comServer'" class="contentWithTitle">
                     <div class="data">
                         <p class="text-big title">Common Servers</p>
                     </div>
                     <div id="list">
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
-                        <ChatCard />
+                        <NuxtLink v-for="(server, i) in commonServers" :to="`/chatPage/${server.id}`">
+                            <ChatCard  :key="i" :name="server.name" :picture="server.picture"/>
+
+                        </NuxtLink>
                     </div>
                 </div>
-                <div v-if="currentPage == 'manage'" id="contentManage">
+                <div v-if="currentPage == 'manage'" class="contentWithTitle">
                     <div class="data">
                         <p class="text-big title">Manage friendship</p>
                     </div>
@@ -111,7 +95,7 @@ const { closeDialogFunc, isDialogOpen, userId, auth } = defineProps({
     }
 })
 
-const currentPage = ref("comFriend")
+const currentPage = useState("asd", ()=>"data")
 
 onMounted(() => {
     const button = document.getElementsByClassName('buttonContainer')
@@ -148,7 +132,15 @@ const { data: commonFriends } = useFetch(()=> `/api/user/shared/friends/${userId
     headers: {
         "Authorization": auth
     },
-    transform: r => r.data.items[0]
+    transform: r => r.data.items
+})
+const { data: commonServers } = useFetch(()=> `/api/user/shared/servers/${userId}`, {
+    method: "GET",
+    server: false,
+    headers: {
+        "Authorization": auth
+    },
+    transform: r => r.data.items
 })
 
 
@@ -206,7 +198,7 @@ const { data: commonFriends } = useFetch(()=> `/api/user/shared/friends/${userId
     height: 20rem;
 }
 
-#content {
+.content {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -272,18 +264,13 @@ const { data: commonFriends } = useFetch(()=> `/api/user/shared/friends/${userId
     height: 18rem;
 }
 
-#contentFriend {
-    overflow: hidden;
+#list > *{
+    height: fit-content;
+    width: 100%;
 }
 
-#contentManage {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-#contentManage button {
-    width: max-content;
+.contentWithTitle {
+    width: 100%;
 }
 
 dialog {
