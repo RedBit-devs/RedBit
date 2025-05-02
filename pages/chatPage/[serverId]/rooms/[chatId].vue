@@ -1,9 +1,9 @@
 <template>
   <div class="content">
-    <div id="chat">
-      <ChatMessage v-for="msg in chatRef" :author-image="(msg.author.picture)?msg.author.picture:''" :author-name="msg.author.username"
+      <div id="chat">
+        <ChatMessage v-for="msg in chatRef" :author-image="(msg.author.picture)?msg.author.picture:''" :author-name="msg.author.username" :author-id="msg.author.id" :authtoken="token"
         :message="msg.data.text" />
-    </div>
+      </div>
     <ChatInputFiled :send="send" :route="`${route.params.chatId}`" id="input" />
    
 
@@ -42,6 +42,10 @@ const checkToken = async () => {
   }
 }
 
+checkToken()
+const token = getToken();
+
+
 const { data, send } = useWebSocket('/_ws', {
   autoReconnect: true,
   onMessage(ws, event) {
@@ -75,6 +79,7 @@ const subscribeToTopic = async () => {
 }
 
 subscribeToTopic()
+
 </script>
 
 <style scoped>
