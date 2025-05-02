@@ -135,6 +135,51 @@ message: {
 },
 ```
 
+### [ChatInputField](https://github.com/RedBit-devs/RedBit/blob/main/components/ChatInputFiled.vue)
+The input field whre the user can type in thier messages and send them to other users or to a chat room.
+### Props
+```js
+  "send": {
+    type: Function,
+    default: () => { }
+  },
+  "route": {
+    type: String,
+    default: ""
+  }
+```
+### [CheckFriendProfileCard](https://github.com/RedBit-devs/RedBit/blob/main/components/CheckFriendProfileCard.vue)
+It's a dialog what the user can open by clicking on it's friend's user name. It shows some informaiton abaout the profile what the user clicked on.
+The user can navigate between four pages where it can see the common servers or friends and can manage the friendship.
+
+### Props
+```js
+    closeDialogFunc: {
+        type: Function,
+        default: () => { }
+    },
+
+    isDialogOpen: {
+        type: Boolean,
+        default: ref(false)
+    }
+```
+
+### [CreateServer](https://github.com/RedBit-devs/RedBit/blob/main/components/CreateServer.vue)
+It's a modal where the user can create it's own serever what opens up after the user clicked the create server button. 
+
+### Props
+```js
+ isShown: {
+    type: Boolean,
+    default: false,
+  },
+  closeDialogFunc: {
+    type: Function,
+    default: () => { },
+  }
+```
+
 ## Database
 <!-- A description of the database schema, including tables, columns, relations, and indexes. -->
 For the database we use [prisma.io](https://www.prisma.io/) ORM.
