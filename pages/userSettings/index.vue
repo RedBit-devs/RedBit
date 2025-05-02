@@ -35,6 +35,10 @@
                 <button class="btn secondary" id="modify">Modify</button>
             </div>
         </div>
+        <div class="toaster">
+            <Toast v-for="err in patchUserError" :title="err.reason.toString()" :content="err.message"
+                class="danger" />
+        </div>
     </div>
 </template>
 
@@ -99,7 +103,7 @@ const { data: userData, refresh: refreshUserData } = useFetch("/api/user/", {
 const usernameRef = ref(null)
 const descriptionRef = ref(null)
 
-const { refresh: patchUser } = useFetch("/api/user/", {
+const { refresh: patchUser, error: patchUserError } = useFetch("/api/user/", {
     method: "PATCH",
     server: false,
     immediate: false,
