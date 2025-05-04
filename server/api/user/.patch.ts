@@ -33,8 +33,6 @@ export default defineEventHandler(async (event) => {
       ...updateUserData,
     };
 
-    console.log(updateUserData);
-    
     updateUserData = apiResponse.params
     if(updateUserData.email && !(await isEmailValid(updateUserData.email))) {
       customErrorMessages.push({
