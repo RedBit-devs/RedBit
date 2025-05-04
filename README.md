@@ -45,6 +45,7 @@ npm run dev
 
 Build the application for production:
 
+**Warning:** ***There should be no spaces in the filepath when building***
 ```bash
 npm run build
 ```
