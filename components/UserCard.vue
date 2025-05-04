@@ -8,9 +8,9 @@
                
             </div>
             <div class="buttons">
-                <div class="settings">
+                <NuxtLink to="/userSettings" class="settings">
                     <Icon name="mingcute:settings-5-line" size="120%" />
-                </div>
+                </NuxtLink>
             </div>
         </div>
     </div>

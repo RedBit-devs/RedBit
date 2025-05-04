@@ -43,9 +43,8 @@ export default defineEventHandler(async (event) => {
     throw createError(errors);  
   }
 
-  const data = await readRecord("user", userId, customErrorMessages);
-  delete data.id;
-  delete data.password;
+  const data: User = await readRecord("user", userId, customErrorMessages);
+  data.password = "NiceTryLol";
   const {errors} = apiResponseHandler(event, customErrorMessages, {totalItems: 1, items: [data]});
 
   if (customErrorMessages.length > 0) {
