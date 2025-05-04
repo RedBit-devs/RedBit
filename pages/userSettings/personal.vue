@@ -10,29 +10,29 @@
             <div class="mainInfo">
                 <div class="datas">
                     <div class="data">
-                        <h2 v-if="inputRef == 'title'">First name: Kis</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="First name" class="nameChange">
-                        <h2 v-if="inputRef == 'title'">Last name: Kacsa</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Last name" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">First name: {{userData?.first_name}}</h2>
+                        <input v-if="inputRef == 'input'" ref="firstNameRef" type="text" placeholder="First name" :value="userData?.first_name" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">Last name: {{userData?.last_name}}</h2>
+                        <input v-if="inputRef == 'input'" ref="lastNameRef" type="text" placeholder="Last name" :value="userData?.last_name" class="nameChange">
                     </div>
                     <div class="data">
-                        <h2 v-if="inputRef == 'title'">Email: kicsikacsa@haphap.com</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Email" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">Email: {{userData?.email}}</h2>
+                        <input v-if="inputRef == 'input'" ref="emailRef" type="text" placeholder="Email" :value="userData?.email" class="nameChange">
                     </div>
                     <div class="data">
-                        <h2 v-if="inputRef == 'title'">Username: Kacsa sziget</h2>
-                        <input v-if="inputRef == 'input'" type="text" placeholder="Name" class="nameChange">
-                    </div>
-                    <div class="data">
-                        <h2 v-if="inputRef == 'title'">Birth date: 2020.02.02</h2>
-                        <input v-if="inputRef == 'input'" type="date" class="nameChange">
+                        <h2 v-if="inputRef == 'title'">Birth date: {{userData?.birthdate}}</h2>
+                        <input v-if="inputRef == 'input'" ref="birthdateRef" type="date" class="nameChange">
                     </div>
                 </div>
             </div>
             <div class="dataBtns">
-                <button class="btn ok" id="save" disabled>Save</button>
+                <button class="btn ok" id="save" disabled @click="patchUser">Save</button>
                 <button class="btn secondary" id="modify">Modify</button>
             </div>
+        </div>
+        <div class="toaster">
+            <Toast v-for="err in patchUserError" :title="err.reason.toString()" :content="err.message"
+                class="danger" />
         </div>
     </div>
 </template>
@@ -76,6 +76,47 @@ onMounted(() => {
     modifyBtn.addEventListener("click", modiflyClick)
     saveBtn.addEventListener('click', saveClick)
 })
+
+const { getToken, tokenRefresh } = useToken()
+
+const firstNameRef = ref(null)
+const lastNameRef = ref(null)
+const emailRef = ref(null)
+const birthdateRef = ref(null)
+
+
+if (!getToken()) await tokenRefresh()
+
+const { data: userData, refresh: refreshUserData } = useFetch("/api/user/", {
+    method: "GET",
+    server: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    transform: r => r.data.items[0],
+})
+
+
+const { refresh: patchUser, error: patchUserError } = useFetch("/api/user/", {
+    method: "PATCH",
+    server: false,
+    immediate: false,
+    headers: {
+        "Authorization": getToken()
+    },
+    onRequest({ options }) {
+        options.body = {
+            first_name: firstNameRef.value.value,
+            last_name: lastNameRef.value.value,
+            email: emailRef.value.value,
+            //birthdate: birthdateRef.value.value,
+        }
+    },
+    onResponse() {
+        refreshUserData()
+    }
+})
+
 
 </script>
 
